@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4cea1940207e4f31b674be93f4132f9f" Name="Diagram1" ZoomLevel="67">
+        <EntityTypeShape EntityType="BD_CIBERVETModel.Administrador" Width="1.5" PointX="3" PointY="5.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.especie_mascota" Width="1.5" PointX="6" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.MASCOTA" Width="1.5" PointX="8.25" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.raza_mascota" Width="1.5" PointX="6" PointY="14.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.tb_categoria" Width="1.5" PointX="3" PointY="13.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.tb_distrito" Width="1.5" PointX="0.75" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.tb_estado" Width="1.5" PointX="9" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.tb_pedidoCabe" Width="1.5" PointX="11.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.tb_pedidoDeta" Width="1.5" PointX="13.5" PointY="7.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.tb_producto" Width="1.5" PointX="5.25" PointY="8.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.tb_proveedor" Width="1.5" PointX="3" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.tb_servicio" Width="1.5" PointX="11.25" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.TIPOUSUARIO" Width="1.5" PointX="3.75" PointY="3.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.usuario" Width="1.5" PointX="6" PointY="4" IsExpanded="true" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_admindis" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_masespe" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_razaespe" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_masraza" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_masusu" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_prodcate" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_provedis" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_usudis" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_pedest" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_detacabe" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_pedusu" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_pedprod" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_pedservi" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_prodprove" ManuallyRouted="false" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_usutipo" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.Carrito" Width="1.5" PointX="8.25" PointY="9.125" />
+        <AssociationConnector Association="BD_CIBERVETModel.FK_Carrito_tb_producto" />
+        <AssociationConnector Association="BD_CIBERVETModel.FK_Carrito_usuario" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

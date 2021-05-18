@@ -1,0 +1,139 @@
+﻿@model CIBERVET.Models.tb_producto
+
+@{
+    ViewBag.Title = "EliminarProducto";
+    Layout = "~/Views/Layout/_Layout_Session_Admin.cshtml";
+}
+
+<style>
+    .thumbnail {
+        width: 60px;
+        height: 60px;
+        border: none;
+    }
+</style>
+
+<h2>Eliminar Producto</h2>
+
+<h3>¿Estás seguro que quieres eliminar este producto?</h3>
+<div>
+    <h4>Producto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            ID
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.id_prod)
+        </dd>
+
+        <dt>
+            Nombre
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcionSimple_prod)
+        </dd>
+
+        <dt>
+            Precio
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.precio_prod)
+        </dd>
+
+        <dt>
+            Stock
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stock_prod)
+        </dd>
+
+        <dt>
+            Serie
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.serie_prod)
+        </dd>
+
+        <dt>
+            Marca
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.marca_prod)
+        </dd>
+
+        <dt>
+            Categoria
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_categoria.descripcion_cate)
+        </dd>
+
+        <dt>
+            Proveedor
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_proveedor.razonSocial_prove)
+        </dd>
+
+        <dt>
+            Descripción
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.descripcionHTML_prod)
+        </dd>
+
+        <dt>
+            Foto 1
+        </dt>
+
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.foto1_prod))
+            {
+                <img class="thumbnail" src="~/FotosProductos/@Model.foto1_prod" />
+            }
+        </dd>
+
+        <dt>
+            Foto 2
+        </dt>
+
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.foto2_prod))
+            {
+                <img class="thumbnail" src="~/FotosProductos/@Model.foto2_prod" />
+            }
+        </dd>
+
+        <dt>
+            Foto 3
+        </dt>
+
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.foto3_prod))
+            {
+                <img class="thumbnail" src="~/FotosProductos/@Model.foto3_prod" />
+            }
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Eliminar" class="btn btn-default" /> |
+            @Html.ActionLink("Regresar a la Lista", "ListadoProductos")
+        </div>
+    }
+</div>

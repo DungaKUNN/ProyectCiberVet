@@ -1,0 +1,208 @@
+﻿@model CIBERVET.Models.ServicioForCRUD
+
+@{
+    ViewBag.Title = "RegistrarServicio";
+    Layout = "~/Views/Layout/_Layout_Session_Admin.cshtml";
+}
+@{ Layout = ""; }
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Registrar</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/cssi/util.css">
+    <link rel="stylesheet" type="text/css" href="~/cssi/main.css">
+    <!--===============================================================================================-->
+</head>
+<body>
+
+    <div class="limiter">
+        <div class="container-login100">
+            <div class="login100-more" style="background-image: url('../images/menu1.jpg');"></div>
+            @Html.AntiForgeryToken()
+            @using (Html.BeginForm())
+            {
+<div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
+    <form class="login100-form validate-form">
+        <span class="login100-form-title p-b-59">
+            Registrar
+        </span>
+        @Html.ValidationSummary(true, "La creación no se realizó correctamente. Por favor, corrija los errores e inténtelo de nuevo.", new { @class = "text-danger" })
+        
+        <div class="wrap-input100 validate-input" data-validate="Se Requiere su Nombre ">
+            <span class="label-input100">Nombre Completo</span>
+            @Html.EditorFor(model => model.nombre, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input100",
+                    @type = "text",
+                    @placeholder = "Nombres Completos..."
+                }
+            })
+            @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Se Requiere su Apellido">
+            <span class="label-input100">Precio</span>
+            @Html.EditorFor(model => model.precio, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input100",
+                    @type = "text",
+                    @placeholder = "Apellidos Completos..."
+                }
+            })
+            @Html.ValidationMessageFor(model => model.precio, "", new { @class = "text-danger" })
+        </div>
+
+        
+
+        <div class="wrap-input100 validate-input" data-validate="Se Requiere su Contraseña">
+            <span class="label-input100">Contraseña</span>
+            @Html.EditorFor(model => model.descripcion, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input100",
+                    @type = "password",
+                    @placeholder = "*****"
+                }
+            })
+            @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Se Requiere su Nro. de Celular">
+            <span class="label-input100">Celular</span>
+            @Html.EditorFor(model => model.horario, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input100",
+                    maxlegth = "9",
+                    @type = "number",
+                    @placeholder = "XXX-XXX-XXX"
+                }
+            })
+            @Html.ValidationMessageFor(model => model.horario, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Se Requiere formato Email: ex@abc.com">
+            <span class="label-input100">Email</span>
+            @Html.EditorFor(model => model.correo, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input100",
+                    @type = "email",
+                    @placeholder = "Email..."
+                }
+            })
+            @Html.ValidationMessageFor(model => model.correo, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Se Requiere su Dirección">
+            <span class="label-input100">Dirección</span>
+            @Html.EditorFor(model => model.direccion, new
+            {
+                htmlAttributes = new
+                {
+                    @class = "input100",
+                    @type = "text"
+                ,
+                    @placeholder = "Clle. Jasminez 123.."
+                }
+            })
+            @Html.ValidationMessageFor(model => model.direccion, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Se Requiere su Distrito">
+            <span class="label-input100">Distrito</span>
+            <div class="col-md-10">
+                @Html.DropDownList("IdDistritos", (SelectList)ViewBag.ciudades, "-Selecione-", htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.IdDistritos, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="flex-m w-full p-b-33">
+            <div class="contact100-form-checkbox">
+                <input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+                <label class="label-checkbox100" for="ckb1">
+                    <span class="txt1">
+                        Acepto terminos y
+                        <a href="#" class="txt2 hov1">
+                            Condiciones.
+                        </a>
+                    </span>
+                </label>
+            </div>
+
+
+        </div>
+
+        <div class="container-login100-form-btn">
+            <div class="wrap-login100-form-btn">
+                <div class="login100-form-bgbtn"></div>
+                <button class="login100-form-btn">
+                    Regístrarse
+                </button>
+            </div>
+
+            <a href="~/Cliente/Login2" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
+                INGRESAR
+                <i class="fa fa-long-arrow-right m-l-5"></i>
+            </a>
+            <a href="Home" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
+                Regresar a Inicio=>
+                <i class="fa fa-long-arrow-right m-l-5"></i>
+            </a>
+        </div>
+    </form>
+</div>      }
+        </div>
+    </div>
+
+    <!--===============================================================================================-->
+    <script src="~/vendor/jquery/jquery-3.2.1.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/bootstrap/js/popper.js"></script>
+    <script src="~/vendor/bootstrap/js/bootstrap.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/jsi/main.js"></script>
+
+
+
+</body>
+</html>

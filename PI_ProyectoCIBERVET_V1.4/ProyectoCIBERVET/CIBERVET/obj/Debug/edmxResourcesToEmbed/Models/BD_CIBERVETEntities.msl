@@ -1,0 +1,225 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="BD_CIBERVETModelStoreContainer" CdmEntityContainer="BD_CIBERVETEntities">
+    <EntitySetMapping Name="Administrador">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.Administrador">
+        <MappingFragment StoreEntitySet="Administrador">
+          <ScalarProperty Name="idAdm" ColumnName="idAdm" />
+          <ScalarProperty Name="nombreAdm" ColumnName="nombreAdm" />
+          <ScalarProperty Name="apellidoAdm" ColumnName="apellidoAdm" />
+          <ScalarProperty Name="iddistrito" ColumnName="iddistrito" />
+          <ScalarProperty Name="dniAdm" ColumnName="dniAdm" />
+          <ScalarProperty Name="emailAdm" ColumnName="emailAdm" />
+          <ScalarProperty Name="pwdAdm" ColumnName="pwdAdm" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="especie_mascota">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.especie_mascota">
+        <MappingFragment StoreEntitySet="especie_mascota">
+          <ScalarProperty Name="idespecie" ColumnName="idespecie" />
+          <ScalarProperty Name="especie" ColumnName="especie" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MASCOTA">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.MASCOTA">
+        <MappingFragment StoreEntitySet="MASCOTA">
+          <ScalarProperty Name="idmascota" ColumnName="idmascota" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="idespecie" ColumnName="idespecie" />
+          <ScalarProperty Name="sexo" ColumnName="sexo" />
+          <ScalarProperty Name="idraza" ColumnName="idraza" />
+          <ScalarProperty Name="foto" ColumnName="foto" />
+          <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="raza_mascota">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.raza_mascota">
+        <MappingFragment StoreEntitySet="raza_mascota">
+          <ScalarProperty Name="idraza" ColumnName="idraza" />
+          <ScalarProperty Name="raza" ColumnName="raza" />
+          <ScalarProperty Name="idespecie" ColumnName="idespecie" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_categoria">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_categoria">
+        <MappingFragment StoreEntitySet="tb_categoria">
+          <ScalarProperty Name="id_cate" ColumnName="id_cate" />
+          <ScalarProperty Name="descripcion_cate" ColumnName="descripcion_cate" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_distrito">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_distrito">
+        <MappingFragment StoreEntitySet="tb_distrito">
+          <ScalarProperty Name="id_dis" ColumnName="id_dis" />
+          <ScalarProperty Name="nombre_dis" ColumnName="nombre_dis" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_estado">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_estado">
+        <MappingFragment StoreEntitySet="tb_estado">
+          <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+          <ScalarProperty Name="descripcion_estado" ColumnName="descripcion_estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_pedidoCabe">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_pedidoCabe">
+        <MappingFragment StoreEntitySet="tb_pedidoCabe">
+          <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
+          <ScalarProperty Name="hora_pedido" ColumnName="hora_pedido" />
+          <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_pedidoDeta">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_pedidoDeta">
+        <MappingFragment StoreEntitySet="tb_pedidoDeta">
+          <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
+          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="id_servicio" ColumnName="id_servicio" />
+          <ScalarProperty Name="cantidad_pedido" ColumnName="cantidad_pedido" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_producto">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_producto">
+        <MappingFragment StoreEntitySet="tb_producto">
+          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="descripcionSimple_prod" ColumnName="descripcionSimple_prod" />
+          <ScalarProperty Name="precio_prod" ColumnName="precio_prod" />
+          <ScalarProperty Name="stock_prod" ColumnName="stock_prod" />
+          <ScalarProperty Name="serie_prod" ColumnName="serie_prod" />
+          <ScalarProperty Name="marca_prod" ColumnName="marca_prod" />
+          <ScalarProperty Name="id_cate" ColumnName="id_cate" />
+          <ScalarProperty Name="id_prove" ColumnName="id_prove" />
+          <ScalarProperty Name="descripcionHTML_prod" ColumnName="descripcionHTML_prod" />
+          <ScalarProperty Name="foto1_prod" ColumnName="foto1_prod" />
+          <ScalarProperty Name="foto2_prod" ColumnName="foto2_prod" />
+          <ScalarProperty Name="foto3_prod" ColumnName="foto3_prod" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_proveedor">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_proveedor">
+        <MappingFragment StoreEntitySet="tb_proveedor">
+          <ScalarProperty Name="id_prove" ColumnName="id_prove" />
+          <ScalarProperty Name="nombres_prove" ColumnName="nombres_prove" />
+          <ScalarProperty Name="apellidos_prove" ColumnName="apellidos_prove" />
+          <ScalarProperty Name="razonSocial_prove" ColumnName="razonSocial_prove" />
+          <ScalarProperty Name="direccion_prove" ColumnName="direccion_prove" />
+          <ScalarProperty Name="celular_prove" ColumnName="celular_prove" />
+          <ScalarProperty Name="email_prove" ColumnName="email_prove" />
+          <ScalarProperty Name="id_dis" ColumnName="id_dis" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_servicio">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_servicio">
+        <MappingFragment StoreEntitySet="tb_servicio">
+          <ScalarProperty Name="id_servicio" ColumnName="id_servicio" />
+          <ScalarProperty Name="nombre_servicio" ColumnName="nombre_servicio" />
+          <ScalarProperty Name="precio_servicio" ColumnName="precio_servicio" />
+          <ScalarProperty Name="descripcion_servicio" ColumnName="descripcion_servicio" />
+          <ScalarProperty Name="horario_servicio" ColumnName="horario_servicio" />
+          <ScalarProperty Name="fecha_servicio" ColumnName="fecha_servicio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TIPOUSUARIO">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.TIPOUSUARIO">
+        <MappingFragment StoreEntitySet="TIPOUSUARIO">
+          <ScalarProperty Name="Id_TipoUsuario" ColumnName="Id_TipoUsuario" />
+          <ScalarProperty Name="descripcion" ColumnName="descripcion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="usuario">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.usuario">
+        <MappingFragment StoreEntitySet="usuario">
+          <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+          <ScalarProperty Name="dni" ColumnName="dni" />
+          <ScalarProperty Name="nombre" ColumnName="nombre" />
+          <ScalarProperty Name="apellido" ColumnName="apellido" />
+          <ScalarProperty Name="login" ColumnName="login" />
+          <ScalarProperty Name="password" ColumnName="password" />
+          <ScalarProperty Name="celular" ColumnName="celular" />
+          <ScalarProperty Name="correo" ColumnName="correo" />
+          <ScalarProperty Name="direccion" ColumnName="direccion" />
+          <ScalarProperty Name="IdDistritos" ColumnName="IdDistritos" />
+          <ScalarProperty Name="IdTipoUsuarios" ColumnName="IdTipoUsuarios" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <FunctionImportMapping FunctionImportName="sp_ActualizarProducto" FunctionName="BD_CIBERVETModel.Store.sp_ActualizarProducto" />
+    <FunctionImportMapping FunctionImportName="sp_ActualizarServicio" FunctionName="BD_CIBERVETModel.Store.sp_ActualizarServicio" />
+    <FunctionImportMapping FunctionImportName="sp_Insertar_Mascotas" FunctionName="BD_CIBERVETModel.Store.sp_Insertar_Mascotas" />
+    <FunctionImportMapping FunctionImportName="sp_InsertarProducto" FunctionName="BD_CIBERVETModel.Store.sp_InsertarProducto" />
+    <FunctionImportMapping FunctionImportName="sp_InsertarServicio" FunctionName="BD_CIBERVETModel.Store.sp_InsertarServicio" />
+    <FunctionImportMapping FunctionImportName="sp_Listado_Mascotas" FunctionName="BD_CIBERVETModel.Store.sp_Listado_Mascotas">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_Listado_Mascotas_Result">
+          <ScalarProperty Name="Codigo_de_Mascota" ColumnName="Codigo de Mascota" />
+          <ScalarProperty Name="Nombre" ColumnName="Nombre" />
+          <ScalarProperty Name="Especie" ColumnName="Especie" />
+          <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+          <ScalarProperty Name="Raza" ColumnName="Raza" />
+          <ScalarProperty Name="Foto" ColumnName="Foto" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_ListarCategorias" FunctionName="BD_CIBERVETModel.Store.sp_ListarCategorias">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_ListarCategorias_Result">
+          <ScalarProperty Name="id_cate" ColumnName="id_cate" />
+          <ScalarProperty Name="descripcion_cate" ColumnName="descripcion_cate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_ListarProductos" FunctionName="BD_CIBERVETModel.Store.sp_ListarProductos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_ListarProductos_Result">
+          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="descripcionSimple_prod" ColumnName="descripcionSimple_prod" />
+          <ScalarProperty Name="precio_prod" ColumnName="precio_prod" />
+          <ScalarProperty Name="stock_prod" ColumnName="stock_prod" />
+          <ScalarProperty Name="serie_prod" ColumnName="serie_prod" />
+          <ScalarProperty Name="marca_prod" ColumnName="marca_prod" />
+          <ScalarProperty Name="descripcion_cate" ColumnName="descripcion_cate" />
+          <ScalarProperty Name="razonSocial_prove" ColumnName="razonSocial_prove" />
+          <ScalarProperty Name="descripcionHTML_prod" ColumnName="descripcionHTML_prod" />
+          <ScalarProperty Name="Column1" ColumnName="Column1" />
+          <ScalarProperty Name="Column2" ColumnName="Column2" />
+          <ScalarProperty Name="Column3" ColumnName="Column3" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_ListarProveedores" FunctionName="BD_CIBERVETModel.Store.sp_ListarProveedores">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_ListarProveedores_Result">
+          <ScalarProperty Name="id_prove" ColumnName="id_prove" />
+          <ScalarProperty Name="razonSocial_prove" ColumnName="razonSocial_prove" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_ListarServicios" FunctionName="BD_CIBERVETModel.Store.sp_ListarServicios">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_ListarServicios_Result">
+          <ScalarProperty Name="id_servicio" ColumnName="id_servicio" />
+          <ScalarProperty Name="nombre_servicio" ColumnName="nombre_servicio" />
+          <ScalarProperty Name="precio_servicio" ColumnName="precio_servicio" />
+          <ScalarProperty Name="descripcion_servicio" ColumnName="descripcion_servicio" />
+          <ScalarProperty Name="horario_servicio" ColumnName="horario_servicio" />
+          <ScalarProperty Name="fecha_servicio" ColumnName="fecha_servicio" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping>

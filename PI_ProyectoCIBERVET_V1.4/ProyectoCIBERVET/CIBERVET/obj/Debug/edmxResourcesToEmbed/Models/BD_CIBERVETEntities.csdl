@@ -1,0 +1,529 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BD_CIBERVETModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Administrador">
+    <Key>
+      <PropertyRef Name="idAdm" />
+    </Key>
+    <Property Name="idAdm" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombreAdm" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellidoAdm" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="iddistrito" Type="Int32" />
+    <Property Name="dniAdm" Type="Int32" Nullable="false" />
+    <Property Name="emailAdm" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="pwdAdm" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tb_distrito" Relationship="Self.fk_admindis" FromRole="Administrador" ToRole="tb_distrito" />
+  </EntityType>
+  <EntityType Name="especie_mascota">
+    <Key>
+      <PropertyRef Name="idespecie" />
+    </Key>
+    <Property Name="idespecie" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="especie" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="MASCOTA" Relationship="Self.fk_masespe" FromRole="especie_mascota" ToRole="MASCOTA" />
+    <NavigationProperty Name="raza_mascota" Relationship="Self.fk_razaespe" FromRole="especie_mascota" ToRole="raza_mascota" />
+  </EntityType>
+  <EntityType Name="MASCOTA">
+    <Key>
+      <PropertyRef Name="idmascota" />
+    </Key>
+    <Property Name="idmascota" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idespecie" Type="Int32" Nullable="false" />
+    <Property Name="sexo" Type="String" MaxLength="30" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idraza" Type="Int32" Nullable="false" />
+    <Property Name="foto" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idusuario" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="especie_mascota" Relationship="Self.fk_masespe" FromRole="MASCOTA" ToRole="especie_mascota" />
+    <NavigationProperty Name="raza_mascota" Relationship="Self.fk_masraza" FromRole="MASCOTA" ToRole="raza_mascota" />
+    <NavigationProperty Name="usuario" Relationship="Self.fk_masusu" FromRole="MASCOTA" ToRole="usuario" />
+  </EntityType>
+  <EntityType Name="raza_mascota">
+    <Key>
+      <PropertyRef Name="idraza" />
+    </Key>
+    <Property Name="idraza" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="raza" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idespecie" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="especie_mascota" Relationship="Self.fk_razaespe" FromRole="raza_mascota" ToRole="especie_mascota" />
+    <NavigationProperty Name="MASCOTA" Relationship="Self.fk_masraza" FromRole="raza_mascota" ToRole="MASCOTA" />
+  </EntityType>
+  <EntityType Name="tb_categoria">
+    <Key>
+      <PropertyRef Name="id_cate" />
+    </Key>
+    <Property Name="id_cate" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion_cate" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tb_producto" Relationship="Self.fk_prodcate" FromRole="tb_categoria" ToRole="tb_producto" />
+  </EntityType>
+  <EntityType Name="tb_distrito">
+    <Key>
+      <PropertyRef Name="id_dis" />
+    </Key>
+    <Property Name="id_dis" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre_dis" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="Administrador" Relationship="Self.fk_admindis" FromRole="tb_distrito" ToRole="Administrador" />
+    <NavigationProperty Name="tb_proveedor" Relationship="Self.fk_provedis" FromRole="tb_distrito" ToRole="tb_proveedor" />
+    <NavigationProperty Name="usuario" Relationship="Self.fk_usudis" FromRole="tb_distrito" ToRole="usuario" />
+  </EntityType>
+  <EntityType Name="tb_estado">
+    <Key>
+      <PropertyRef Name="id_estado" />
+    </Key>
+    <Property Name="id_estado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion_estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="tb_pedidoCabe" Relationship="Self.fk_pedest" FromRole="tb_estado" ToRole="tb_pedidoCabe" />
+  </EntityType>
+  <EntityType Name="tb_pedidoCabe">
+    <Key>
+      <PropertyRef Name="id_pedido" />
+    </Key>
+    <Property Name="id_pedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_usuario" Type="Int32" />
+    <Property Name="fecha_pedido" Type="DateTime" Nullable="false" Precision="0" />
+    <Property Name="hora_pedido" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="id_estado" Type="Int32" />
+    <NavigationProperty Name="tb_estado" Relationship="Self.fk_pedest" FromRole="tb_pedidoCabe" ToRole="tb_estado" />
+    <NavigationProperty Name="tb_pedidoDeta" Relationship="Self.fk_detacabe" FromRole="tb_pedidoCabe" ToRole="tb_pedidoDeta" />
+    <NavigationProperty Name="usuario" Relationship="Self.fk_pedusu" FromRole="tb_pedidoCabe" ToRole="usuario" />
+  </EntityType>
+  <EntityType Name="tb_pedidoDeta">
+    <Key>
+      <PropertyRef Name="id_pedido" />
+      <PropertyRef Name="id_prod" />
+      <PropertyRef Name="id_servicio" />
+    </Key>
+    <Property Name="id_pedido" Type="Int32" Nullable="false" />
+    <Property Name="id_prod" Type="Int32" Nullable="false" />
+    <Property Name="id_servicio" Type="Int32" Nullable="false" />
+    <Property Name="cantidad_pedido" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_pedidoCabe" Relationship="Self.fk_detacabe" FromRole="tb_pedidoDeta" ToRole="tb_pedidoCabe" />
+    <NavigationProperty Name="tb_producto" Relationship="Self.fk_pedprod" FromRole="tb_pedidoDeta" ToRole="tb_producto" />
+    <NavigationProperty Name="tb_servicio" Relationship="Self.fk_pedservi" FromRole="tb_pedidoDeta" ToRole="tb_servicio" />
+  </EntityType>
+  <EntityType Name="tb_producto">
+    <Key>
+      <PropertyRef Name="id_prod" />
+    </Key>
+    <Property Name="id_prod" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcionSimple_prod" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="precio_prod" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="stock_prod" Type="Int32" Nullable="false" />
+    <Property Name="serie_prod" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="marca_prod" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="id_cate" Type="Int32" />
+    <Property Name="id_prove" Type="Int32" />
+    <Property Name="descripcionHTML_prod" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="foto1_prod" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foto2_prod" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <Property Name="foto3_prod" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tb_categoria" Relationship="Self.fk_prodcate" FromRole="tb_producto" ToRole="tb_categoria" />
+    <NavigationProperty Name="tb_pedidoDeta" Relationship="Self.fk_pedprod" FromRole="tb_producto" ToRole="tb_pedidoDeta" />
+    <NavigationProperty Name="tb_proveedor" Relationship="Self.fk_prodprove" FromRole="tb_producto" ToRole="tb_proveedor" />
+  </EntityType>
+  <EntityType Name="tb_proveedor">
+    <Key>
+      <PropertyRef Name="id_prove" />
+    </Key>
+    <Property Name="id_prove" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombres_prove" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellidos_prove" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="razonSocial_prove" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="direccion_prove" Type="String" MaxLength="80" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="celular_prove" Type="String" MaxLength="15" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="email_prove" Type="String" MaxLength="40" FixedLength="false" Unicode="false" />
+    <Property Name="id_dis" Type="Int32" />
+    <NavigationProperty Name="tb_distrito" Relationship="Self.fk_provedis" FromRole="tb_proveedor" ToRole="tb_distrito" />
+    <NavigationProperty Name="tb_producto" Relationship="Self.fk_prodprove" FromRole="tb_proveedor" ToRole="tb_producto" />
+  </EntityType>
+  <EntityType Name="tb_servicio">
+    <Key>
+      <PropertyRef Name="id_servicio" />
+    </Key>
+    <Property Name="id_servicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre_servicio" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="precio_servicio" Type="Decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="descripcion_servicio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="horario_servicio" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="fecha_servicio" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="tb_pedidoDeta" Relationship="Self.fk_pedservi" FromRole="tb_servicio" ToRole="tb_pedidoDeta" />
+  </EntityType>
+  <EntityType Name="TIPOUSUARIO">
+    <Key>
+      <PropertyRef Name="Id_TipoUsuario" />
+    </Key>
+    <Property Name="Id_TipoUsuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="usuario" Relationship="Self.fk_usutipo" FromRole="TIPOUSUARIO" ToRole="usuario" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="idusuario" />
+    </Key>
+    <Property Name="idusuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dni" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="nombre" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="apellido" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="login" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="password" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="celular" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="correo" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="direccion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="IdDistritos" Type="Int32" />
+    <Property Name="IdTipoUsuarios" Type="Int32" />
+    <NavigationProperty Name="MASCOTA" Relationship="Self.fk_masusu" FromRole="usuario" ToRole="MASCOTA" />
+    <NavigationProperty Name="tb_distrito" Relationship="Self.fk_usudis" FromRole="usuario" ToRole="tb_distrito" />
+    <NavigationProperty Name="tb_pedidoCabe" Relationship="Self.fk_pedusu" FromRole="usuario" ToRole="tb_pedidoCabe" />
+    <NavigationProperty Name="TIPOUSUARIO" Relationship="Self.fk_usutipo" FromRole="usuario" ToRole="TIPOUSUARIO" />
+  </EntityType>
+  <Association Name="fk_admindis">
+    <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
+    <End Role="Administrador" Type="Self.Administrador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_distrito">
+        <PropertyRef Name="id_dis" />
+      </Principal>
+      <Dependent Role="Administrador">
+        <PropertyRef Name="iddistrito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_masespe">
+    <End Role="especie_mascota" Type="Self.especie_mascota" Multiplicity="1" />
+    <End Role="MASCOTA" Type="Self.MASCOTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="especie_mascota">
+        <PropertyRef Name="idespecie" />
+      </Principal>
+      <Dependent Role="MASCOTA">
+        <PropertyRef Name="idespecie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_razaespe">
+    <End Role="especie_mascota" Type="Self.especie_mascota" Multiplicity="1" />
+    <End Role="raza_mascota" Type="Self.raza_mascota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="especie_mascota">
+        <PropertyRef Name="idespecie" />
+      </Principal>
+      <Dependent Role="raza_mascota">
+        <PropertyRef Name="idespecie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_masraza">
+    <End Role="raza_mascota" Type="Self.raza_mascota" Multiplicity="1" />
+    <End Role="MASCOTA" Type="Self.MASCOTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="raza_mascota">
+        <PropertyRef Name="idraza" />
+      </Principal>
+      <Dependent Role="MASCOTA">
+        <PropertyRef Name="idraza" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_masusu">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+    <End Role="MASCOTA" Type="Self.MASCOTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="idusuario" />
+      </Principal>
+      <Dependent Role="MASCOTA">
+        <PropertyRef Name="idusuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_prodcate">
+    <End Role="tb_categoria" Type="Self.tb_categoria" Multiplicity="0..1" />
+    <End Role="tb_producto" Type="Self.tb_producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_categoria">
+        <PropertyRef Name="id_cate" />
+      </Principal>
+      <Dependent Role="tb_producto">
+        <PropertyRef Name="id_cate" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_provedis">
+    <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
+    <End Role="tb_proveedor" Type="Self.tb_proveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_distrito">
+        <PropertyRef Name="id_dis" />
+      </Principal>
+      <Dependent Role="tb_proveedor">
+        <PropertyRef Name="id_dis" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_usudis">
+    <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_distrito">
+        <PropertyRef Name="id_dis" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="IdDistritos" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pedest">
+    <End Role="tb_estado" Type="Self.tb_estado" Multiplicity="0..1" />
+    <End Role="tb_pedidoCabe" Type="Self.tb_pedidoCabe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_estado">
+        <PropertyRef Name="id_estado" />
+      </Principal>
+      <Dependent Role="tb_pedidoCabe">
+        <PropertyRef Name="id_estado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_detacabe">
+    <End Role="tb_pedidoCabe" Type="Self.tb_pedidoCabe" Multiplicity="1" />
+    <End Role="tb_pedidoDeta" Type="Self.tb_pedidoDeta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_pedidoCabe">
+        <PropertyRef Name="id_pedido" />
+      </Principal>
+      <Dependent Role="tb_pedidoDeta">
+        <PropertyRef Name="id_pedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pedusu">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+    <End Role="tb_pedidoCabe" Type="Self.tb_pedidoCabe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="idusuario" />
+      </Principal>
+      <Dependent Role="tb_pedidoCabe">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pedprod">
+    <End Role="tb_producto" Type="Self.tb_producto" Multiplicity="1" />
+    <End Role="tb_pedidoDeta" Type="Self.tb_pedidoDeta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_producto">
+        <PropertyRef Name="id_prod" />
+      </Principal>
+      <Dependent Role="tb_pedidoDeta">
+        <PropertyRef Name="id_prod" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pedservi">
+    <End Role="tb_servicio" Type="Self.tb_servicio" Multiplicity="1" />
+    <End Role="tb_pedidoDeta" Type="Self.tb_pedidoDeta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_servicio">
+        <PropertyRef Name="id_servicio" />
+      </Principal>
+      <Dependent Role="tb_pedidoDeta">
+        <PropertyRef Name="id_servicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_prodprove">
+    <End Role="tb_proveedor" Type="Self.tb_proveedor" Multiplicity="0..1" />
+    <End Role="tb_producto" Type="Self.tb_producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_proveedor">
+        <PropertyRef Name="id_prove" />
+      </Principal>
+      <Dependent Role="tb_producto">
+        <PropertyRef Name="id_prove" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_usutipo">
+    <End Role="TIPOUSUARIO" Type="Self.TIPOUSUARIO" Multiplicity="0..1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPOUSUARIO">
+        <PropertyRef Name="Id_TipoUsuario" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="IdTipoUsuarios" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="BD_CIBERVETEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Administrador" EntityType="Self.Administrador" />
+    <EntitySet Name="especie_mascota" EntityType="Self.especie_mascota" />
+    <EntitySet Name="MASCOTA" EntityType="Self.MASCOTA" />
+    <EntitySet Name="raza_mascota" EntityType="Self.raza_mascota" />
+    <EntitySet Name="tb_categoria" EntityType="Self.tb_categoria" />
+    <EntitySet Name="tb_distrito" EntityType="Self.tb_distrito" />
+    <EntitySet Name="tb_estado" EntityType="Self.tb_estado" />
+    <EntitySet Name="tb_pedidoCabe" EntityType="Self.tb_pedidoCabe" />
+    <EntitySet Name="tb_pedidoDeta" EntityType="Self.tb_pedidoDeta" />
+    <EntitySet Name="tb_producto" EntityType="Self.tb_producto" />
+    <EntitySet Name="tb_proveedor" EntityType="Self.tb_proveedor" />
+    <EntitySet Name="tb_servicio" EntityType="Self.tb_servicio" />
+    <EntitySet Name="TIPOUSUARIO" EntityType="Self.TIPOUSUARIO" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" />
+    <AssociationSet Name="fk_admindis" Association="Self.fk_admindis">
+      <End Role="tb_distrito" EntitySet="tb_distrito" />
+      <End Role="Administrador" EntitySet="Administrador" />
+    </AssociationSet>
+    <AssociationSet Name="fk_masespe" Association="Self.fk_masespe">
+      <End Role="especie_mascota" EntitySet="especie_mascota" />
+      <End Role="MASCOTA" EntitySet="MASCOTA" />
+    </AssociationSet>
+    <AssociationSet Name="fk_razaespe" Association="Self.fk_razaespe">
+      <End Role="especie_mascota" EntitySet="especie_mascota" />
+      <End Role="raza_mascota" EntitySet="raza_mascota" />
+    </AssociationSet>
+    <AssociationSet Name="fk_masraza" Association="Self.fk_masraza">
+      <End Role="raza_mascota" EntitySet="raza_mascota" />
+      <End Role="MASCOTA" EntitySet="MASCOTA" />
+    </AssociationSet>
+    <AssociationSet Name="fk_masusu" Association="Self.fk_masusu">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="MASCOTA" EntitySet="MASCOTA" />
+    </AssociationSet>
+    <AssociationSet Name="fk_prodcate" Association="Self.fk_prodcate">
+      <End Role="tb_categoria" EntitySet="tb_categoria" />
+      <End Role="tb_producto" EntitySet="tb_producto" />
+    </AssociationSet>
+    <AssociationSet Name="fk_provedis" Association="Self.fk_provedis">
+      <End Role="tb_distrito" EntitySet="tb_distrito" />
+      <End Role="tb_proveedor" EntitySet="tb_proveedor" />
+    </AssociationSet>
+    <AssociationSet Name="fk_usudis" Association="Self.fk_usudis">
+      <End Role="tb_distrito" EntitySet="tb_distrito" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pedest" Association="Self.fk_pedest">
+      <End Role="tb_estado" EntitySet="tb_estado" />
+      <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_detacabe" Association="Self.fk_detacabe">
+      <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
+      <End Role="tb_pedidoDeta" EntitySet="tb_pedidoDeta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pedusu" Association="Self.fk_pedusu">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pedprod" Association="Self.fk_pedprod">
+      <End Role="tb_producto" EntitySet="tb_producto" />
+      <End Role="tb_pedidoDeta" EntitySet="tb_pedidoDeta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pedservi" Association="Self.fk_pedservi">
+      <End Role="tb_servicio" EntitySet="tb_servicio" />
+      <End Role="tb_pedidoDeta" EntitySet="tb_pedidoDeta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_prodprove" Association="Self.fk_prodprove">
+      <End Role="tb_proveedor" EntitySet="tb_proveedor" />
+      <End Role="tb_producto" EntitySet="tb_producto" />
+    </AssociationSet>
+    <AssociationSet Name="fk_usutipo" Association="Self.fk_usutipo">
+      <End Role="TIPOUSUARIO" EntitySet="TIPOUSUARIO" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+    <FunctionImport Name="sp_ActualizarProducto">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="desSimple" Mode="In" Type="String" />
+      <Parameter Name="pre" Mode="In" Type="Decimal" />
+      <Parameter Name="stk" Mode="In" Type="Int32" />
+      <Parameter Name="serie" Mode="In" Type="String" />
+      <Parameter Name="marca" Mode="In" Type="String" />
+      <Parameter Name="idCat" Mode="In" Type="Int32" />
+      <Parameter Name="idProve" Mode="In" Type="Int32" />
+      <Parameter Name="desHTML" Mode="In" Type="String" />
+      <Parameter Name="foto1" Mode="In" Type="String" />
+      <Parameter Name="foto2" Mode="In" Type="String" />
+      <Parameter Name="foto3" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_ActualizarServicio">
+      <Parameter Name="id" Mode="In" Type="Int32" />
+      <Parameter Name="nom" Mode="In" Type="String" />
+      <Parameter Name="pre" Mode="In" Type="Decimal" />
+      <Parameter Name="des" Mode="In" Type="String" />
+      <Parameter Name="horario" Mode="In" Type="String" />
+      <Parameter Name="fecha" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="sp_Insertar_Mascotas">
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="idespecie" Mode="In" Type="Int32" />
+      <Parameter Name="sexo" Mode="In" Type="String" />
+      <Parameter Name="idraza" Mode="In" Type="Int32" />
+      <Parameter Name="foto" Mode="In" Type="String" />
+      <Parameter Name="idusuario" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertarProducto">
+      <Parameter Name="desSimple" Mode="In" Type="String" />
+      <Parameter Name="pre" Mode="In" Type="Decimal" />
+      <Parameter Name="stk" Mode="In" Type="Int32" />
+      <Parameter Name="serie" Mode="In" Type="String" />
+      <Parameter Name="marca" Mode="In" Type="String" />
+      <Parameter Name="idCat" Mode="In" Type="Int32" />
+      <Parameter Name="idProve" Mode="In" Type="Int32" />
+      <Parameter Name="desHTML" Mode="In" Type="String" />
+      <Parameter Name="foto1" Mode="In" Type="String" />
+      <Parameter Name="foto2" Mode="In" Type="String" />
+      <Parameter Name="foto3" Mode="In" Type="String" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertarServicio">
+      <Parameter Name="nom" Mode="In" Type="String" />
+      <Parameter Name="pre" Mode="In" Type="Decimal" />
+      <Parameter Name="des" Mode="In" Type="String" />
+      <Parameter Name="horario" Mode="In" Type="String" />
+      <Parameter Name="fecha" Mode="In" Type="DateTime" />
+    </FunctionImport>
+    <FunctionImport Name="sp_Listado_Mascotas" ReturnType="Collection(BD_CIBERVETModel.sp_Listado_Mascotas_Result)">
+      <Parameter Name="idusuario" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_ListarCategorias" ReturnType="Collection(BD_CIBERVETModel.sp_ListarCategorias_Result)" />
+    <FunctionImport Name="sp_ListarProductos" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProductos_Result)" />
+    <FunctionImport Name="sp_ListarProveedores" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProveedores_Result)" />
+    <FunctionImport Name="sp_ListarServicios" ReturnType="Collection(BD_CIBERVETModel.sp_ListarServicios_Result)" />
+  </EntityContainer>
+  <ComplexType Name="sp_Listado_Mascotas_Result">
+    <Property Type="Int32" Name="Codigo_de_Mascota" Nullable="false" />
+    <Property Type="String" Name="Nombre" Nullable="false" MaxLength="45" />
+    <Property Type="String" Name="Especie" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Sexo" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="Raza" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="Foto" Nullable="false" MaxLength="100" />
+  </ComplexType>
+  <ComplexType Name="sp_ListarCategorias_Result">
+    <Property Type="Int32" Name="id_cate" Nullable="false" />
+    <Property Type="String" Name="descripcion_cate" Nullable="false" MaxLength="80" />
+  </ComplexType>
+  <ComplexType Name="sp_ListarProductos_Result">
+    <Property Type="Int32" Name="id_prod" Nullable="false" />
+    <Property Type="String" Name="descripcionSimple_prod" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="precio_prod" Nullable="false" Precision="10" Scale="2" />
+    <Property Type="Int32" Name="stock_prod" Nullable="false" />
+    <Property Type="String" Name="serie_prod" Nullable="true" MaxLength="40" />
+    <Property Type="String" Name="marca_prod" Nullable="false" MaxLength="40" />
+    <Property Type="String" Name="descripcion_cate" Nullable="false" MaxLength="80" />
+    <Property Type="String" Name="razonSocial_prove" Nullable="false" MaxLength="80" />
+    <Property Type="String" Name="descripcionHTML_prod" Nullable="false" MaxLength="Max" />
+    <Property Type="String" Name="Column1" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="Column2" Nullable="false" MaxLength="255" />
+    <Property Type="String" Name="Column3" Nullable="false" MaxLength="255" />
+  </ComplexType>
+  <ComplexType Name="sp_ListarProveedores_Result">
+    <Property Type="Int32" Name="id_prove" Nullable="false" />
+    <Property Type="String" Name="razonSocial_prove" Nullable="false" MaxLength="80" />
+  </ComplexType>
+  <ComplexType Name="sp_ListarServicios_Result">
+    <Property Type="Int32" Name="id_servicio" Nullable="false" />
+    <Property Type="String" Name="nombre_servicio" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="precio_servicio" Nullable="false" Precision="10" Scale="2" />
+    <Property Type="String" Name="descripcion_servicio" Nullable="false" MaxLength="Max" />
+    <Property Type="String" Name="horario_servicio" Nullable="false" MaxLength="40" />
+    <Property Type="DateTime" Name="fecha_servicio" Nullable="false" />
+  </ComplexType>
+</Schema>

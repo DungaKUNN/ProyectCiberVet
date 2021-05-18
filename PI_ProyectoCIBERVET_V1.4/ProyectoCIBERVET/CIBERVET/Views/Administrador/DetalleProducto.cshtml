@@ -1,0 +1,132 @@
+﻿@model CIBERVET.Models.ProductoForCRUD
+
+@{
+    ViewBag.Title = "DetalleProducto";
+    Layout = "~/Views/Layout/_Layout_Session_Admin.cshtml";
+}
+
+<style>
+    .thumbnail {
+        width: 100px;
+        height: 100px;
+        border: none;
+    }
+</style>
+
+<h2>Detalle Producto</h2>
+
+<div>
+    <h4>Producto</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            ID
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IdProducto)
+        </dd>
+
+        <dt>
+            Nombre
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.desSimple)
+        </dd>
+
+        <dt>
+            Precio
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.precio)
+        </dd>
+
+        <dt>
+            Stock
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.stock)
+        </dd>
+
+        <dt>
+            Serie
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.serie)
+        </dd>
+
+        <dt>
+            Marca
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.marca)
+        </dd>
+
+        <dt>
+            Categoria
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.categoria)
+        </dd>
+
+        <dt>
+            Proveedor
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.proveedor)
+        </dd>
+
+        <dt>
+            Descripción
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.desHTML)
+        </dd>
+
+        <dt>
+            Foto 1
+        </dt>
+
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.foto1))
+            {
+                <img class="thumbnail" src="~/FotosProductos/@Model.foto1" />
+            }
+        </dd>
+
+        <dt>
+            Foto 2
+        </dt>
+
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.foto2))
+            {
+                <img class="thumbnail" src="~/FotosProductos/@Model.foto2" />
+            }
+        </dd>
+
+        <dt>
+            Foto 3
+        </dt>
+
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.foto3))
+            {
+                <img class="thumbnail" src="~/FotosProductos/@Model.foto3" />
+            }
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Editar", "ModificarProducto", new { id = Model.IdProducto }) |
+    @Html.ActionLink("Regresar a la Lista", "ListadoProductos")
+</p>
