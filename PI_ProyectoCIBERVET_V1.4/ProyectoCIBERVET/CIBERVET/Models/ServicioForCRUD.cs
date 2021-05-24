@@ -22,6 +22,7 @@ namespace CIBERVET.Models
         public decimal precio { get; set; }
 
         [Display(Name = "Descripción")]
+        [AllowHtml]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Ingrese la Descripción")]
         public string descripcion { get; set; }
 

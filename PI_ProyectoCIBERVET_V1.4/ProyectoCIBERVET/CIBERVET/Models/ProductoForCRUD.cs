@@ -46,6 +46,7 @@ namespace CIBERVET.Models
         public string proveedor { get; set; }
 
         [Display(Name = "Descripción")]
+        [AllowHtml]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Ingrese la Descripción")]
         public string desHTML { get; set; }
 
