@@ -8,7 +8,6 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-/*........*/
 
 namespace CIBERVET.Controllers
 {
@@ -175,6 +174,7 @@ namespace CIBERVET.Controllers
                             Path.GetFileName(archivo2.FileName)));
             archivo3.SaveAs(Path.Combine(Server.MapPath("~/FotosProductos/"),
                             Path.GetFileName(archivo3.FileName)));
+
             return RedirectToAction("ListadoProductos");
         }
 
@@ -407,8 +407,7 @@ namespace CIBERVET.Controllers
         }
         /*----------------------------------------------------------------*/
 
-        public ActionResult 
-            nAdmin()
+        public ActionResult LoginAdmin()
         {
             return View();
         }

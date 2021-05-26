@@ -257,15 +257,12 @@ create table tb_pedidoDeta
 (
  id_pedido			int,
  id_prod			int,
- id_servicio		int,
  cantidad_pedido	int not null,
  constraint fk_detacabe foreign key(id_pedido)
  references tb_pedidoCabe(id_pedido),
  constraint fk_pedprod foreign key(id_prod)
  references tb_producto(id_prod),
- constraint fk_pedservi foreign key(id_servicio)
- references tb_servicio(id_servicio),
- primary key(id_pedido,id_prod,id_servicio)
+ primary key(id_pedido,id_prod)
 );
 go
 /*----------------------------------------------------------------------------*/

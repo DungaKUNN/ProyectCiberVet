@@ -14,20 +14,11 @@ namespace CIBERVET.Models
     
     public partial class tb_servicio
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tb_servicio()
-        {
-            this.tb_pedidoDeta = new HashSet<tb_pedidoDeta>();
-        }
-    
         public int id_servicio { get; set; }
         public string nombre_servicio { get; set; }
         public decimal precio_servicio { get; set; }
         public string descripcion_servicio { get; set; }
         public string horario_servicio { get; set; }
         public System.DateTime fecha_servicio { get; set; }
-    
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_pedidoDeta> tb_pedidoDeta { get; set; }
     }
 }

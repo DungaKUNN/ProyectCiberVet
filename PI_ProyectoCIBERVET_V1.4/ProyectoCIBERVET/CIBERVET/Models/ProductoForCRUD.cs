@@ -14,15 +14,18 @@ namespace CIBERVET.Models
         public int IdProducto { get; set; }
 
         [Display(Name = "Nombre")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Ingrese el Nombre")]
+        [Required(ErrorMessage = "Ingrese el Nombre")]
+        [StringLength(100, ErrorMessage = "Maximo 100  caracteres")]
+        [RegularExpression("^[A-Za-z]+$")]
         public string desSimple { get; set; }
-
         [Display(Name = "Precio")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Ingrese el Precio con Formato 10.00")]
+        [Required(ErrorMessage = "Ingrese el Precio ")]
+        [RegularExpression(@"^\d+\.\d{0,2}$", ErrorMessage = "Ingrese precio con formato 0.00")]
         public decimal precio { get; set; }
 
         [Display(Name = "Stock")]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Ingrese el Stock")]
+        [Required(ErrorMessage = "Ingrese el stock ")]
+        [RegularExpression("^[0-9]{1,3}$", ErrorMessage = "Ingrese el stock que son de 1 a 3 digitos")]
         public int stock { get; set; }
 
         [Display(Name = "Serie")]
@@ -31,6 +34,8 @@ namespace CIBERVET.Models
 
         [Display(Name = "Marca")]
         [Required(AllowEmptyStrings = false, ErrorMessage = "Ingrese la Marca")]
+        [StringLength(100, ErrorMessage = "Maximo 100  caracteres")]
+        [RegularExpression("^[A-Za-z]+$")]
         public string marca { get; set; }
 
         [Display(Name = "ID Categoria")]
@@ -47,7 +52,7 @@ namespace CIBERVET.Models
 
         [Display(Name = "Descripción")]
         [AllowHtml]
-        [Required(AllowEmptyStrings = false, ErrorMessage = "Ingrese la Descripción")]
+        [Required(ErrorMessage = "Ingrese la Descripción")]
         public string desHTML { get; set; }
 
         [Display(Name = "Foto 1")]

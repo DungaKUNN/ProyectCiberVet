@@ -13,6 +13,19 @@
     <Property Name="pwdAdm" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
     <NavigationProperty Name="tb_distrito" Relationship="Self.fk_admindis" FromRole="Administrador" ToRole="tb_distrito" />
   </EntityType>
+  <EntityType Name="Carrito">
+    <Key>
+      <PropertyRef Name="CarritoID" />
+    </Key>
+    <Property Name="CarritoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Identificador" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="idusuario" Type="Int32" />
+    <Property Name="id_prod" Type="Int32" Nullable="false" />
+    <Property Name="Cantidad" Type="Int32" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
+    <NavigationProperty Name="tb_producto" Relationship="Self.FK_Carrito_tb_producto" FromRole="Carrito" ToRole="tb_producto" />
+    <NavigationProperty Name="usuario" Relationship="Self.FK_Carrito_usuario" FromRole="Carrito" ToRole="usuario" />
+  </EntityType>
   <EntityType Name="especie_mascota">
     <Key>
       <PropertyRef Name="idespecie" />
@@ -90,15 +103,12 @@
     <Key>
       <PropertyRef Name="id_pedido" />
       <PropertyRef Name="id_prod" />
-      <PropertyRef Name="id_servicio" />
     </Key>
     <Property Name="id_pedido" Type="Int32" Nullable="false" />
     <Property Name="id_prod" Type="Int32" Nullable="false" />
-    <Property Name="id_servicio" Type="Int32" Nullable="false" />
     <Property Name="cantidad_pedido" Type="Int32" Nullable="false" />
     <NavigationProperty Name="tb_pedidoCabe" Relationship="Self.fk_detacabe" FromRole="tb_pedidoDeta" ToRole="tb_pedidoCabe" />
     <NavigationProperty Name="tb_producto" Relationship="Self.fk_pedprod" FromRole="tb_pedidoDeta" ToRole="tb_producto" />
-    <NavigationProperty Name="tb_servicio" Relationship="Self.fk_pedservi" FromRole="tb_pedidoDeta" ToRole="tb_servicio" />
   </EntityType>
   <EntityType Name="tb_producto">
     <Key>
@@ -116,10 +126,10 @@
     <Property Name="foto1_prod" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="foto2_prod" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
     <Property Name="foto3_prod" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Carrito" Relationship="Self.FK_Carrito_tb_producto" FromRole="tb_producto" ToRole="Carrito" />
     <NavigationProperty Name="tb_categoria" Relationship="Self.fk_prodcate" FromRole="tb_producto" ToRole="tb_categoria" />
     <NavigationProperty Name="tb_pedidoDeta" Relationship="Self.fk_pedprod" FromRole="tb_producto" ToRole="tb_pedidoDeta" />
     <NavigationProperty Name="tb_proveedor" Relationship="Self.fk_prodprove" FromRole="tb_producto" ToRole="tb_proveedor" />
-    <NavigationProperty Name="Carrito" Relationship="BD_CIBERVETModel.FK_Carrito_tb_producto" FromRole="tb_producto" ToRole="Carrito" />
   </EntityType>
   <EntityType Name="tb_proveedor">
     <Key>
@@ -146,7 +156,6 @@
     <Property Name="descripcion_servicio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="horario_servicio" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="fecha_servicio" Type="DateTime" Nullable="false" Precision="0" />
-    <NavigationProperty Name="tb_pedidoDeta" Relationship="Self.fk_pedservi" FromRole="tb_servicio" ToRole="tb_pedidoDeta" />
   </EntityType>
   <EntityType Name="TIPOUSUARIO">
     <Key>
@@ -171,11 +180,11 @@
     <Property Name="direccion" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
     <Property Name="IdDistritos" Type="Int32" />
     <Property Name="IdTipoUsuarios" Type="Int32" />
+    <NavigationProperty Name="Carrito" Relationship="Self.FK_Carrito_usuario" FromRole="usuario" ToRole="Carrito" />
     <NavigationProperty Name="MASCOTA" Relationship="Self.fk_masusu" FromRole="usuario" ToRole="MASCOTA" />
     <NavigationProperty Name="tb_distrito" Relationship="Self.fk_usudis" FromRole="usuario" ToRole="tb_distrito" />
     <NavigationProperty Name="tb_pedidoCabe" Relationship="Self.fk_pedusu" FromRole="usuario" ToRole="tb_pedidoCabe" />
     <NavigationProperty Name="TIPOUSUARIO" Relationship="Self.fk_usutipo" FromRole="usuario" ToRole="TIPOUSUARIO" />
-    <NavigationProperty Name="Carrito" Relationship="BD_CIBERVETModel.FK_Carrito_usuario" FromRole="usuario" ToRole="Carrito" />
   </EntityType>
   <Association Name="fk_admindis">
     <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
@@ -186,6 +195,30 @@
       </Principal>
       <Dependent Role="Administrador">
         <PropertyRef Name="iddistrito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carrito_tb_producto">
+    <End Role="tb_producto" Type="Self.tb_producto" Multiplicity="1" />
+    <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_producto">
+        <PropertyRef Name="id_prod" />
+      </Principal>
+      <Dependent Role="Carrito">
+        <PropertyRef Name="id_prod" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carrito_usuario">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+    <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="idusuario" />
+      </Principal>
+      <Dependent Role="Carrito">
+        <PropertyRef Name="idusuario" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -321,18 +354,6 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="fk_pedservi">
-    <End Role="tb_servicio" Type="Self.tb_servicio" Multiplicity="1" />
-    <End Role="tb_pedidoDeta" Type="Self.tb_pedidoDeta" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tb_servicio">
-        <PropertyRef Name="id_servicio" />
-      </Principal>
-      <Dependent Role="tb_pedidoDeta">
-        <PropertyRef Name="id_servicio" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
   <Association Name="fk_prodprove">
     <End Role="tb_proveedor" Type="Self.tb_proveedor" Multiplicity="0..1" />
     <End Role="tb_producto" Type="Self.tb_producto" Multiplicity="*" />
@@ -359,6 +380,7 @@
   </Association>
   <EntityContainer Name="BD_CIBERVETEntities" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="Administrador" EntityType="Self.Administrador" />
+    <EntitySet Name="Carrito" EntityType="Self.Carrito" />
     <EntitySet Name="especie_mascota" EntityType="Self.especie_mascota" />
     <EntitySet Name="MASCOTA" EntityType="Self.MASCOTA" />
     <EntitySet Name="raza_mascota" EntityType="Self.raza_mascota" />
@@ -375,6 +397,14 @@
     <AssociationSet Name="fk_admindis" Association="Self.fk_admindis">
       <End Role="tb_distrito" EntitySet="tb_distrito" />
       <End Role="Administrador" EntitySet="Administrador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carrito_tb_producto" Association="Self.FK_Carrito_tb_producto">
+      <End Role="tb_producto" EntitySet="tb_producto" />
+      <End Role="Carrito" EntitySet="Carrito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carrito_usuario" Association="Self.FK_Carrito_usuario">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="Carrito" EntitySet="Carrito" />
     </AssociationSet>
     <AssociationSet Name="fk_masespe" Association="Self.fk_masespe">
       <End Role="especie_mascota" EntitySet="especie_mascota" />
@@ -418,10 +448,6 @@
     </AssociationSet>
     <AssociationSet Name="fk_pedprod" Association="Self.fk_pedprod">
       <End Role="tb_producto" EntitySet="tb_producto" />
-      <End Role="tb_pedidoDeta" EntitySet="tb_pedidoDeta" />
-    </AssociationSet>
-    <AssociationSet Name="fk_pedservi" Association="Self.fk_pedservi">
-      <End Role="tb_servicio" EntitySet="tb_servicio" />
       <End Role="tb_pedidoDeta" EntitySet="tb_pedidoDeta" />
     </AssociationSet>
     <AssociationSet Name="fk_prodprove" Association="Self.fk_prodprove">
@@ -501,15 +527,6 @@
     <FunctionImport Name="sp_ListarProductos" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProductos_Result)" />
     <FunctionImport Name="sp_ListarProveedores" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProveedores_Result)" />
     <FunctionImport Name="sp_ListarServicios" ReturnType="Collection(BD_CIBERVETModel.sp_ListarServicios_Result)" />
-    <EntitySet Name="Carrito" EntityType="BD_CIBERVETModel.Carrito" />
-    <AssociationSet Name="FK_Carrito_tb_producto" Association="BD_CIBERVETModel.FK_Carrito_tb_producto">
-      <End Role="tb_producto" EntitySet="tb_producto" />
-      <End Role="Carrito" EntitySet="Carrito" />
-    </AssociationSet>
-    <AssociationSet Name="FK_Carrito_usuario" Association="BD_CIBERVETModel.FK_Carrito_usuario">
-      <End Role="usuario" EntitySet="usuario" />
-      <End Role="Carrito" EntitySet="Carrito" />
-    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_Listado_Mascotas_Result">
     <Property Type="Int32" Name="Codigo_de_Mascota" Nullable="false" />
@@ -549,41 +566,4 @@
     <Property Type="String" Name="horario_servicio" Nullable="false" MaxLength="40" />
     <Property Type="DateTime" Name="fecha_servicio" Nullable="false" />
   </ComplexType>
-  <EntityType Name="Carrito">
-    <Key>
-      <PropertyRef Name="CarritoID" />
-    </Key>
-    <Property Name="CarritoID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-    <Property Name="Identificador" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
-    <Property Name="idusuario" Type="Int32" />
-    <Property Name="id_prod" Type="Int32" Nullable="false" />
-    <Property Name="Cantidad" Type="Int32" Nullable="false" />
-    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="3" />
-    <NavigationProperty Name="tb_producto" Relationship="BD_CIBERVETModel.FK_Carrito_tb_producto" FromRole="Carrito" ToRole="tb_producto" />
-    <NavigationProperty Name="usuario" Relationship="BD_CIBERVETModel.FK_Carrito_usuario" FromRole="Carrito" ToRole="usuario" />
-  </EntityType>
-  <Association Name="FK_Carrito_tb_producto">
-    <End Type="BD_CIBERVETModel.tb_producto" Role="tb_producto" Multiplicity="1" />
-    <End Type="BD_CIBERVETModel.Carrito" Role="Carrito" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tb_producto">
-        <PropertyRef Name="id_prod" />
-      </Principal>
-      <Dependent Role="Carrito">
-        <PropertyRef Name="id_prod" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_Carrito_usuario">
-    <End Type="BD_CIBERVETModel.usuario" Role="usuario" Multiplicity="0..1" />
-    <End Type="BD_CIBERVETModel.Carrito" Role="Carrito" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="usuario">
-        <PropertyRef Name="idusuario" />
-      </Principal>
-      <Dependent Role="Carrito">
-        <PropertyRef Name="idusuario" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
 </Schema>

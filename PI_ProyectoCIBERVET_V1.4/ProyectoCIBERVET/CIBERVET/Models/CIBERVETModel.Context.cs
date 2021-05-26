@@ -28,6 +28,7 @@ namespace CIBERVET.Models
         }
     
         public virtual DbSet<Administrador> Administrador { get; set; }
+        public virtual DbSet<Carrito> Carrito { get; set; }
         public virtual DbSet<especie_mascota> especie_mascota { get; set; }
         public virtual DbSet<MASCOTA> MASCOTA { get; set; }
         public virtual DbSet<raza_mascota> raza_mascota { get; set; }
@@ -41,7 +42,6 @@ namespace CIBERVET.Models
         public virtual DbSet<tb_servicio> tb_servicio { get; set; }
         public virtual DbSet<TIPOUSUARIO> TIPOUSUARIO { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
-        public virtual DbSet<Carrito> Carrito { get; set; }
     
         public virtual int sp_ActualizarProducto(Nullable<int> id, string desSimple, Nullable<decimal> pre, Nullable<int> stk, string serie, string marca, Nullable<int> idCat, Nullable<int> idProve, string desHTML, string foto1, string foto2, string foto3)
         {
@@ -301,7 +301,5 @@ namespace CIBERVET.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ListarServicios_Result>("sp_ListarServicios");
         }
-
-        public System.Data.Entity.DbSet<CIBERVET.Models.ProductoForCRUD> ProductoForCRUDs { get; set; }
     }
 }

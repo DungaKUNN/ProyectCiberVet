@@ -85,11 +85,9 @@
     <Key>
       <PropertyRef Name="id_pedido" />
       <PropertyRef Name="id_prod" />
-      <PropertyRef Name="id_servicio" />
     </Key>
     <Property Name="id_pedido" Type="int" Nullable="false" />
     <Property Name="id_prod" Type="int" Nullable="false" />
-    <Property Name="id_servicio" Type="int" Nullable="false" />
     <Property Name="cantidad_pedido" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tb_producto">
@@ -261,18 +259,6 @@
       </Principal>
       <Dependent Role="tb_pedidoDeta">
         <PropertyRef Name="id_prod" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="fk_pedservi">
-    <End Role="tb_servicio" Type="Self.tb_servicio" Multiplicity="1" />
-    <End Role="tb_pedidoDeta" Type="Self.tb_pedidoDeta" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tb_servicio">
-        <PropertyRef Name="id_servicio" />
-      </Principal>
-      <Dependent Role="tb_pedidoDeta">
-        <PropertyRef Name="id_servicio" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -479,10 +465,6 @@
     </AssociationSet>
     <AssociationSet Name="fk_pedprod" Association="Self.fk_pedprod">
       <End Role="tb_producto" EntitySet="tb_producto" />
-      <End Role="tb_pedidoDeta" EntitySet="tb_pedidoDeta" />
-    </AssociationSet>
-    <AssociationSet Name="fk_pedservi" Association="Self.fk_pedservi">
-      <End Role="tb_servicio" EntitySet="tb_servicio" />
       <End Role="tb_pedidoDeta" EntitySet="tb_pedidoDeta" />
     </AssociationSet>
     <AssociationSet Name="fk_pedusu" Association="Self.fk_pedusu">

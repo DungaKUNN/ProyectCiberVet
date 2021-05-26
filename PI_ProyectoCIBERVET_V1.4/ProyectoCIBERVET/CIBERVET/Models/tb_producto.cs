@@ -17,8 +17,8 @@ namespace CIBERVET.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tb_producto()
         {
-            this.tb_pedidoDeta = new HashSet<tb_pedidoDeta>();
             this.Carrito = new HashSet<Carrito>();
+            this.tb_pedidoDeta = new HashSet<tb_pedidoDeta>();
         }
     
         public int id_prod { get; set; }
@@ -34,11 +34,11 @@ namespace CIBERVET.Models
         public string foto2_prod { get; set; }
         public string foto3_prod { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Carrito> Carrito { get; set; }
         public virtual tb_categoria tb_categoria { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_pedidoDeta> tb_pedidoDeta { get; set; }
         public virtual tb_proveedor tb_proveedor { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Carrito> Carrito { get; set; }
     }
 }

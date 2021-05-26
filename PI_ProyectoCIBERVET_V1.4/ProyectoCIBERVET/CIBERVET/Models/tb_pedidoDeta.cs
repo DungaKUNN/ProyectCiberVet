@@ -16,11 +16,9 @@ namespace CIBERVET.Models
     {
         public int id_pedido { get; set; }
         public int id_prod { get; set; }
-        public int id_servicio { get; set; }
         public int cantidad_pedido { get; set; }
     
         public virtual tb_pedidoCabe tb_pedidoCabe { get; set; }
         public virtual tb_producto tb_producto { get; set; }
-        public virtual tb_servicio tb_servicio { get; set; }
     }
 }

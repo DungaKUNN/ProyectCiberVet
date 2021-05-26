@@ -13,7 +13,7 @@
     }
 </style>
 
-<h2>Modificar Producto </h2>
+<h2>Modificar Producto</h2>
 
 
 @using (Html.BeginForm("ModificarProducto", "Administrador", FormMethod.Post, new { enctype = "multipart/form-data" }))
@@ -143,3 +143,7 @@
 <div>
     @Html.ActionLink("Regresar a la Lista", "ListadoProductos")
 </div>
+
+<script>
+    CKEDITOR.replace('ckeditor');
+</script>

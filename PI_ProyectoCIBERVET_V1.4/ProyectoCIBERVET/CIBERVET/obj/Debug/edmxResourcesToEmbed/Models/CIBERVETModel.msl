@@ -14,6 +14,18 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="Carrito">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.Carrito">
+        <MappingFragment StoreEntitySet="Carrito">
+          <ScalarProperty Name="CarritoID" ColumnName="CarritoID" />
+          <ScalarProperty Name="Identificador" ColumnName="Identificador" />
+          <ScalarProperty Name="idusuario" ColumnName="idusuario" />
+          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
+          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="especie_mascota">
       <EntityTypeMapping TypeName="BD_CIBERVETModel.especie_mascota">
         <MappingFragment StoreEntitySet="especie_mascota">
@@ -84,7 +96,6 @@
         <MappingFragment StoreEntitySet="tb_pedidoDeta">
           <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
           <ScalarProperty Name="id_prod" ColumnName="id_prod" />
-          <ScalarProperty Name="id_servicio" ColumnName="id_servicio" />
           <ScalarProperty Name="cantidad_pedido" ColumnName="cantidad_pedido" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -222,17 +233,5 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
-    <EntitySetMapping Name="Carrito">
-      <EntityTypeMapping TypeName="BD_CIBERVETModel.Carrito">
-        <MappingFragment StoreEntitySet="Carrito">
-          <ScalarProperty Name="Fecha" ColumnName="Fecha" />
-          <ScalarProperty Name="Cantidad" ColumnName="Cantidad" />
-          <ScalarProperty Name="id_prod" ColumnName="id_prod" />
-          <ScalarProperty Name="idusuario" ColumnName="idusuario" />
-          <ScalarProperty Name="Identificador" ColumnName="Identificador" />
-          <ScalarProperty Name="CarritoID" ColumnName="CarritoID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

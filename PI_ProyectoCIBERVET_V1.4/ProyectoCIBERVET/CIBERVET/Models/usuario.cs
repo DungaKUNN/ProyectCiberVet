@@ -17,9 +17,9 @@ namespace CIBERVET.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public usuario()
         {
+            this.Carrito = new HashSet<Carrito>();
             this.MASCOTA = new HashSet<MASCOTA>();
             this.tb_pedidoCabe = new HashSet<tb_pedidoCabe>();
-            this.Carrito = new HashSet<Carrito>();
         }
     
         public int idusuario { get; set; }
@@ -35,12 +35,12 @@ namespace CIBERVET.Models
         public Nullable<int> IdTipoUsuarios { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Carrito> Carrito { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<MASCOTA> MASCOTA { get; set; }
         public virtual tb_distrito tb_distrito { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_pedidoCabe> tb_pedidoCabe { get; set; }
         public virtual TIPOUSUARIO TIPOUSUARIO { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Carrito> Carrito { get; set; }
     }
 }
