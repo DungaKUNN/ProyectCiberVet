@@ -16,6 +16,7 @@ namespace CIBERVET.Models
     {
         public int id_pedido { get; set; }
         public int id_prod { get; set; }
+        public decimal precioPorUnidad { get; set; }
         public int cantidad_pedido { get; set; }
     
         public virtual tb_pedidoCabe tb_pedidoCabe { get; set; }

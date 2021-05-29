@@ -243,8 +243,8 @@ create table tb_pedidoCabe
 (
  id_pedido			int identity(1,1) primary key not null,
  id_usuario			int,
- fecha_pedido		date not null,
- hora_pedido		time not null,
+ fecha_pedido		datetime not null,
+ total_pedido		decimal not null,
  id_estado			int,
  constraint fk_pedusu foreign key(id_usuario)
  references usuario(idusuario),
@@ -257,6 +257,7 @@ create table tb_pedidoDeta
 (
  id_pedido			int,
  id_prod			int,
+ precioPorUnidad	decimal not null,
  cantidad_pedido	int not null,
  constraint fk_detacabe foreign key(id_pedido)
  references tb_pedidoCabe(id_pedido),

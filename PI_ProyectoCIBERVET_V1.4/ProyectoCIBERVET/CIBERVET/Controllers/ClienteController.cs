@@ -255,7 +255,6 @@ namespace CIBERVET.Controllers
             return lista;
         }
 
-
         public ActionResult CatalogoProductos(int? id = 0)
         {
             List<tb_producto> ListarProductos;
@@ -332,6 +331,78 @@ namespace CIBERVET.Controllers
 
             return View(vm);
         }
+
+        //Metodos para pagar carrito
+        public void AddToPedido(Carrito c)
+        {
+            var cart = CarritoDeCompras.GetCart(this.HttpContext);
+            tb_pedidoCabe pedCabe;
+            usuario usu;
+
+            usu = (usuario)Session["usuario"];
+
+            pedCabe = new tb_pedidoCabe()
+            {
+                id_usuario = usu.idusuario,
+                fecha_pedido = DateTime.Now,
+                total_pedido = cart.GetTotal(),
+                id_estado = 1//Se registra con estado "Preparado"
+            };
+
+            db.tb_pedidoCabe.Add(pedCabe);
+            Session["Pedido"] = pedCabe;
+            db.SaveChanges();
+        }
+
+        public void AddToPedidoDetalle()
+        {
+            tb_pedidoCabe pedCabe = (tb_pedidoCabe)Session["Pedido"];
+            usuario usu = (usuario)Session["usuario"];
+            var ped = db.tb_pedidoCabe.SingleOrDefault(p => p.id_usuario == usu.idusuario && p.id_pedido == pedCabe.id_pedido);
+            var cart = CarritoDeCompras.GetCart(this.HttpContext);
+            var item = cart.GetCartItems();
+            tb_pedidoDeta pedDeta;
+
+            foreach (var c in item)
+            {
+                pedDeta = new tb_pedidoDeta()
+                {
+                    id_pedido = ped.id_pedido,
+                    id_prod = c.id_prod,
+                    precioPorUnidad = c.tb_producto.precio_prod,
+                    cantidad_pedido = c.Cantidad
+                };
+                db.tb_pedidoDeta.Add(pedDeta);
+            };
+            db.SaveChanges();
+        }
+
+        /*public ActionResult PagarCarrito()
+        {
+            var cart = CarritoDeCompras.GetCart(this.HttpContext);
+            var item = cart.GetCartItems();
+
+            foreach (var c in item)
+            {
+                var carri = db.Carrito.Single(o => o.CarritoID == c.CarritoID);
+                AddToPedido(carri);
+                AddToPedidoDetalle();
+                db.Carrito.RemoveRange(db.Carrito.Where(x => x.CarritoID == c.CarritoID));
+                break;
+            };
+
+            usuario usu = (usuario)Session["usuario"];
+            tb_pedidoCabe cabe = (tb_pedidoCabe)Session["Pedido"];
+
+            //Mostrar la lista de pedidos
+            List<BoletaPedido> lista;
+            //lista = BoletaListaPedido(ciente.idcliente, ca.IdPedido);
+
+            //return View(lista);
+
+
+
+        }*/
 
     }
 }

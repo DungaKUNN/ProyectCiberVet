@@ -82,8 +82,8 @@
           </Key>
           <Property Name="id_pedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="id_usuario" Type="int" />
-          <Property Name="fecha_pedido" Type="date" Nullable="false" />
-          <Property Name="hora_pedido" Type="time" Precision="7" Nullable="false" />
+          <Property Name="fecha_pedido" Type="datetime" Nullable="false" />
+          <Property Name="total_pedido" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="id_estado" Type="int" />
         </EntityType>
         <EntityType Name="tb_pedidoDeta">
@@ -93,6 +93,7 @@
           </Key>
           <Property Name="id_pedido" Type="int" Nullable="false" />
           <Property Name="id_prod" Type="int" Nullable="false" />
+          <Property Name="precioPorUnidad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="cantidad_pedido" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="tb_producto">
@@ -598,8 +599,8 @@
           </Key>
           <Property Name="id_pedido" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="id_usuario" Type="Int32" />
-          <Property Name="fecha_pedido" Type="DateTime" Nullable="false" Precision="0" />
-          <Property Name="hora_pedido" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="fecha_pedido" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="total_pedido" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="id_estado" Type="Int32" />
           <NavigationProperty Name="tb_estado" Relationship="Self.fk_pedest" FromRole="tb_pedidoCabe" ToRole="tb_estado" />
           <NavigationProperty Name="tb_pedidoDeta" Relationship="Self.fk_detacabe" FromRole="tb_pedidoCabe" ToRole="tb_pedidoDeta" />
@@ -612,6 +613,7 @@
           </Key>
           <Property Name="id_pedido" Type="Int32" Nullable="false" />
           <Property Name="id_prod" Type="Int32" Nullable="false" />
+          <Property Name="precioPorUnidad" Type="Decimal" Precision="18" Scale="0" Nullable="false" />
           <Property Name="cantidad_pedido" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tb_pedidoCabe" Relationship="Self.fk_detacabe" FromRole="tb_pedidoDeta" ToRole="tb_pedidoCabe" />
           <NavigationProperty Name="tb_producto" Relationship="Self.fk_pedprod" FromRole="tb_pedidoDeta" ToRole="tb_producto" />
@@ -1163,7 +1165,7 @@
                 <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
                 <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
                 <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
-                <ScalarProperty Name="hora_pedido" ColumnName="hora_pedido" />
+                <ScalarProperty Name="total_pedido" ColumnName="total_pedido" />
                 <ScalarProperty Name="id_estado" ColumnName="id_estado" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -1173,6 +1175,7 @@
               <MappingFragment StoreEntitySet="tb_pedidoDeta">
                 <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
                 <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+                <ScalarProperty Name="precioPorUnidad" ColumnName="precioPorUnidad" />
                 <ScalarProperty Name="cantidad_pedido" ColumnName="cantidad_pedido" />
               </MappingFragment>
             </EntityTypeMapping>

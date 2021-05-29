@@ -23,7 +23,7 @@ namespace CIBERVET.Models
         public int id_pedido { get; set; }
         public Nullable<int> id_usuario { get; set; }
         public System.DateTime fecha_pedido { get; set; }
-        public System.TimeSpan hora_pedido { get; set; }
+        public decimal total_pedido { get; set; }
         public Nullable<int> id_estado { get; set; }
     
         public virtual tb_estado tb_estado { get; set; }
