@@ -377,7 +377,62 @@ namespace CIBERVET.Controllers
             db.SaveChanges();
         }
 
-        /*public ActionResult PagarCarrito()
+        public List<BoletaPedido> BoletaListaPedido(int idUsu, int idDetaPed)
+        {
+            List<BoletaPedido> lista = new List<BoletaPedido>();
+            SqlCommand cmd = new SqlCommand("sp_reporteVentaPorPedido", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@idUsu", idUsu);
+            cmd.Parameters.AddWithValue("@idPed", idDetaPed);
+            cn.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                lista.Add(new BoletaPedido()
+                {
+                    nombreProducto = dr.GetString(0),
+                    precio = dr.GetDecimal(1),
+                    cantidad = dr.GetInt32(2),
+                    fechaPedido = dr.GetDateTime(3),
+                    importeTotal = dr.GetDecimal(4)
+                });
+            }
+            dr.Close(); cn.Close();
+            return lista;
+        }
+
+        public List<BoletaPedido> BoletaLista(int idUsu)
+        {
+            List<BoletaPedido> lista = new List<BoletaPedido>();
+            SqlCommand cmd = new SqlCommand("sp_reporteVenta", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@idUsu", idUsu);
+            cn.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                lista.Add(new BoletaPedido()
+                {
+                    nombreProducto = dr.GetString(0),
+                    precio = dr.GetDecimal(1),
+                    cantidad = dr.GetInt32(2),
+                    fechaPedido = dr.GetDateTime(3),
+                    importeTotal = dr.GetDecimal(4)
+                });
+            }
+            dr.Close(); cn.Close();
+            return lista;
+        }
+
+        public ActionResult AllPedidos()
+        {
+            usuario usu = (usuario)Session["usuario"];
+            List<BoletaPedido> lista;
+            lista = BoletaLista(usu.idusuario);
+            return View(lista);
+        }
+
+        public ActionResult PagarCarrito()
         {
             var cart = CarritoDeCompras.GetCart(this.HttpContext);
             var item = cart.GetCartItems();
@@ -396,13 +451,8 @@ namespace CIBERVET.Controllers
 
             //Mostrar la lista de pedidos
             List<BoletaPedido> lista;
-            //lista = BoletaListaPedido(ciente.idcliente, ca.IdPedido);
-
-            //return View(lista);
-
-
-
-        }*/
-
+            lista = BoletaListaPedido(usu.idusuario, cabe.id_pedido);
+            return View(lista);
+        }
     }
 }

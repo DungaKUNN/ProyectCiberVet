@@ -34,7 +34,7 @@
 
                         @foreach (var item in ViewBag.categorias)
                         {
-                            <button data-filter=".best-seller">@Html.ActionLink((string)item.descripcion_cate, "CatalogoPlatos", new { id = item.id_cate })</button>
+                            <button data-filter=".best-seller">@Html.ActionLink((string)item.descripcion_cate, "CatalogoProductos", new { id = item.id_cate })</button>
 
                         }
                     </div>

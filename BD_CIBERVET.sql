@@ -431,3 +431,30 @@ as
 	end
 go
 /*----------------------------------------------------------------------------*/
+
+/*----------------------------------------------------------------------------*/
+create procedure sp_reporteVenta
+ @idUsu int
+as
+	begin
+		select p.descripcionSimple_prod,p.precio_prod,pd.cantidad_pedido,pc.fecha_pedido,pc.total_pedido
+		from tb_pedidoCabe pc
+		inner join tb_pedidoDeta pd on pc.id_pedido = pd.id_pedido
+		inner join tb_producto p on p.id_prod = pd.id_prod
+		where pc.id_usuario = @idUsu
+	end
+go
+
+create proc sp_reporteVentaPorPedido
+ @idUsu  int,
+ @idPed  int 
+as
+	begin
+		select p.descripcionSimple_prod,p.precio_prod,pd.cantidad_pedido,pc.fecha_pedido,pc.total_pedido
+		from tb_pedidoCabe pc
+		inner join tb_pedidoDeta pd on pc.id_pedido = pd.id_pedido
+		inner join tb_producto p on p.id_prod = pd.id_prod
+		where pc.id_usuario = @idusu and pc.id_pedido = @idPed
+	end
+go
+/*----------------------------------------------------------------------------*/

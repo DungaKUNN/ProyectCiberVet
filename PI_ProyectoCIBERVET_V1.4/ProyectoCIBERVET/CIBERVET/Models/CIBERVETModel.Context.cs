@@ -301,5 +301,27 @@ namespace CIBERVET.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ListarServicios_Result>("sp_ListarServicios");
         }
+    
+        public virtual ObjectResult<sp_reporteVenta_Result> sp_reporteVenta(Nullable<int> idUsu)
+        {
+            var idUsuParameter = idUsu.HasValue ?
+                new ObjectParameter("idUsu", idUsu) :
+                new ObjectParameter("idUsu", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_reporteVenta_Result>("sp_reporteVenta", idUsuParameter);
+        }
+    
+        public virtual ObjectResult<sp_reporteVentaPorPedido_Result> sp_reporteVentaPorPedido(Nullable<int> idUsu, Nullable<int> idPed)
+        {
+            var idUsuParameter = idUsu.HasValue ?
+                new ObjectParameter("idUsu", idUsu) :
+                new ObjectParameter("idUsu", typeof(int));
+    
+            var idPedParameter = idPed.HasValue ?
+                new ObjectParameter("idPed", idPed) :
+                new ObjectParameter("idPed", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_reporteVentaPorPedido_Result>("sp_reporteVentaPorPedido", idUsuParameter, idPedParameter);
+        }
     }
 }

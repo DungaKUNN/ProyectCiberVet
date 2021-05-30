@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CIBERVET.Models.BoletaPedido>
+
+@{
+    ViewBag.Title = "PagarCarrito";
+    Layout = "~/Views/Layout/_Layout_Session.cshtml";
+}
+
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>REALIZA TU COMPRA CON TARJETA DE CREDITO O AHORRO</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Compras</a></li>
+                    <li class="breadcrumb-item active">Platos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Total</th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@item.nombreProducto</td>
+                                <td>@item.precio</td>
+                                <td>@item.cantidad</td>
+                                <td>@item.fechaPedido</td>
+                                <td>@item.importeTotal</td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
+            @Html.ActionLink("Ver Todos Los Pedidos", "AllPedidos")
+            <div class="col-12 d-flex shopping-box"> <a href="~/Cliente/CatalogoProductos" class="ml-auto btn hvr-hover">Regresar</a> </div>
+        </div>
+    </div>
+</div>

@@ -86,7 +86,7 @@
           <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
           <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
           <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
-          <ScalarProperty Name="hora_pedido" ColumnName="hora_pedido" />
+          <ScalarProperty Name="total_pedido" ColumnName="total_pedido" />
           <ScalarProperty Name="id_estado" ColumnName="id_estado" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -96,6 +96,7 @@
         <MappingFragment StoreEntitySet="tb_pedidoDeta">
           <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
           <ScalarProperty Name="id_prod" ColumnName="id_prod" />
+          <ScalarProperty Name="precioPorUnidad" ColumnName="precioPorUnidad" />
           <ScalarProperty Name="cantidad_pedido" ColumnName="cantidad_pedido" />
         </MappingFragment>
       </EntityTypeMapping>
@@ -230,6 +231,28 @@
           <ScalarProperty Name="descripcion_servicio" ColumnName="descripcion_servicio" />
           <ScalarProperty Name="horario_servicio" ColumnName="horario_servicio" />
           <ScalarProperty Name="fecha_servicio" ColumnName="fecha_servicio" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_reporteVenta" FunctionName="BD_CIBERVETModel.Store.sp_reporteVenta">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_reporteVenta_Result">
+          <ScalarProperty Name="descripcionSimple_prod" ColumnName="descripcionSimple_prod" />
+          <ScalarProperty Name="precio_prod" ColumnName="precio_prod" />
+          <ScalarProperty Name="cantidad_pedido" ColumnName="cantidad_pedido" />
+          <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
+          <ScalarProperty Name="total_pedido" ColumnName="total_pedido" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_reporteVentaPorPedido" FunctionName="BD_CIBERVETModel.Store.sp_reporteVentaPorPedido">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_reporteVentaPorPedido_Result">
+          <ScalarProperty Name="descripcionSimple_prod" ColumnName="descripcionSimple_prod" />
+          <ScalarProperty Name="precio_prod" ColumnName="precio_prod" />
+          <ScalarProperty Name="cantidad_pedido" ColumnName="cantidad_pedido" />
+          <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
+          <ScalarProperty Name="total_pedido" ColumnName="total_pedido" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

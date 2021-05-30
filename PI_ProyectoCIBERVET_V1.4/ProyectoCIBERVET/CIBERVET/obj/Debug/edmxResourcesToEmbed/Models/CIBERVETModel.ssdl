@@ -77,8 +77,8 @@
     </Key>
     <Property Name="id_pedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="id_usuario" Type="int" />
-    <Property Name="fecha_pedido" Type="date" Nullable="false" />
-    <Property Name="hora_pedido" Type="time" Precision="7" Nullable="false" />
+    <Property Name="fecha_pedido" Type="datetime" Nullable="false" />
+    <Property Name="total_pedido" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="id_estado" Type="int" />
   </EntityType>
   <EntityType Name="tb_pedidoDeta">
@@ -88,6 +88,7 @@
     </Key>
     <Property Name="id_pedido" Type="int" Nullable="false" />
     <Property Name="id_prod" Type="int" Nullable="false" />
+    <Property Name="precioPorUnidad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
     <Property Name="cantidad_pedido" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="tb_producto">
@@ -415,6 +416,13 @@
   <Function Name="sp_ListarProductos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_ListarProveedores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <Function Name="sp_ListarServicios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_reporteVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idUsu" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_reporteVentaPorPedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idUsu" Type="int" Mode="In" />
+    <Parameter Name="idPed" Type="int" Mode="In" />
+  </Function>
   <EntityContainer Name="BD_CIBERVETModelStoreContainer">
     <EntitySet Name="Administrador" EntityType="Self.Administrador" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Carrito" EntityType="Self.Carrito" Schema="dbo" store:Type="Tables" />
