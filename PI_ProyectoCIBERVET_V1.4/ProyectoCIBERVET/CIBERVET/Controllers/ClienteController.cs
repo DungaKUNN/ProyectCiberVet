@@ -424,7 +424,7 @@ namespace CIBERVET.Controllers
             return lista;
         }
 
-        public ActionResult AllPedidos()
+        public ActionResult AllPedidos()//Lista de Pedidos "MIS PEDIDOS"
         {
             usuario usu = (usuario)Session["usuario"];
             List<BoletaPedido> lista;
@@ -432,7 +432,7 @@ namespace CIBERVET.Controllers
             return View(lista);
         }
 
-        public ActionResult PagarCarrito()
+        public ActionResult PagarCarrito()//VISTA DE BOLETA CAMBIAR NOMBRE
         {
             var cart = CarritoDeCompras.GetCart(this.HttpContext);
             var item = cart.GetCartItems();
