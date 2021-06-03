@@ -1,0 +1,507 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="BD_CIBERVETModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Administrador">
+    <Key>
+      <PropertyRef Name="idAdm" />
+    </Key>
+    <Property Name="idAdm" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombreAdm" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="apellidoAdm" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="iddistrito" Type="int" />
+    <Property Name="dniAdm" Type="int" Nullable="false" />
+    <Property Name="emailAdm" Type="varchar" MaxLength="50" />
+    <Property Name="pwdAdm" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Carrito">
+    <Key>
+      <PropertyRef Name="CarritoID" />
+    </Key>
+    <Property Name="CarritoID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Identificador" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="idusuario" Type="int" />
+    <Property Name="id_prod" Type="int" Nullable="false" />
+    <Property Name="Cantidad" Type="int" Nullable="false" />
+    <Property Name="Fecha" Type="datetime" Nullable="false" />
+  </EntityType>
+  <EntityType Name="especie_mascota">
+    <Key>
+      <PropertyRef Name="idespecie" />
+    </Key>
+    <Property Name="idespecie" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="especie" Type="varchar" MaxLength="100" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MASCOTA">
+    <Key>
+      <PropertyRef Name="idmascota" />
+    </Key>
+    <Property Name="idmascota" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre" Type="varchar" MaxLength="45" Nullable="false" />
+    <Property Name="idespecie" Type="int" Nullable="false" />
+    <Property Name="sexo" Type="varchar" MaxLength="30" Nullable="false" />
+    <Property Name="idraza" Type="int" Nullable="false" />
+    <Property Name="foto" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="idusuario" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="raza_mascota">
+    <Key>
+      <PropertyRef Name="idraza" />
+    </Key>
+    <Property Name="idraza" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="raza" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="idespecie" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_categoria">
+    <Key>
+      <PropertyRef Name="id_cate" />
+    </Key>
+    <Property Name="id_cate" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion_cate" Type="varchar" MaxLength="80" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_distrito">
+    <Key>
+      <PropertyRef Name="id_dis" />
+    </Key>
+    <Property Name="id_dis" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_dis" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_estado">
+    <Key>
+      <PropertyRef Name="id_estado" />
+    </Key>
+    <Property Name="id_estado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion_estado" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_pedidoCabe">
+    <Key>
+      <PropertyRef Name="id_pedido" />
+    </Key>
+    <Property Name="id_pedido" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_usuario" Type="int" />
+    <Property Name="fecha_pedido" Type="datetime" Nullable="false" />
+    <Property Name="total_pedido" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="id_estado" Type="int" />
+  </EntityType>
+  <EntityType Name="tb_pedidoDeta">
+    <Key>
+      <PropertyRef Name="id_pedido" />
+      <PropertyRef Name="id_prod" />
+    </Key>
+    <Property Name="id_pedido" Type="int" Nullable="false" />
+    <Property Name="id_prod" Type="int" Nullable="false" />
+    <Property Name="precioPorUnidad" Type="decimal" Precision="18" Scale="0" Nullable="false" />
+    <Property Name="cantidad_pedido" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_producto">
+    <Key>
+      <PropertyRef Name="id_prod" />
+    </Key>
+    <Property Name="id_prod" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcionSimple_prod" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="precio_prod" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="stock_prod" Type="int" Nullable="false" />
+    <Property Name="serie_prod" Type="varchar" MaxLength="40" />
+    <Property Name="marca_prod" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="id_cate" Type="int" />
+    <Property Name="id_prove" Type="int" />
+    <Property Name="descripcionHTML_prod" Type="text" Nullable="false" />
+    <Property Name="foto1_prod" Type="varchar" MaxLength="255" />
+    <Property Name="foto2_prod" Type="varchar" MaxLength="255" />
+    <Property Name="foto3_prod" Type="varchar" MaxLength="255" />
+  </EntityType>
+  <EntityType Name="tb_proveedor">
+    <Key>
+      <PropertyRef Name="id_prove" />
+    </Key>
+    <Property Name="id_prove" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombres_prove" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="apellidos_prove" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="razonSocial_prove" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="direccion_prove" Type="varchar" MaxLength="80" Nullable="false" />
+    <Property Name="celular_prove" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="email_prove" Type="varchar" MaxLength="40" />
+    <Property Name="id_dis" Type="int" />
+  </EntityType>
+  <EntityType Name="tb_servicio">
+    <Key>
+      <PropertyRef Name="id_servicio" />
+    </Key>
+    <Property Name="id_servicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_servicio" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="precio_servicio" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+    <Property Name="descripcion_servicio" Type="text" Nullable="false" />
+    <Property Name="horario_servicio" Type="varchar" MaxLength="40" Nullable="false" />
+    <Property Name="fecha_servicio" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TIPOUSUARIO">
+    <Key>
+      <PropertyRef Name="Id_TipoUsuario" />
+    </Key>
+    <Property Name="Id_TipoUsuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcion" Type="varchar" MaxLength="45" Nullable="false" />
+  </EntityType>
+  <EntityType Name="usuario">
+    <Key>
+      <PropertyRef Name="idusuario" />
+    </Key>
+    <Property Name="idusuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dni" Type="varchar" MaxLength="45" />
+    <Property Name="nombre" Type="varchar" MaxLength="45" />
+    <Property Name="apellido" Type="varchar" MaxLength="45" />
+    <Property Name="login" Type="varchar" MaxLength="45" />
+    <Property Name="password" Type="varchar" MaxLength="45" />
+    <Property Name="celular" Type="varchar" MaxLength="45" />
+    <Property Name="correo" Type="varchar" MaxLength="45" />
+    <Property Name="direccion" Type="varchar" MaxLength="45" />
+    <Property Name="IdDistritos" Type="int" />
+    <Property Name="IdTipoUsuarios" Type="int" />
+  </EntityType>
+  <Association Name="fk_admindis">
+    <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
+    <End Role="Administrador" Type="Self.Administrador" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_distrito">
+        <PropertyRef Name="id_dis" />
+      </Principal>
+      <Dependent Role="Administrador">
+        <PropertyRef Name="iddistrito" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carrito_tb_producto">
+    <End Role="tb_producto" Type="Self.tb_producto" Multiplicity="1" />
+    <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_producto">
+        <PropertyRef Name="id_prod" />
+      </Principal>
+      <Dependent Role="Carrito">
+        <PropertyRef Name="id_prod" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Carrito_usuario">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+    <End Role="Carrito" Type="Self.Carrito" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="idusuario" />
+      </Principal>
+      <Dependent Role="Carrito">
+        <PropertyRef Name="idusuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_detacabe">
+    <End Role="tb_pedidoCabe" Type="Self.tb_pedidoCabe" Multiplicity="1" />
+    <End Role="tb_pedidoDeta" Type="Self.tb_pedidoDeta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_pedidoCabe">
+        <PropertyRef Name="id_pedido" />
+      </Principal>
+      <Dependent Role="tb_pedidoDeta">
+        <PropertyRef Name="id_pedido" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_masespe">
+    <End Role="especie_mascota" Type="Self.especie_mascota" Multiplicity="1" />
+    <End Role="MASCOTA" Type="Self.MASCOTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="especie_mascota">
+        <PropertyRef Name="idespecie" />
+      </Principal>
+      <Dependent Role="MASCOTA">
+        <PropertyRef Name="idespecie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_masraza">
+    <End Role="raza_mascota" Type="Self.raza_mascota" Multiplicity="1" />
+    <End Role="MASCOTA" Type="Self.MASCOTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="raza_mascota">
+        <PropertyRef Name="idraza" />
+      </Principal>
+      <Dependent Role="MASCOTA">
+        <PropertyRef Name="idraza" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_masusu">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="1" />
+    <End Role="MASCOTA" Type="Self.MASCOTA" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="idusuario" />
+      </Principal>
+      <Dependent Role="MASCOTA">
+        <PropertyRef Name="idusuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pedest">
+    <End Role="tb_estado" Type="Self.tb_estado" Multiplicity="0..1" />
+    <End Role="tb_pedidoCabe" Type="Self.tb_pedidoCabe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_estado">
+        <PropertyRef Name="id_estado" />
+      </Principal>
+      <Dependent Role="tb_pedidoCabe">
+        <PropertyRef Name="id_estado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pedprod">
+    <End Role="tb_producto" Type="Self.tb_producto" Multiplicity="1" />
+    <End Role="tb_pedidoDeta" Type="Self.tb_pedidoDeta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_producto">
+        <PropertyRef Name="id_prod" />
+      </Principal>
+      <Dependent Role="tb_pedidoDeta">
+        <PropertyRef Name="id_prod" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_pedusu">
+    <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+    <End Role="tb_pedidoCabe" Type="Self.tb_pedidoCabe" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="usuario">
+        <PropertyRef Name="idusuario" />
+      </Principal>
+      <Dependent Role="tb_pedidoCabe">
+        <PropertyRef Name="id_usuario" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_prodcate">
+    <End Role="tb_categoria" Type="Self.tb_categoria" Multiplicity="0..1" />
+    <End Role="tb_producto" Type="Self.tb_producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_categoria">
+        <PropertyRef Name="id_cate" />
+      </Principal>
+      <Dependent Role="tb_producto">
+        <PropertyRef Name="id_cate" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_prodprove">
+    <End Role="tb_proveedor" Type="Self.tb_proveedor" Multiplicity="0..1" />
+    <End Role="tb_producto" Type="Self.tb_producto" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_proveedor">
+        <PropertyRef Name="id_prove" />
+      </Principal>
+      <Dependent Role="tb_producto">
+        <PropertyRef Name="id_prove" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_provedis">
+    <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
+    <End Role="tb_proveedor" Type="Self.tb_proveedor" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_distrito">
+        <PropertyRef Name="id_dis" />
+      </Principal>
+      <Dependent Role="tb_proveedor">
+        <PropertyRef Name="id_dis" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_razaespe">
+    <End Role="especie_mascota" Type="Self.especie_mascota" Multiplicity="1" />
+    <End Role="raza_mascota" Type="Self.raza_mascota" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="especie_mascota">
+        <PropertyRef Name="idespecie" />
+      </Principal>
+      <Dependent Role="raza_mascota">
+        <PropertyRef Name="idespecie" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_usudis">
+    <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_distrito">
+        <PropertyRef Name="id_dis" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="IdDistritos" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_usutipo">
+    <End Role="TIPOUSUARIO" Type="Self.TIPOUSUARIO" Multiplicity="0..1" />
+    <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TIPOUSUARIO">
+        <PropertyRef Name="Id_TipoUsuario" />
+      </Principal>
+      <Dependent Role="usuario">
+        <PropertyRef Name="IdTipoUsuarios" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Function Name="sp_ActualizarProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="desSimple" Type="varchar" Mode="In" />
+    <Parameter Name="pre" Type="decimal" Mode="In" />
+    <Parameter Name="stk" Type="int" Mode="In" />
+    <Parameter Name="serie" Type="varchar" Mode="In" />
+    <Parameter Name="marca" Type="varchar" Mode="In" />
+    <Parameter Name="idCat" Type="int" Mode="In" />
+    <Parameter Name="idProve" Type="int" Mode="In" />
+    <Parameter Name="desHTML" Type="text" Mode="In" />
+    <Parameter Name="foto1" Type="varchar" Mode="In" />
+    <Parameter Name="foto2" Type="varchar" Mode="In" />
+    <Parameter Name="foto3" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_ActualizarServicio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="id" Type="int" Mode="In" />
+    <Parameter Name="nom" Type="varchar" Mode="In" />
+    <Parameter Name="pre" Type="decimal" Mode="In" />
+    <Parameter Name="des" Type="text" Mode="In" />
+    <Parameter Name="horario" Type="varchar" Mode="In" />
+    <Parameter Name="fecha" Type="date" Mode="In" />
+  </Function>
+  <Function Name="sp_EditarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idusu" Type="int" Mode="In" />
+    <Parameter Name="dniusu" Type="varchar" Mode="In" />
+    <Parameter Name="nomusu" Type="varchar" Mode="In" />
+    <Parameter Name="apeusu" Type="varchar" Mode="In" />
+    <Parameter Name="logusu" Type="varchar" Mode="In" />
+    <Parameter Name="passusu" Type="varchar" Mode="In" />
+    <Parameter Name="celusu" Type="varchar" Mode="In" />
+    <Parameter Name="corusu" Type="varchar" Mode="In" />
+    <Parameter Name="dirusu" Type="varchar" Mode="In" />
+    <Parameter Name="iddis" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_Insertar_Mascotas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="nombre" Type="varchar" Mode="In" />
+    <Parameter Name="idespecie" Type="int" Mode="In" />
+    <Parameter Name="sexo" Type="varchar" Mode="In" />
+    <Parameter Name="idraza" Type="int" Mode="In" />
+    <Parameter Name="foto" Type="varchar" Mode="In" />
+    <Parameter Name="idusuario" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_InsertarProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="desSimple" Type="varchar" Mode="In" />
+    <Parameter Name="pre" Type="decimal" Mode="In" />
+    <Parameter Name="stk" Type="int" Mode="In" />
+    <Parameter Name="serie" Type="varchar" Mode="In" />
+    <Parameter Name="marca" Type="varchar" Mode="In" />
+    <Parameter Name="idCat" Type="int" Mode="In" />
+    <Parameter Name="idProve" Type="int" Mode="In" />
+    <Parameter Name="desHTML" Type="text" Mode="In" />
+    <Parameter Name="foto1" Type="varchar" Mode="In" />
+    <Parameter Name="foto2" Type="varchar" Mode="In" />
+    <Parameter Name="foto3" Type="varchar" Mode="In" />
+  </Function>
+  <Function Name="sp_InsertarServicio" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="nom" Type="varchar" Mode="In" />
+    <Parameter Name="pre" Type="decimal" Mode="In" />
+    <Parameter Name="des" Type="text" Mode="In" />
+    <Parameter Name="horario" Type="varchar" Mode="In" />
+    <Parameter Name="fecha" Type="date" Mode="In" />
+  </Function>
+  <Function Name="sp_Listado_Mascotas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idusuario" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_ListarCategorias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_ListarProductos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_ListarProveedores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_ListarServicios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_reporteVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idUsu" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_reporteVentaPorPedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idUsu" Type="int" Mode="In" />
+    <Parameter Name="idPed" Type="int" Mode="In" />
+  </Function>
+  <EntityContainer Name="BD_CIBERVETModelStoreContainer">
+    <EntitySet Name="Administrador" EntityType="Self.Administrador" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Carrito" EntityType="Self.Carrito" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="especie_mascota" EntityType="Self.especie_mascota" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MASCOTA" EntityType="Self.MASCOTA" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="raza_mascota" EntityType="Self.raza_mascota" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_categoria" EntityType="Self.tb_categoria" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_distrito" EntityType="Self.tb_distrito" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_estado" EntityType="Self.tb_estado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_pedidoCabe" EntityType="Self.tb_pedidoCabe" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_pedidoDeta" EntityType="Self.tb_pedidoDeta" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_producto" EntityType="Self.tb_producto" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_proveedor" EntityType="Self.tb_proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_servicio" EntityType="Self.tb_servicio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TIPOUSUARIO" EntityType="Self.TIPOUSUARIO" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="fk_admindis" Association="Self.fk_admindis">
+      <End Role="tb_distrito" EntitySet="tb_distrito" />
+      <End Role="Administrador" EntitySet="Administrador" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carrito_tb_producto" Association="Self.FK_Carrito_tb_producto">
+      <End Role="tb_producto" EntitySet="tb_producto" />
+      <End Role="Carrito" EntitySet="Carrito" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Carrito_usuario" Association="Self.FK_Carrito_usuario">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="Carrito" EntitySet="Carrito" />
+    </AssociationSet>
+    <AssociationSet Name="fk_detacabe" Association="Self.fk_detacabe">
+      <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
+      <End Role="tb_pedidoDeta" EntitySet="tb_pedidoDeta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_masespe" Association="Self.fk_masespe">
+      <End Role="especie_mascota" EntitySet="especie_mascota" />
+      <End Role="MASCOTA" EntitySet="MASCOTA" />
+    </AssociationSet>
+    <AssociationSet Name="fk_masraza" Association="Self.fk_masraza">
+      <End Role="raza_mascota" EntitySet="raza_mascota" />
+      <End Role="MASCOTA" EntitySet="MASCOTA" />
+    </AssociationSet>
+    <AssociationSet Name="fk_masusu" Association="Self.fk_masusu">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="MASCOTA" EntitySet="MASCOTA" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pedest" Association="Self.fk_pedest">
+      <End Role="tb_estado" EntitySet="tb_estado" />
+      <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pedprod" Association="Self.fk_pedprod">
+      <End Role="tb_producto" EntitySet="tb_producto" />
+      <End Role="tb_pedidoDeta" EntitySet="tb_pedidoDeta" />
+    </AssociationSet>
+    <AssociationSet Name="fk_pedusu" Association="Self.fk_pedusu">
+      <End Role="usuario" EntitySet="usuario" />
+      <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_prodcate" Association="Self.fk_prodcate">
+      <End Role="tb_categoria" EntitySet="tb_categoria" />
+      <End Role="tb_producto" EntitySet="tb_producto" />
+    </AssociationSet>
+    <AssociationSet Name="fk_prodprove" Association="Self.fk_prodprove">
+      <End Role="tb_proveedor" EntitySet="tb_proveedor" />
+      <End Role="tb_producto" EntitySet="tb_producto" />
+    </AssociationSet>
+    <AssociationSet Name="fk_provedis" Association="Self.fk_provedis">
+      <End Role="tb_distrito" EntitySet="tb_distrito" />
+      <End Role="tb_proveedor" EntitySet="tb_proveedor" />
+    </AssociationSet>
+    <AssociationSet Name="fk_razaespe" Association="Self.fk_razaespe">
+      <End Role="especie_mascota" EntitySet="especie_mascota" />
+      <End Role="raza_mascota" EntitySet="raza_mascota" />
+    </AssociationSet>
+    <AssociationSet Name="fk_usudis" Association="Self.fk_usudis">
+      <End Role="tb_distrito" EntitySet="tb_distrito" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_usutipo" Association="Self.fk_usutipo">
+      <End Role="TIPOUSUARIO" EntitySet="TIPOUSUARIO" />
+      <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

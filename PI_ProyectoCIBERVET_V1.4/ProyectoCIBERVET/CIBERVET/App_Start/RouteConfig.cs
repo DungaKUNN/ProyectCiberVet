@@ -16,7 +16,7 @@ namespace CIBERVET
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "CIBERVET", action = "Home", id = UrlParameter.Optional }
+                defaults: new { controller = "PagPrin", action = "Home", id = UrlParameter.Optional }
             );
         }
     }
