@@ -168,11 +168,11 @@ namespace CIBERVET.Controllers
             p.foto2 = archivo2.FileName;
             p.foto3 = archivo3.FileName;
             InsertarProducto(p);
-            archivo1.SaveAs(Path.Combine(Server.MapPath("~/FotosProductos/"),
+            archivo1.SaveAs(Path.Combine(Server.MapPath("~/images/"),
                             Path.GetFileName(archivo1.FileName)));
-            archivo2.SaveAs(Path.Combine(Server.MapPath("~/FotosProductos/"),
+            archivo2.SaveAs(Path.Combine(Server.MapPath("~/images/"),
                             Path.GetFileName(archivo2.FileName)));
-            archivo3.SaveAs(Path.Combine(Server.MapPath("~/FotosProductos/"),
+            archivo3.SaveAs(Path.Combine(Server.MapPath("~/images/"),
                             Path.GetFileName(archivo3.FileName)));
 
             return RedirectToAction("ListadoProductos");
