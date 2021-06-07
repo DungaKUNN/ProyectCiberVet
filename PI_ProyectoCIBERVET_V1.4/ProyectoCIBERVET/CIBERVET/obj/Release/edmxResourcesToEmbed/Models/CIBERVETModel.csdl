@@ -481,6 +481,14 @@
       <Parameter Name="horario" Mode="In" Type="String" />
       <Parameter Name="fecha" Mode="In" Type="DateTime" />
     </FunctionImport>
+    <FunctionImport Name="sp_boletaPedido" ReturnType="Collection(BD_CIBERVETModel.sp_boletaPedido_Result)">
+      <Parameter Name="idUsu" Mode="In" Type="Int32" />
+      <Parameter Name="idPed" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EditarEstadoPedido">
+      <Parameter Name="idPedCabe" Mode="In" Type="Int32" />
+      <Parameter Name="idEstado" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="sp_EditarUsuario">
       <Parameter Name="idusu" Mode="In" Type="Int32" />
       <Parameter Name="dniusu" Mode="In" Type="String" />
@@ -492,6 +500,9 @@
       <Parameter Name="corusu" Mode="In" Type="String" />
       <Parameter Name="dirusu" Mode="In" Type="String" />
       <Parameter Name="iddis" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_FiltroPedidoPorApellido" ReturnType="Collection(BD_CIBERVETModel.sp_FiltroPedidoPorApellido_Result)">
+      <Parameter Name="apeUsu" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_Insertar_Mascotas">
       <Parameter Name="nombre" Mode="In" Type="String" />
@@ -524,18 +535,32 @@
     <FunctionImport Name="sp_Listado_Mascotas" ReturnType="Collection(BD_CIBERVETModel.sp_Listado_Mascotas_Result)">
       <Parameter Name="idusuario" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_ListarCategorias" ReturnType="Collection(BD_CIBERVETModel.sp_ListarCategorias_Result)" />
-    <FunctionImport Name="sp_ListarProductos" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProductos_Result)" />
-    <FunctionImport Name="sp_ListarProveedores" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProveedores_Result)" />
-    <FunctionImport Name="sp_ListarServicios" ReturnType="Collection(BD_CIBERVETModel.sp_ListarServicios_Result)" />
-    <FunctionImport Name="sp_reporteVenta" ReturnType="Collection(BD_CIBERVETModel.sp_reporteVenta_Result)">
+    <FunctionImport Name="sp_listaPedidos" ReturnType="Collection(BD_CIBERVETModel.sp_listaPedidos_Result)">
       <Parameter Name="idUsu" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_reporteVentaPorPedido" ReturnType="Collection(BD_CIBERVETModel.sp_reporteVentaPorPedido_Result)">
+    <FunctionImport Name="sp_listaPedidosDetallado" ReturnType="Collection(BD_CIBERVETModel.sp_listaPedidosDetallado_Result)">
       <Parameter Name="idUsu" Mode="In" Type="Int32" />
       <Parameter Name="idPed" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="sp_ListarCategorias" ReturnType="Collection(BD_CIBERVETModel.sp_ListarCategorias_Result)" />
+    <FunctionImport Name="sp_ListarEstados" ReturnType="Collection(BD_CIBERVETModel.sp_ListarEstados_Result)" />
+    <FunctionImport Name="sp_ListarProductos" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProductos_Result)" />
+    <FunctionImport Name="sp_ListarProveedores" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProveedores_Result)" />
+    <FunctionImport Name="sp_ListarServicios" ReturnType="Collection(BD_CIBERVETModel.sp_ListarServicios_Result)" />
   </EntityContainer>
+  <ComplexType Name="sp_boletaPedido_Result">
+    <Property Type="String" Name="descripcionSimple_prod" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="precio_prod" Nullable="false" Precision="10" Scale="2" />
+    <Property Type="Int32" Name="cantidad_pedido" Nullable="false" />
+    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
+    <Property Type="Decimal" Name="total_pedido" Nullable="false" Precision="18" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="sp_FiltroPedidoPorApellido_Result">
+    <Property Type="Int32" Name="id_pedido" Nullable="false" />
+    <Property Type="String" Name="Column1" Nullable="false" MaxLength="92" />
+    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
+    <Property Type="String" Name="descripcion_estado" Nullable="false" MaxLength="50" />
+  </ComplexType>
   <ComplexType Name="sp_Listado_Mascotas_Result">
     <Property Type="Int32" Name="Codigo_de_Mascota" Nullable="false" />
     <Property Type="String" Name="Nombre" Nullable="false" MaxLength="45" />
@@ -544,9 +569,29 @@
     <Property Type="String" Name="Raza" Nullable="false" MaxLength="100" />
     <Property Type="String" Name="Foto" Nullable="false" MaxLength="100" />
   </ComplexType>
+  <ComplexType Name="sp_listaPedidos_Result">
+    <Property Type="Int32" Name="id_pedido" Nullable="false" />
+    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
+    <Property Type="String" Name="descripcion_estado" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="total_pedido" Nullable="false" Precision="18" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="sp_listaPedidosDetallado_Result">
+    <Property Type="Int32" Name="id_pedido" Nullable="false" />
+    <Property Type="String" Name="Column1" Nullable="false" MaxLength="92" />
+    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
+    <Property Type="String" Name="descripcion_estado" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="descripcionSimple_prod" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="precioPorUnidad" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="Int32" Name="cantidad_pedido" Nullable="false" />
+    <Property Type="Decimal" Name="total_pedido" Nullable="false" Precision="18" Scale="0" />
+  </ComplexType>
   <ComplexType Name="sp_ListarCategorias_Result">
     <Property Type="Int32" Name="id_cate" Nullable="false" />
     <Property Type="String" Name="descripcion_cate" Nullable="false" MaxLength="80" />
+  </ComplexType>
+  <ComplexType Name="sp_ListarEstados_Result">
+    <Property Type="Int32" Name="id_estado" Nullable="false" />
+    <Property Type="String" Name="descripcion_estado" Nullable="false" MaxLength="50" />
   </ComplexType>
   <ComplexType Name="sp_ListarProductos_Result">
     <Property Type="Int32" Name="id_prod" Nullable="false" />
@@ -573,19 +618,5 @@
     <Property Type="String" Name="descripcion_servicio" Nullable="false" MaxLength="Max" />
     <Property Type="String" Name="horario_servicio" Nullable="false" MaxLength="40" />
     <Property Type="DateTime" Name="fecha_servicio" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="sp_reporteVenta_Result">
-    <Property Type="String" Name="descripcionSimple_prod" Nullable="false" MaxLength="100" />
-    <Property Type="Decimal" Name="precio_prod" Nullable="false" Precision="10" Scale="2" />
-    <Property Type="Int32" Name="cantidad_pedido" Nullable="false" />
-    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
-    <Property Type="Decimal" Name="total_pedido" Nullable="false" Precision="18" Scale="0" />
-  </ComplexType>
-  <ComplexType Name="sp_reporteVentaPorPedido_Result">
-    <Property Type="String" Name="descripcionSimple_prod" Nullable="false" MaxLength="100" />
-    <Property Type="Decimal" Name="precio_prod" Nullable="false" Precision="10" Scale="2" />
-    <Property Type="Int32" Name="cantidad_pedido" Nullable="false" />
-    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
-    <Property Type="Decimal" Name="total_pedido" Nullable="false" Precision="18" Scale="0" />
   </ComplexType>
 </Schema>

@@ -1,11 +1,9 @@
-﻿@model IEnumerable<CIBERVET.Models.BoletaPedido>
+﻿@model IEnumerable<CIBERVET.Models.PedidoTracking>
 
 @{
     ViewBag.Title = "AllPedidos";
     Layout = "~/Views/Layout/_Layout_Session.cshtml";
 }
-
-<!--EN ESTA VISTA SE DEBE MOSTRAR LA CABECERA DEL PEDIDO Y AGREGAR UN BOTON DE "VER DETALLE" QUE MUESTRE EL DETALLE DE ESE PEDIDO Y SU ESTADO-->
 
 <div class="all-title-box">
     <div class="container">
@@ -28,28 +26,27 @@
                 <table class="table">
                     <thead class="thead-dark">
                         <tr>
-                        <th scope="col">Producto</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Cantidad</th>
+                        <th scope="col">ID</th>
                         <th scope="col">Fecha</th>
+                        <th scope="col">Estado</th>
                         <th scope="col">Total</th>
+                        <th></th>
                         </tr>
                     </thead>
                     @foreach (var item in Model)
                         {
                         <tbody>
                             <tr>
-                            <td>@item.nombreProducto</td>
-                            <td>@item.precio</td>
-                            <td>@item.cantidad</td>
+                            <td>@item.idPedido</td>
                             <td>@item.fechaPedido</td>
+                            <td>@item.descripcionEstado</td>
                             <td>@item.importeTotal</td>
+                            <td>@Html.ActionLink("Ver Detalle", "TrackingCliente", new { idPed = item.idPedido })</td>
                             </tr>
                         </tbody>
                         }
                 </table>
             </div>
-            <div class="col-12 d-flex shopping-box"> <a href="~/Cliente/CatalogoProductos" class="ml-auto btn hvr-hover">Regresar</a> </div>
         </div>
     </div>
 </div>

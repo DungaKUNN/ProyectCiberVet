@@ -1,0 +1,79 @@
+﻿@model IEnumerable<CIBERVET.Models.PedidoTracking>
+
+@{
+    ViewBag.Title = "TrackingCliente";
+    Layout = "~/Views/Layout/_Layout_Session.cshtml";
+}
+
+<div class="all-title-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h2>Tracking de Pedido</h2>
+                <ul class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Compras</a></li>
+                    <li class="breadcrumb-item active">Productos</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="cart-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <h2>Pedido Cabecera</h2>
+                <br />
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Nombres y Apellidos</th>
+                            <th scope="col">Fecha</th>
+                            <th scope="col">Estado</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@item.idPedido</td>
+                                <td>@item.NomApeCliente</td>
+                                <td>@item.fechaPedido</td>
+                                <td>@item.descripcionEstado</td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+                <br />
+
+                <h2>Pedido Detalle</h2>
+                <br />
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Producto</th>
+                            <th scope="col">Precio</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    @foreach (var item in Model)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@item.descripcionProducto</td>
+                                <td>@item.precioProducto</td>
+                                <td>@item.cantidad</td>
+                                <td>@item.importeTotal</td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

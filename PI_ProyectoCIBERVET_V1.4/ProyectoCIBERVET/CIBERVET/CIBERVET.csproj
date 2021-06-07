@@ -166,20 +166,37 @@
     <Compile Include="Models\especie_mascota.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\EstadoTracking.cs" />
     <Compile Include="Models\MASCOTA.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\MascotaForCrud.cs" />
+    <Compile Include="Models\PedidoTracking.cs" />
     <Compile Include="Models\ProductoForCRUD.cs" />
     <Compile Include="Models\ProveedorForCRUD.cs" />
     <Compile Include="Models\raza_mascota.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ServicioForCRUD.cs" />
+    <Compile Include="Models\sp_boletaPedido_Result.cs">
+      <DependentUpon>CIBERVETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_FiltroPedidoPorApellido_Result.cs">
+      <DependentUpon>CIBERVETModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_Listado_Mascotas_Result.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\sp_listaPedidosDetallado_Result.cs">
+      <DependentUpon>CIBERVETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_listaPedidos_Result.cs">
+      <DependentUpon>CIBERVETModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\sp_ListarCategorias_Result.cs">
+      <DependentUpon>CIBERVETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_ListarEstados_Result.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_ListarProductos_Result.cs">
@@ -189,12 +206,6 @@
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_ListarServicios_Result.cs">
-      <DependentUpon>CIBERVETModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_reporteVentaPorPedido_Result.cs">
-      <DependentUpon>CIBERVETModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\sp_reporteVenta_Result.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tb_categoria.cs">
@@ -867,6 +878,9 @@
     <Content Include="Views\Cliente\CatalogoProductos.cshtml" />
     <Content Include="Views\Cliente\AllPedidos.cshtml" />
     <Content Include="Views\Cliente\PagarCarrito.cshtml" />
+    <Content Include="Views\Cliente\TrackingCliente.cshtml" />
+    <Content Include="Views\Administrador\ListadoPedidosAdmin.cshtml" />
+    <Content Include="Views\Administrador\ModificarEstadoPedido.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

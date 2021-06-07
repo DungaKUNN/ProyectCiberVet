@@ -237,6 +237,7 @@ go
 insert into tb_estado values('Preparado')
 insert into tb_estado values('Enviado')
 insert into tb_estado values('Entregado')
+insert into tb_estado values('Cancelado')
 go
 
 create table tb_pedidoCabe
@@ -432,22 +433,10 @@ as
 go
 /*----------------------------------------------------------------------------*/
 
-/*----------------------------------------------------------------------------*/
-create procedure sp_reporteVenta
- @idUsu int
-as
-	begin
-		select p.descripcionSimple_prod,p.precio_prod,pd.cantidad_pedido,pc.fecha_pedido,pc.total_pedido
-		from tb_pedidoCabe pc
-		inner join tb_pedidoDeta pd on pc.id_pedido = pd.id_pedido
-		inner join tb_producto p on p.id_prod = pd.id_prod
-		where pc.id_usuario = @idUsu
-	end
-go
-
-create proc sp_reporteVentaPorPedido
+/*-------------------Procedimientos Almacenados para Carrito------------------*/
+create procedure sp_boletaPedido
  @idUsu  int,
- @idPed  int 
+ @idPed  int
 as
 	begin
 		select p.descripcionSimple_prod,p.precio_prod,pd.cantidad_pedido,pc.fecha_pedido,pc.total_pedido
@@ -456,5 +445,68 @@ as
 		inner join tb_producto p on p.id_prod = pd.id_prod
 		where pc.id_usuario = @idusu and pc.id_pedido = @idPed
 	end
+go
+/*----------------------------------------------------------------------------*/
+
+/*--------------Procedimientos Almacenados para Tracking Cliente--------------*/
+create procedure sp_listaPedidos
+ @idUsu int
+as
+	begin
+		select pc.id_pedido,pc.fecha_pedido,e.descripcion_estado,pc.total_pedido
+		from tb_pedidoCabe pc
+		inner join tb_estado e on pc.id_estado = e.id_estado
+		where pc.id_usuario = @idUsu
+	end
+go
+
+create procedure sp_listaPedidosDetallado
+ @idUsu  int,
+ @idPed  int
+as
+	begin
+		select pc.id_pedido,CONCAT(u.nombre,', ',u.apellido),pc.fecha_pedido,e.descripcion_estado,
+			   p.descripcionSimple_prod,pd.precioPorUnidad,pd.cantidad_pedido,pc.total_pedido
+		from tb_pedidoCabe pc
+		inner join usuario u on pc.id_usuario = u.idusuario
+		inner join tb_estado e on pc.id_estado = e.id_estado
+		inner join tb_pedidoDeta pd on pc.id_pedido = pd.id_pedido
+		inner join tb_producto p on pd.id_prod = p.id_prod
+		where pc.id_usuario = @idusu and pc.id_pedido = @idPed
+	end
+go
+/*----------------------------------------------------------------------------*/
+
+/*---------------Procedimientos Almacenados para Tracking Admin---------------*/
+/*Filtro por ? ApellidoUsuario,IdPedido,Fecha,Estado*/
+create procedure sp_FiltroPedidoPorApellido
+ @apeUsu varchar(45)
+as
+	begin
+		select pc.id_pedido,CONCAT(u.nombre,', ',u.apellido),pc.fecha_pedido,e.descripcion_estado
+		from tb_pedidoCabe pc
+		inner join usuario u on pc.id_usuario = u.idusuario
+		inner join tb_estado e on pc.id_estado = e.id_estado
+		where u.apellido like '%' + @apeUsu + '%'
+	end
+go
+
+create procedure sp_ListarEstados
+as
+	begin
+		select e.id_estado,e.descripcion_estado
+		from tb_estado e
+	end
+go
+
+create procedure sp_EditarEstadoPedido
+@idPedCabe	int,
+@idEstado	int
+as
+ begin
+	UPDATE tb_pedidoCabe set
+	id_estado = @idEstado
+	where id_pedido = @idPedCabe
+ end
 go
 /*----------------------------------------------------------------------------*/

@@ -159,7 +159,6 @@ namespace CIBERVET.Controllers
 
         public ActionResult PerfilClient(int id)
         {
-
             List<usuario> lstusu = new List<usuario>();
             usuario usu = db.usuario.Find(id);
             usuario prueba = new usuario();
@@ -181,14 +180,11 @@ namespace CIBERVET.Controllers
                 ViewBag.ciudades = new SelectList(db.tb_distrito.ToList(), "Id_dis", "nombre_dis",usu.IdDistritos);
                 ViewBag.tipoUsu = new SelectList(db.TIPOUSUARIO.ToList(), "Id_TipoUsuario", "descripcion", usu.IdTipoUsuarios);
                 return View(lstusu);
-
             }
             return RedirectToAction("Home", "PagPrin");
-
         }
         public ActionResult EditarPerfil(int id)
         {
-           
             usuario usu = db.usuario.Find(id);
             Usuario prueba = new Usuario();
             prueba.idusuario = usu.idusuario;
@@ -269,7 +265,6 @@ namespace CIBERVET.Controllers
 
             ViewBag.categorias = db.tb_categoria.ToList();
             return View(ListarProductos);
-
         }
 
         public ActionResult VerProductosDetallado(int id)
@@ -317,7 +312,6 @@ namespace CIBERVET.Controllers
         }
 
         //GET CARRITO/VERCARRITO
-
         public ActionResult VerCarrito()
         {
             var cart = CarritoDeCompras.GetCart(this.HttpContext);
@@ -377,13 +371,13 @@ namespace CIBERVET.Controllers
             db.SaveChanges();
         }
 
-        public List<BoletaPedido> BoletaListaPedido(int idUsu, int idDetaPed)
+        public List<BoletaPedido> ListaBoletaPedido(int idUsu, int idPedCabe)
         {
             List<BoletaPedido> lista = new List<BoletaPedido>();
-            SqlCommand cmd = new SqlCommand("sp_reporteVentaPorPedido", cn);
+            SqlCommand cmd = new SqlCommand("sp_boletaPedido", cn);
             cmd.CommandType = CommandType.StoredProcedure;
             cmd.Parameters.AddWithValue("@idUsu", idUsu);
-            cmd.Parameters.AddWithValue("@idPed", idDetaPed);
+            cmd.Parameters.AddWithValue("@idPed", idPedCabe);
             cn.Open();
             SqlDataReader dr = cmd.ExecuteReader();
             while (dr.Read())
@@ -401,38 +395,7 @@ namespace CIBERVET.Controllers
             return lista;
         }
 
-        public List<BoletaPedido> BoletaLista(int idUsu)
-        {
-            List<BoletaPedido> lista = new List<BoletaPedido>();
-            SqlCommand cmd = new SqlCommand("sp_reporteVenta", cn);
-            cmd.CommandType = CommandType.StoredProcedure;
-            cmd.Parameters.AddWithValue("@idUsu", idUsu);
-            cn.Open();
-            SqlDataReader dr = cmd.ExecuteReader();
-            while (dr.Read())
-            {
-                lista.Add(new BoletaPedido()
-                {
-                    nombreProducto = dr.GetString(0),
-                    precio = dr.GetDecimal(1),
-                    cantidad = dr.GetInt32(2),
-                    fechaPedido = dr.GetDateTime(3),
-                    importeTotal = dr.GetDecimal(4)
-                });
-            }
-            dr.Close(); cn.Close();
-            return lista;
-        }
-
-        public ActionResult AllPedidos()//Lista de Pedidos "MIS PEDIDOS"
-        {
-            usuario usu = (usuario)Session["usuario"];
-            List<BoletaPedido> lista;
-            lista = BoletaLista(usu.idusuario);
-            return View(lista);
-        }
-
-        public ActionResult PagarCarrito()//VISTA DE BOLETA CAMBIAR NOMBRE
+        public ActionResult PagarCarrito()
         {
             var cart = CarritoDeCompras.GetCart(this.HttpContext);
             var item = cart.GetCartItems();
@@ -446,12 +409,79 @@ namespace CIBERVET.Controllers
                 break;
             };
 
+            //Luego de registrar el tb_pedidoCabe y tb_pedidoDeta mostrar la Boleta de Pedido
             usuario usu = (usuario)Session["usuario"];
             tb_pedidoCabe cabe = (tb_pedidoCabe)Session["Pedido"];
 
-            //Mostrar la lista de pedidos
             List<BoletaPedido> lista;
-            lista = BoletaListaPedido(usu.idusuario, cabe.id_pedido);
+            lista = ListaBoletaPedido(usu.idusuario, cabe.id_pedido);
+            return View(lista);
+        }
+
+        //Metodos para listar todos los pedidos de un Cliente
+        public List<PedidoTracking> ListaPedidosCliente(int idUsu)
+        {
+            List<PedidoTracking> lista = new List<PedidoTracking>();
+            SqlCommand cmd = new SqlCommand("sp_listaPedidos", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@idUsu", idUsu);
+            cn.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                lista.Add(new PedidoTracking()
+                {
+                    idPedido = dr.GetInt32(0),
+                    fechaPedido = dr.GetDateTime(1),
+                    descripcionEstado = dr.GetString(2),
+                    importeTotal = dr.GetDecimal(3)
+                });
+            }
+            dr.Close(); cn.Close();
+            return lista;
+        }
+
+        public ActionResult AllPedidos()
+        {
+            usuario usu = (usuario)Session["usuario"];
+            List<PedidoTracking> lista;
+            lista = ListaPedidosCliente(usu.idusuario);
+            return View(lista);
+        }
+
+        //Metodos para el Tracking de Cliente
+        public List<PedidoTracking> ListaPedidoTracking(int idUsu, int idPedCabe)
+        {
+            List<PedidoTracking> lista = new List<PedidoTracking>();
+            SqlCommand cmd = new SqlCommand("sp_listaPedidosDetallado", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@idUsu", idUsu);
+            cmd.Parameters.AddWithValue("@idPed", idPedCabe);
+            cn.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                lista.Add(new PedidoTracking()
+                {
+                    idPedido = dr.GetInt32(0),
+                    NomApeCliente = dr.GetString(1),
+                    fechaPedido = dr.GetDateTime(2),
+                    descripcionEstado = dr.GetString(3),
+                    descripcionProducto = dr.GetString(4),
+                    precioProducto = dr.GetDecimal(5),
+                    cantidad = dr.GetInt32(6),
+                    importeTotal = dr.GetDecimal(7)
+                });
+            }
+            dr.Close(); cn.Close();
+            return lista;
+        }
+
+        public ActionResult TrackingCliente(int idPed)
+        {
+            usuario usu = (usuario)Session["usuario"];
+            List<PedidoTracking> lista;
+            lista = ListaPedidoTracking(usu.idusuario, idPed);
             return View(lista);
         }
     }

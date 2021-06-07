@@ -11,12 +11,11 @@ namespace CIBERVET.Models
 {
     using System;
     
-    public partial class sp_reporteVenta_Result
+    public partial class sp_listaPedidos_Result
     {
-        public string descripcionSimple_prod { get; set; }
-        public decimal precio_prod { get; set; }
-        public int cantidad_pedido { get; set; }
+        public int id_pedido { get; set; }
         public System.DateTime fecha_pedido { get; set; }
+        public string descripcion_estado { get; set; }
         public decimal total_pedido { get; set; }
     }
 }

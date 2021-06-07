@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CIBERVET.Models.PedidoTracking>
+
+@{
+    ViewBag.Title = "ListadoPedidosAdmin";
+    Layout = "~/Views/Layout/_Layout_Session_Admin.cshtml";
+}
+
+<h2>Listado de Pedidos por Apellidos de un Cliente</h2>
+
+@using (Html.BeginForm())
+{
+    <span>Ingrese el Apellido</span>
+    @Html.TextBox("apellido", (string)ViewBag.apellidos)
+    <button>Filtrar</button>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Nombres y Apellidos
+        </th>
+        <th>
+            Fecha
+        </th>
+        <th>
+            Estado
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.idPedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomApeCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.fechaPedido)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descripcionEstado)
+            </td>
+            <td>
+                @Html.ActionLink("Cambiar Estado", "ModificarEstadoPedido", new { id = item.idPedido })
+            </td>
+        </tr>
+    }
+</table>

@@ -446,5 +446,88 @@ namespace CIBERVET.Controllers
                 return RedirectToAction("LoginAdmin", "Administrador");
             }
         }
+
+        //Metodos para cambiar el estadoPedido desde Administrador
+        public List<PedidoTracking> ListarPedidosPorApellido(string ape)
+        {
+            List<PedidoTracking> lista = new List<PedidoTracking>();
+            SqlCommand cmd = new SqlCommand("sp_FiltroPedidoPorApellido", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@apeUsu", ape);
+            cn.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                lista.Add(new PedidoTracking()
+                {
+                    idPedido = dr.GetInt32(0),
+                    NomApeCliente = dr.GetString(1),
+                    fechaPedido = dr.GetDateTime(2),
+                    descripcionEstado = dr.GetString(3)
+                });
+            }
+            dr.Close(); cn.Close();
+            return lista;
+        }
+
+        public List<tb_estado> ListarEstados()
+        {
+            List<tb_estado> lista = new List<tb_estado>();
+            SqlCommand cmd = new SqlCommand("sp_ListarEstados", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cn.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                lista.Add(new tb_estado()
+                {
+                    id_estado = dr.GetInt32(0),
+                    descripcion_estado = dr.GetString(1)
+                });
+            }
+            dr.Close(); cn.Close();
+            return lista;
+        }
+
+        public int ActualizarEstadoPedido(PedidoTracking p)
+        {
+            int resultado = -1;
+            SqlCommand cmd = new SqlCommand("sp_EditarEstadoPedido", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@idEstado", p.idEstado);
+            cmd.Parameters.AddWithValue("@idPedCabe", p.idPedido);
+            cn.Open();
+            resultado = cmd.ExecuteNonQuery();
+            cn.Close();
+            return resultado;
+        }
+
+        public ActionResult ListadoPedidosAdmin(string apellido)
+        {
+            if (string.IsNullOrEmpty(apellido))
+            {
+                apellido = string.Empty;
+            }
+
+            List<PedidoTracking> lista = ListarPedidosPorApellido(apellido);
+            ViewBag.apellidos = apellido;
+
+            return View(lista);
+        }
+
+        public ActionResult ModificarEstadoPedido(int id)
+        {
+            PedidoTracking pedido = new PedidoTracking();
+            pedido.idPedido = id;
+            ViewBag.estados = ListarEstados();
+            return View(pedido);
+        }
+
+        [HttpPost]
+        public ActionResult ModificarEstadoPedido(PedidoTracking p)
+        {
+            ActualizarEstadoPedido(p);
+            return RedirectToAction("ListadoPedidosAdmin");
+        }
     }
 }

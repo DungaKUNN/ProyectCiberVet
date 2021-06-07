@@ -125,6 +125,32 @@ namespace CIBERVET.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_ActualizarServicio", idParameter, nomParameter, preParameter, desParameter, horarioParameter, fechaParameter);
         }
     
+        public virtual ObjectResult<sp_boletaPedido_Result> sp_boletaPedido(Nullable<int> idUsu, Nullable<int> idPed)
+        {
+            var idUsuParameter = idUsu.HasValue ?
+                new ObjectParameter("idUsu", idUsu) :
+                new ObjectParameter("idUsu", typeof(int));
+    
+            var idPedParameter = idPed.HasValue ?
+                new ObjectParameter("idPed", idPed) :
+                new ObjectParameter("idPed", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_boletaPedido_Result>("sp_boletaPedido", idUsuParameter, idPedParameter);
+        }
+    
+        public virtual int sp_EditarEstadoPedido(Nullable<int> idPedCabe, Nullable<int> idEstado)
+        {
+            var idPedCabeParameter = idPedCabe.HasValue ?
+                new ObjectParameter("idPedCabe", idPedCabe) :
+                new ObjectParameter("idPedCabe", typeof(int));
+    
+            var idEstadoParameter = idEstado.HasValue ?
+                new ObjectParameter("idEstado", idEstado) :
+                new ObjectParameter("idEstado", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EditarEstadoPedido", idPedCabeParameter, idEstadoParameter);
+        }
+    
         public virtual int sp_EditarUsuario(Nullable<int> idusu, string dniusu, string nomusu, string apeusu, string logusu, string passusu, string celusu, string corusu, string dirusu, Nullable<int> iddis)
         {
             var idusuParameter = idusu.HasValue ?
@@ -168,6 +194,15 @@ namespace CIBERVET.Models
                 new ObjectParameter("iddis", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EditarUsuario", idusuParameter, dniusuParameter, nomusuParameter, apeusuParameter, logusuParameter, passusuParameter, celusuParameter, corusuParameter, dirusuParameter, iddisParameter);
+        }
+    
+        public virtual ObjectResult<sp_FiltroPedidoPorApellido_Result> sp_FiltroPedidoPorApellido(string apeUsu)
+        {
+            var apeUsuParameter = apeUsu != null ?
+                new ObjectParameter("apeUsu", apeUsu) :
+                new ObjectParameter("apeUsu", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FiltroPedidoPorApellido_Result>("sp_FiltroPedidoPorApellido", apeUsuParameter);
         }
     
         public virtual int sp_Insertar_Mascotas(string nombre, Nullable<int> idespecie, string sexo, Nullable<int> idraza, string foto, Nullable<int> idusuario)
@@ -282,9 +317,36 @@ namespace CIBERVET.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_Listado_Mascotas_Result>("sp_Listado_Mascotas", idusuarioParameter);
         }
     
+        public virtual ObjectResult<sp_listaPedidos_Result> sp_listaPedidos(Nullable<int> idUsu)
+        {
+            var idUsuParameter = idUsu.HasValue ?
+                new ObjectParameter("idUsu", idUsu) :
+                new ObjectParameter("idUsu", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_listaPedidos_Result>("sp_listaPedidos", idUsuParameter);
+        }
+    
+        public virtual ObjectResult<sp_listaPedidosDetallado_Result> sp_listaPedidosDetallado(Nullable<int> idUsu, Nullable<int> idPed)
+        {
+            var idUsuParameter = idUsu.HasValue ?
+                new ObjectParameter("idUsu", idUsu) :
+                new ObjectParameter("idUsu", typeof(int));
+    
+            var idPedParameter = idPed.HasValue ?
+                new ObjectParameter("idPed", idPed) :
+                new ObjectParameter("idPed", typeof(int));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_listaPedidosDetallado_Result>("sp_listaPedidosDetallado", idUsuParameter, idPedParameter);
+        }
+    
         public virtual ObjectResult<sp_ListarCategorias_Result> sp_ListarCategorias()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ListarCategorias_Result>("sp_ListarCategorias");
+        }
+    
+        public virtual ObjectResult<sp_ListarEstados_Result> sp_ListarEstados()
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ListarEstados_Result>("sp_ListarEstados");
         }
     
         public virtual ObjectResult<sp_ListarProductos_Result> sp_ListarProductos()
@@ -300,28 +362,6 @@ namespace CIBERVET.Models
         public virtual ObjectResult<sp_ListarServicios_Result> sp_ListarServicios()
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_ListarServicios_Result>("sp_ListarServicios");
-        }
-    
-        public virtual ObjectResult<sp_reporteVenta_Result> sp_reporteVenta(Nullable<int> idUsu)
-        {
-            var idUsuParameter = idUsu.HasValue ?
-                new ObjectParameter("idUsu", idUsu) :
-                new ObjectParameter("idUsu", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_reporteVenta_Result>("sp_reporteVenta", idUsuParameter);
-        }
-    
-        public virtual ObjectResult<sp_reporteVentaPorPedido_Result> sp_reporteVentaPorPedido(Nullable<int> idUsu, Nullable<int> idPed)
-        {
-            var idUsuParameter = idUsu.HasValue ?
-                new ObjectParameter("idUsu", idUsu) :
-                new ObjectParameter("idUsu", typeof(int));
-    
-            var idPedParameter = idPed.HasValue ?
-                new ObjectParameter("idPed", idPed) :
-                new ObjectParameter("idPed", typeof(int));
-    
-            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_reporteVentaPorPedido_Result>("sp_reporteVentaPorPedido", idUsuParameter, idPedParameter);
         }
     }
 }
