@@ -147,7 +147,6 @@ namespace CIBERVET.Models
                                  cartItems.tb_producto.precio_prod).Sum();
             return total ?? decimal.Zero;
         }
-
-
+      
     }
 }

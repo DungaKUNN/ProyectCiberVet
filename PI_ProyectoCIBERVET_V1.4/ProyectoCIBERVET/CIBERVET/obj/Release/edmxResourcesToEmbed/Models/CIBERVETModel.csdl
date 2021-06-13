@@ -157,6 +157,7 @@
     <Property Name="descripcion_servicio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="horario_servicio" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="fecha_servicio" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="tb_reservarservicio" Relationship="BD_CIBERVETModel.fk_reserv" FromRole="tb_servicio" ToRole="tb_reservarservicio" />
   </EntityType>
   <EntityType Name="TIPOUSUARIO">
     <Key>
@@ -547,6 +548,11 @@
     <FunctionImport Name="sp_ListarProductos" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProductos_Result)" />
     <FunctionImport Name="sp_ListarProveedores" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProveedores_Result)" />
     <FunctionImport Name="sp_ListarServicios" ReturnType="Collection(BD_CIBERVETModel.sp_ListarServicios_Result)" />
+    <EntitySet Name="tb_reservarservicio" EntityType="BD_CIBERVETModel.tb_reservarservicio" />
+    <AssociationSet Name="fk_reserv" Association="BD_CIBERVETModel.fk_reserv">
+      <End Role="tb_servicio" EntitySet="tb_servicio" />
+      <End Role="tb_reservarservicio" EntitySet="tb_reservarservicio" />
+    </AssociationSet>
   </EntityContainer>
   <ComplexType Name="sp_boletaPedido_Result">
     <Property Type="String" Name="descripcionSimple_prod" Nullable="false" MaxLength="100" />
@@ -619,4 +625,25 @@
     <Property Type="String" Name="horario_servicio" Nullable="false" MaxLength="40" />
     <Property Type="DateTime" Name="fecha_servicio" Nullable="false" />
   </ComplexType>
+  <EntityType Name="tb_reservarservicio">
+    <Key>
+      <PropertyRef Name="id_reservarservicio" />
+    </Key>
+    <Property Name="id_reservarservicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="descripcionreserva" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
+    <Property Name="idservicio" Type="Int32" />
+    <NavigationProperty Name="tb_servicio" Relationship="BD_CIBERVETModel.fk_reserv" FromRole="tb_reservarservicio" ToRole="tb_servicio" />
+  </EntityType>
+  <Association Name="fk_reserv">
+    <End Type="BD_CIBERVETModel.tb_servicio" Role="tb_servicio" Multiplicity="0..1" />
+    <End Type="BD_CIBERVETModel.tb_reservarservicio" Role="tb_reservarservicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_servicio">
+        <PropertyRef Name="id_servicio" />
+      </Principal>
+      <Dependent Role="tb_reservarservicio">
+        <PropertyRef Name="idservicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

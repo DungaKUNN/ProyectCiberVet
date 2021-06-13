@@ -121,6 +121,14 @@
     <Property Name="email_prove" Type="varchar" MaxLength="40" />
     <Property Name="id_dis" Type="int" />
   </EntityType>
+  <EntityType Name="tb_reservarservicio">
+    <Key>
+      <PropertyRef Name="id_reservarservicio" />
+    </Key>
+    <Property Name="id_reservarservicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="descripcionreserva" Type="varchar" MaxLength="45" />
+    <Property Name="idservicio" Type="int" />
+  </EntityType>
   <EntityType Name="tb_servicio">
     <Key>
       <PropertyRef Name="id_servicio" />
@@ -323,6 +331,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_reserv">
+    <End Role="tb_servicio" Type="Self.tb_servicio" Multiplicity="0..1" />
+    <End Role="tb_reservarservicio" Type="Self.tb_reservarservicio" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_servicio">
+        <PropertyRef Name="id_servicio" />
+      </Principal>
+      <Dependent Role="tb_reservarservicio">
+        <PropertyRef Name="idservicio" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_usudis">
     <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
     <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
@@ -448,6 +468,7 @@
     <EntitySet Name="tb_pedidoDeta" EntityType="Self.tb_pedidoDeta" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_producto" EntityType="Self.tb_producto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_proveedor" EntityType="Self.tb_proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_reservarservicio" EntityType="Self.tb_reservarservicio" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_servicio" EntityType="Self.tb_servicio" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOUSUARIO" EntityType="Self.TIPOUSUARIO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
@@ -506,6 +527,10 @@
     <AssociationSet Name="fk_razaespe" Association="Self.fk_razaespe">
       <End Role="especie_mascota" EntitySet="especie_mascota" />
       <End Role="raza_mascota" EntitySet="raza_mascota" />
+    </AssociationSet>
+    <AssociationSet Name="fk_reserv" Association="Self.fk_reserv">
+      <End Role="tb_servicio" EntitySet="tb_servicio" />
+      <End Role="tb_reservarservicio" EntitySet="tb_reservarservicio" />
     </AssociationSet>
     <AssociationSet Name="fk_usudis" Association="Self.fk_usudis">
       <End Role="tb_distrito" EntitySet="tb_distrito" />

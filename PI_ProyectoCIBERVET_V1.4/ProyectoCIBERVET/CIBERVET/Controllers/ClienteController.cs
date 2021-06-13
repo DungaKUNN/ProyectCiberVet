@@ -484,5 +484,33 @@ namespace CIBERVET.Controllers
             lista = ListaPedidoTracking(usu.idusuario, idPed);
             return View(lista);
         }
+
+
+        public ActionResult ServicioCliente(int? id = 0)
+        {
+            List<tb_servicio> ListarServicio;
+            if (id.HasValue && id.Value != 0)
+            {
+                ListarServicio = db.tb_servicio.Where(x => x.id_servicio == id).ToList();
+            }
+            else
+            {
+                ListarServicio = db.tb_servicio.ToList();
+            }
+
+            ViewBag.servicios = db.tb_servicio.ToList();
+            return View(ListarServicio);
+        }
+        public ActionResult VerServiciosDetallado(int id)
+        {
+            var s = db.tb_servicio.Find(id);
+            return View(s);
+        }
+
+        public ActionResult ReservarServicio(int id)
+        {
+            var s = db.tb_reservarservicio.Find(id);
+            return View(s);
+        }
     }
 }

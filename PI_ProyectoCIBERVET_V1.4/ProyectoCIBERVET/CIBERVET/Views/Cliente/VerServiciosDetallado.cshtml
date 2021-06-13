@@ -1,0 +1,64 @@
+﻿@model CIBERVET.Models.tb_servicio
+
+@{
+    ViewBag.Title = "VerServiciosDetallado";
+    Layout = "~/Views/Layout/_Layout_Session.cshtml";
+}
+
+
+<div class="shop-detail-box-main">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-5 col-lg-5 col-md-6">
+                <div id="carousel-example-1" class="single-product-slider carousel slide" data-ride="carousel">
+                    <div class="carousel-inner" role="listbox">
+
+                       
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7 col-lg-7 col-md-6">
+                <div class="single-product-details">
+                    <h2>@Html.DisplayFor(model => model.nombre_servicio)</h2>
+
+                    <h5>PRECIO:  S/. @Html.DisplayFor(model => model.precio_servicio)</h5>
+                    <p class="available-stock">
+                        <strong>Categoria: </strong><span>
+                            <a href="#">
+                                <strong>@Html.DisplayFor(model => model.descripcion_servicio)</strong>
+                            </a>
+                        </span>
+                    </p>
+                    <p class="available-stock">
+                        <strong>Horario: </strong><span>
+                            <a href="#">
+                                <strong>@Html.DisplayFor(model => model.horario_servicio)</strong>
+                            </a>
+                        </span>
+                    </p>
+                    <p class="available-stock">
+                        <strong>Fecha: </strong><span>
+                            <a href="#">
+                                <strong>@Html.DisplayFor(model => model.fecha_servicio)</strong>
+                            </a>
+                        </span>
+                    </p>
+
+                    <ul>
+                    </ul>
+
+                    <div class="price-box-bar">
+                        <div class="cart-and-bay-btn">
+
+                            <p class="btn hvr-hover">@Html.ActionLink("Reservar", "ReservarServicio")</p>
+
+                            <p class="btn hvr-hover">@Html.ActionLink("Regresar", "ServicioCliente")</p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

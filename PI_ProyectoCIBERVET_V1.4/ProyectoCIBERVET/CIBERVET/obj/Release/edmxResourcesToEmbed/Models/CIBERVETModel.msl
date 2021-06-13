@@ -288,5 +288,14 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <EntitySetMapping Name="tb_reservarservicio">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_reservarservicio">
+        <MappingFragment StoreEntitySet="tb_reservarservicio">
+          <ScalarProperty Name="idservicio" ColumnName="idservicio" />
+          <ScalarProperty Name="descripcionreserva" ColumnName="descripcionreserva" />
+          <ScalarProperty Name="id_reservarservicio" ColumnName="id_reservarservicio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

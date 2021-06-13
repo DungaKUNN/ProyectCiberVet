@@ -42,6 +42,7 @@ namespace CIBERVET.Models
         public virtual DbSet<tb_servicio> tb_servicio { get; set; }
         public virtual DbSet<TIPOUSUARIO> TIPOUSUARIO { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
+        public virtual DbSet<tb_reservarservicio> tb_reservarservicio { get; set; }
     
         public virtual int sp_ActualizarProducto(Nullable<int> id, string desSimple, Nullable<decimal> pre, Nullable<int> stk, string serie, string marca, Nullable<int> idCat, Nullable<int> idProve, string desHTML, string foto1, string foto2, string foto3)
         {

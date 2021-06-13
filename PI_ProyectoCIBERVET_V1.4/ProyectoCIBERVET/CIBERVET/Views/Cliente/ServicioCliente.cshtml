@@ -1,0 +1,173 @@
+﻿    @model IEnumerable<CIBERVET.Models.tb_servicio>
+
+@{
+    ViewBag.Title = "ServicioCliente";
+}
+
+@{
+    Layout = "~/Views/Layout/_Layout_Session.cshtml";
+}
+
+
+
+
+
+<div class="products-box">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="title-all text-center">
+                    <h1>Los servicios más pedidos en Cibervet </h1>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+
+            <div class="col-lg-12">
+                <div class="special-menu text-center">
+                    <div class="button-group filter-button-group">
+                        <button class="active" data-filter="*">Servicios</button>
+                        <!--   <button data-filter=".best-seller">AMOR</button>     --------------------------->
+
+                        @foreach (var item in ViewBag.servicios)
+                        {
+                            <button data-filter=".best-seller">@Html.ActionLink((string)item.descripcion_servicio, "ServicioCliente", new { id = item.id_servicio })</button>
+
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row special-list">
+            @foreach (var item in Model)
+            {
+                <div class="col-lg-3 col-md-6 special-grid best-seller">
+                    <div class="products-single fix">
+                        <div class="box-img-hover">
+                            <div class="type-lb">
+                                <p class="sale">Sale</p>
+                            </div>
+                       
+
+                            <div class="type-lb">
+                                <p class="sale">@Html.ActionLink("Reservar", "AgregarServicio", new { id = item.id_servicio })</p>
+                            </div>
+                        </div>
+
+
+
+
+                        <center>
+                            <p class="sale" id="color"><strong>@Html.ActionLink("VER DETALLE SERVICIO →", "VerServiciosDetallado", new { id = item.id_servicio }) </strong></p>
+                        </center>
+
+
+
+                        <div class="why-text">
+                            <div class="col-md-8"><strong>@item.descripcion_servicio</strong><br /><span> CATEGORIA: @item.horario_servicio</span></div>
+                            <div class="col-md-8">PRECIO: S/. <strong>@item.precio_servicio</strong> </div>
+                        </div>
+                        <hr />
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+
+
+
+<!-- End Products  -->
+<!-- Start Blog  -------------------------------------------------------A-------P-------------->
+<!-- Start Blog  --------------------------------------------------------Q--------O------------->
+<!-- Start Blog  ---------------------------------------------------------U--------S------------>
+<!-- Start Blog  ----------------------------------------------------------I--------T----------->
+<!-- Start Blog  --------------------------------------------------------------------R---------->
+<!-- Start Blog  ---------------------------------------------------------------------E--------->
+<!-- Start Blog  ----------------------------------------------------------------------S-------->
+<!-- End Blog  -->
+<!-- Start Instagram Feed  -->
+<div class="instagram-box">
+    <div class="main-instagram owl-carousel owl-theme">
+        <div class="item">
+            <div class="ins-inner-box">
+                <img src="~/images/footer1.jpg" alt="" />
+                <div class="hov-in">
+                    <a href="#"><i class="far fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <img src="~/images/footer2.jpg" alt="" />
+                <div class="hov-in">
+                    <a href="#"><i class="far fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <img src="~/images/footer3.jpg" alt="" />
+                <div class="hov-in">
+                    <a href="#"><i class="far fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <img src="~/images/footer4.png" alt="" />
+                <div class="hov-in">
+                    <a href="#"><i class="far fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <img src="~/images/footer5.jpg" alt="" />
+                <div class="hov-in">
+                    <a href="#"><i class="far fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <img src="~/images/footer6.jpg" alt="" />
+                <div class="hov-in">
+                    <a href="#"><i class="far fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="item">
+            <div class="ins-inner-box">
+                <img src="~/images/footer7.jpg" alt="" />
+                <div class="hov-in">
+                    <a href="#"><i class="far fa-heart"></i></a>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<!-- ALL JS FILES -->
+<script src="~/js/jquery-3.2.1.min.js"></script>
+<script src="~/js/popper.min.js"></script>
+<script src="~/js/bootstrap.min.js"></script>
+<!-- ALL PLUGINS -->
+<script src="~/js/jquery.superslides.min.js"></script>
+<script src="~/js/bootstrap-select.js"></script>
+<script src="~/js/inewsticker.js"></script>
+<script src="~/js/bootsnav.js."></script>
+<script src="~/js/images-loded.min.js"></script>
+<script src="~/js/isotope.min.js"></script>
+<script src="~/js/owl.carousel.min.js"></script>
+<script src="~/js/baguetteBox.min.js"></script>
+<script src="~/js/form-validator.min.js"></script>
+<script src="~/js/contact-form-script.js"></script>
+<script src="~/js/custom.js"></script>
+

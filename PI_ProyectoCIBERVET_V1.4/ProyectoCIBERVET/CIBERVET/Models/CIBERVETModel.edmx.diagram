@@ -36,6 +36,8 @@
         <AssociationConnector Association="BD_CIBERVETModel.fk_pedprod" ManuallyRouted="false" />
         <AssociationConnector Association="BD_CIBERVETModel.fk_prodprove" ManuallyRouted="false" />
         <AssociationConnector Association="BD_CIBERVETModel.fk_usutipo" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="BD_CIBERVETModel.tb_reservarservicio" Width="1.5" PointX="3" PointY="1.5" />
+        <AssociationConnector Association="BD_CIBERVETModel.fk_reserv" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

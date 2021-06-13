@@ -229,6 +229,9 @@
     <Compile Include="Models\tb_proveedor.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tb_reservarservicio.cs">
+      <DependentUpon>CIBERVETModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tb_servicio.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
@@ -881,6 +884,8 @@
     <Content Include="Views\Cliente\TrackingCliente.cshtml" />
     <Content Include="Views\Administrador\ListadoPedidosAdmin.cshtml" />
     <Content Include="Views\Administrador\ModificarEstadoPedido.cshtml" />
+    <Content Include="Views\Cliente\VerServiciosDetallado.cshtml" />
+    <Content Include="Views\Cliente\ServicioCliente.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
