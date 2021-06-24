@@ -309,7 +309,9 @@ namespace CIBERVET.Controllers
 
             //RETORNAR A LA VISTA DE CARRITO
             return RedirectToAction("VerCarrito");
+
         }
+
 
         //GET CARRITO/VERCARRITO
         public ActionResult VerCarrito()

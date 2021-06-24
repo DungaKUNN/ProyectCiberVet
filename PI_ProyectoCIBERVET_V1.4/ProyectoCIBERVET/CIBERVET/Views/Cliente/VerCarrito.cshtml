@@ -30,13 +30,12 @@
                                                        new { id = item.id_prod }, null)
                                     </td>
                                     <td class="name-pr">
-                                    
+
                                         @if (!string.IsNullOrEmpty(item.tb_producto.foto1_prod))
                                         {
-                                            <img class="thumbnail" src="~/images/@item.tb_producto.foto1_prod" width="100" height="100"/>
+                                            <img class="thumbnail" src="~/images/@item.tb_producto.foto1_prod" width="100" height="100" />
                                         }
-                                    
-                                    </td>
+                             </td>
                                     <td class="price-pr">
                                         <p>@item.tb_producto.precio_prod</p>
                                     </td>
