@@ -303,7 +303,7 @@ namespace CIBERVET.Controllers
         {
             //OBTENEMOS EL PRODUCTO
             var p = db.tb_producto.Single(o => o.id_prod == id);
-            //AGREGAMOS EL CARRITO (SHOPPINGCART)
+
             var cart = CarritoDeCompras.GetCart(this.HttpContext);
             cart.DisToCart(p);
 

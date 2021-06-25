@@ -78,29 +78,17 @@ namespace CIBERVET.Models
             // Verifica si el producto ya se encuentra en el carrito de la bd
             var cartItem = bd.Carrito.SingleOrDefault(c =>
                         c.Identificador == CarritoDeComprasId && c.id_prod == p.id_prod);
-            if (cartItem == null)
-            {
-                cartItem = new Carrito()
-                {
-                    id_prod = p.id_prod,
-                    Identificador = CarritoDeComprasId,
-                    Cantidad = 1,
-                    Fecha = DateTime.Now
-                };
-                bd.Carrito.Add(cartItem);
-            }
-            else if (cartItem != null)
-            {
-                
-                bd.Carrito.Remove(cartItem);
-            }
-            else
+            if (cartItem != null)
             {
                 cartItem.Cantidad--;
             }
+
+            if (cartItem.Cantidad <= 0)
+            {
+                bd.Carrito.Remove(cartItem);
+            }
             bd.SaveChanges();
         }
-
         // Método que remueve un producto del carrito (en la BD)
         public void RemoveToCart(tb_producto p)
         {
