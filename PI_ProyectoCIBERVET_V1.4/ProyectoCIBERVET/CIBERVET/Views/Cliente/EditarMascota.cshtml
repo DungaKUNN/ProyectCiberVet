@@ -1,0 +1,123 @@
+﻿@model CIBERVET.Models.Entidades.Mascota
+
+@{
+    ViewBag.Title = "EditarMascota";
+    Layout = "~/Views/Layout/_Layout_Session.cshtml";
+}
+
+<style>
+    .thumbnail {
+        width: 60px;
+        height: 60px;
+        border: none;
+    }
+
+    #idraza {
+        enabled: true;
+    }
+</style>
+
+<div class="about-box-main">
+    <div class="container">
+        <h2>Editar Mascota</h2>
+
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-horizontal">
+                <h4>MASCOTA</h4>
+                <hr />
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.idmascota)
+
+                <div class="form-group">
+                    <p>Nombre</p>
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.nombre, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.nombre, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p>Especie</p>
+                    <div class="col-md-10">
+                        @Html.DropDownList("idespecie", (SelectList)ViewBag.especie, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idespecie, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p>Sexo</p>
+                    <div class="col-md-10">
+
+                        @Html.DropDownListFor(model => model.sexo, new List<SelectListItem>
+                                   {
+                            new SelectListItem{ Text="Macho", Value = "Macho" },
+                                  new SelectListItem{ Text="Hembra", Value = "Hembra" }}, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.sexo, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p>Raza</p>
+                    <div class="col-md-10">
+                        @Html.DropDownList("idraza", (SelectList)ViewBag.raza, htmlAttributes: new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.idraza, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <p>Foto</p>
+                    <div class="col-md-10">
+                        <img class="thumbnail" src="~/images/@Model.foto" />
+
+                        @Html.EditorFor(model => model.foto, new { htmlAttributes = new { @class = "form-control" } })
+
+                        @Html.ValidationMessageFor(model => model.foto, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Save" class="btn btn-default" />
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+<div>
+    <a href="~/Cliente/ListadoMascotas?id=@Session["UserID"]">Ir al listado</a>
+</div>
+@section Scripts{
+    @Scripts.Render("~/bundles/jqueryval")
+    <script type="text/javascript">
+            $(document).ready(function () {
+                $("#idespecie").change(function () {
+                    $("#idraza").empty();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("GetRaza")',
+                        dataType: 'json',
+                        data: { idespecie: $("#idespecie").val() },
+                        success: function (razas) {
+                            $.each(razas, function (i, raza) {
+                                $("#idraza").append('<option value="'
+                                    + raza.idraza + '">'
+                                    + raza.raza + '</option>');
+                            });
+                        },
+                        error: function (ex) {
+                            console.log("error");
+                            alert('Fallo la conexion al traer las razas.' + ex)
+                        }
+                    });
+                    return false;
+                })
+            });
+            //var Url='Url.Action("GetRaza","Generic")'
+    </script>
+
+}

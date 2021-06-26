@@ -487,6 +487,14 @@
           <Parameter Name="idPedCabe" Type="int" Mode="In" />
           <Parameter Name="idEstado" Type="int" Mode="In" />
         </Function>
+        <Function Name="sp_EditarMascota" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="idmascota" Type="int" Mode="In" />
+          <Parameter Name="nombre" Type="varchar" Mode="In" />
+          <Parameter Name="idespecie" Type="int" Mode="In" />
+          <Parameter Name="sexo" Type="varchar" Mode="In" />
+          <Parameter Name="idraza" Type="int" Mode="In" />
+          <Parameter Name="foto" Type="varchar" Mode="In" />
+        </Function>
         <Function Name="sp_EditarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="idusu" Type="int" Mode="In" />
           <Parameter Name="dniusu" Type="varchar" Mode="In" />
@@ -1285,6 +1293,14 @@
             <Parameter Name="idPedCabe" Mode="In" Type="Int32" />
             <Parameter Name="idEstado" Mode="In" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="sp_EditarMascota">
+            <Parameter Name="idmascota" Mode="In" Type="Int32" />
+            <Parameter Name="nombre" Mode="In" Type="String" />
+            <Parameter Name="idespecie" Mode="In" Type="Int32" />
+            <Parameter Name="sexo" Mode="In" Type="String" />
+            <Parameter Name="idraza" Mode="In" Type="Int32" />
+            <Parameter Name="foto" Mode="In" Type="String" />
+          </FunctionImport>
           <FunctionImport Name="sp_EditarUsuario">
             <Parameter Name="idusu" Mode="In" Type="Int32" />
             <Parameter Name="dniusu" Mode="In" Type="String" />
@@ -1654,6 +1670,7 @@
             </ResultMapping>
           </FunctionImportMapping>
           <FunctionImportMapping FunctionImportName="sp_EditarEstadoPedido" FunctionName="BD_CIBERVETModel.Store.sp_EditarEstadoPedido" />
+          <FunctionImportMapping FunctionImportName="sp_EditarMascota" FunctionName="BD_CIBERVETModel.Store.sp_EditarMascota" />
           <FunctionImportMapping FunctionImportName="sp_EditarUsuario" FunctionName="BD_CIBERVETModel.Store.sp_EditarUsuario" />
           <FunctionImportMapping FunctionImportName="sp_FiltroPedidoPorApellido" FunctionName="BD_CIBERVETModel.Store.sp_FiltroPedidoPorApellido">
             <ResultMapping>

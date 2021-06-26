@@ -524,6 +524,21 @@ create procedure sp_Insertar_Mascotas
 	values (@nombre,@idespecie,@sexo,@idraza,@foto,@idusuario)
  end
 go
+
+create procedure sp_EditarMascota
+ @idmascota int,
+ @nombre		varchar(45),
+ @idespecie		int,
+ @sexo			varchar(30),
+ @idraza        int,
+ @foto          varchar(100)
+as
+	begin
+		update MASCOTA
+		set nombre = @nombre, idespecie = @idespecie, sexo = @sexo, idraza = @idraza, foto = @foto
+		where idmascota = @idmascota
+	end
+go
 /*----------------------------------------------------------------------------*/
 
 /*-------------------Procedimientos Almacenados para Usuario------------------*/

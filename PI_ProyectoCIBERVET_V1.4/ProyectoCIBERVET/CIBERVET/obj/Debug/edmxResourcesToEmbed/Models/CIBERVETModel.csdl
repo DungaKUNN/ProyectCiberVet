@@ -629,6 +629,14 @@
       <Parameter Name="idPedCabe" Mode="In" Type="Int32" />
       <Parameter Name="idEstado" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="sp_EditarMascota">
+      <Parameter Name="idmascota" Mode="In" Type="Int32" />
+      <Parameter Name="nombre" Mode="In" Type="String" />
+      <Parameter Name="idespecie" Mode="In" Type="Int32" />
+      <Parameter Name="sexo" Mode="In" Type="String" />
+      <Parameter Name="idraza" Mode="In" Type="Int32" />
+      <Parameter Name="foto" Mode="In" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="sp_EditarUsuario">
       <Parameter Name="idusu" Mode="In" Type="Int32" />
       <Parameter Name="dniusu" Mode="In" Type="String" />

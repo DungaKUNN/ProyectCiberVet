@@ -482,6 +482,14 @@
     <Parameter Name="idPedCabe" Type="int" Mode="In" />
     <Parameter Name="idEstado" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_EditarMascota" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idmascota" Type="int" Mode="In" />
+    <Parameter Name="nombre" Type="varchar" Mode="In" />
+    <Parameter Name="idespecie" Type="int" Mode="In" />
+    <Parameter Name="sexo" Type="varchar" Mode="In" />
+    <Parameter Name="idraza" Type="int" Mode="In" />
+    <Parameter Name="foto" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_EditarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idusu" Type="int" Mode="In" />
     <Parameter Name="dniusu" Type="varchar" Mode="In" />

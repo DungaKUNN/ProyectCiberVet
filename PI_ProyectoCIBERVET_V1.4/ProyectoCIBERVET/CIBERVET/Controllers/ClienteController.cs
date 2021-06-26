@@ -251,6 +251,54 @@ namespace CIBERVET.Controllers
             return lista;
         }
 
+        public ActionResult EditarMascota(int id)
+        {
+            MASCOTA mas = db.MASCOTA.Find(id);
+            Mascota prueba = new Mascota();
+            prueba.idmascota = mas.idmascota;
+            prueba.nombre = mas.nombre.ToString();
+            prueba.idespecie = mas.idespecie;
+            prueba.sexo = mas.sexo.ToString();
+            prueba.idraza = mas.idraza;
+            prueba.foto = mas.foto.ToString();
+            prueba.idusuario = mas.idusuario;
+            ViewBag.especie = new SelectList(db.especie_mascota.ToList(), "idespecie", "especie", mas.idespecie);
+            ViewBag.idraza = new SelectList(db.raza_mascota.Where(t => t.idespecie == db.especie_mascota.FirstOrDefault().idespecie).ToList(), "idraza", "raza", mas.idraza);
+            ViewBag.sexo = new SelectList(mas.sexo);
+            return View(prueba);
+        }
+
+        [HttpPost]
+        public ActionResult EditarMascota(Mascota mas)
+        {
+            if (!ModelState.IsValid)
+            {
+                ViewBag.especie = new SelectList(db.especie_mascota.ToList(), "idespecie", "especie", mas.idespecie);
+                ViewBag.idraza = new SelectList(db.raza_mascota.Where(t => t.idespecie == db.especie_mascota.FirstOrDefault().idespecie).ToList(), "idraza", "raza", mas.idraza);
+                ViewBag.sexo = new SelectList(mas.sexo);
+
+                return View(mas);
+            }
+
+            db.sp_EditarMascota(mas.idmascota, mas.nombre, mas.idespecie, mas.sexo, mas.idraza, mas.foto);
+
+
+            return RedirectToAction("ListadoMascotas", "Cliente", routeValues: new { id = Session["UserID"] });
+        }
+
+        [HttpGet]
+        public ActionResult EliminarMascota(int id)
+        {
+            using (db)
+            {
+                var tabla = db.MASCOTA.Find(id);
+                db.MASCOTA.Remove(tabla);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("ListadoMascotas", "Cliente", routeValues: new { id = Session["UserID"] });
+        }
+
         public ActionResult CatalogoProductos(int? id = 0)
         {
             List<tb_producto> ListarProductos;

@@ -156,6 +156,35 @@ namespace CIBERVET.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EditarEstadoPedido", idPedCabeParameter, idEstadoParameter);
         }
     
+        public virtual int sp_EditarMascota(Nullable<int> idmascota, string nombre, Nullable<int> idespecie, string sexo, Nullable<int> idraza, string foto)
+        {
+            var idmascotaParameter = idmascota.HasValue ?
+                new ObjectParameter("idmascota", idmascota) :
+                new ObjectParameter("idmascota", typeof(int));
+    
+            var nombreParameter = nombre != null ?
+                new ObjectParameter("nombre", nombre) :
+                new ObjectParameter("nombre", typeof(string));
+    
+            var idespecieParameter = idespecie.HasValue ?
+                new ObjectParameter("idespecie", idespecie) :
+                new ObjectParameter("idespecie", typeof(int));
+    
+            var sexoParameter = sexo != null ?
+                new ObjectParameter("sexo", sexo) :
+                new ObjectParameter("sexo", typeof(string));
+    
+            var idrazaParameter = idraza.HasValue ?
+                new ObjectParameter("idraza", idraza) :
+                new ObjectParameter("idraza", typeof(int));
+    
+            var fotoParameter = foto != null ?
+                new ObjectParameter("foto", foto) :
+                new ObjectParameter("foto", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EditarMascota", idmascotaParameter, nombreParameter, idespecieParameter, sexoParameter, idrazaParameter, fotoParameter);
+        }
+    
         public virtual int sp_EditarUsuario(Nullable<int> idusu, string dniusu, string nomusu, string apeusu, string logusu, string passusu, string celusu, string corusu, string dirusu, Nullable<int> iddis)
         {
             var idusuParameter = idusu.HasValue ?

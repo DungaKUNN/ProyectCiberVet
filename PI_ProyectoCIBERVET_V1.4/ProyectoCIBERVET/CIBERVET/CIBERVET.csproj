@@ -161,6 +161,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CIBERVETModel.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entidades\Mascota.cs" />
     <Compile Include="Models\Entidades\tb_distrito.cs" />
     <Compile Include="Models\Entidades\TIPOUSUARIO.cs" />
     <Compile Include="Models\Entidades\Usuario.cs" />
@@ -905,6 +906,7 @@
     <Content Include="Views\Veterinaria\RegistrarProducto.cshtml" />
     <Content Include="Views\Veterinaria\RegistrarServicio.cshtml" />
     <Content Include="Views\Veterinaria\TrackingPersonalVentas.cshtml" />
+    <Content Include="Views\Cliente\EditarMascota.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

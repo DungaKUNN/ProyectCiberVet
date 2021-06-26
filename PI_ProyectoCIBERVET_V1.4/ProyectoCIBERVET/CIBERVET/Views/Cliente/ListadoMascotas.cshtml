@@ -36,7 +36,12 @@
                 <th>
                     <p>Foto</p>
                 </th>
-                <th></th>
+                <th>
+                    <p>Editar</p>
+                </th>
+                <th>
+                    <p>Eliminar</p>
+                </th>  
             </tr>
 
             @foreach (var item in Model)
@@ -59,6 +64,13 @@
                         {
                             <img class="thumbnail" src="~/images/@item.foto" />//AQUI LISTA LA FOTO PERO DE PRODUCTO POR ESO SALE VACIA
                         }
+                    </td>
+
+                                        <td>
+                        <a href="~/Cliente/EditarMascota?id=@item.idmascota" class="btn btn-success" value="">Editar Mascota</a>
+                    </td>
+                    <td>
+                        <a href="~/Cliente/EliminarMascota?id=@item.idmascota" class="btn btn-danger" value="">Eliminar</a>
                     </td>
                 </tr>
             }
