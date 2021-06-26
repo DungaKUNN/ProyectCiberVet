@@ -911,6 +911,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="fonts\NewFolder1\" />
+    <Folder Include="images\FotosMascotas\" />
     <Folder Include="images\FotosProductos\" />
     <Folder Include="Views\Generic\" />
   </ItemGroup>

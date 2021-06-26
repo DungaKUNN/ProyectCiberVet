@@ -122,6 +122,10 @@ namespace CIBERVET.Controllers
                 m.foto = foto3.FileName;
 
                 InsertarMascota(m);
+
+                foto3.SaveAs(Path.Combine(Server.MapPath("~/images/FotosMascotas/"),
+                             Path.GetFileName(foto3.FileName)));
+
                 var id = Session["UserID"];
                 return RedirectToAction("ListadoMascotas","Cliente", routeValues: new { id = id });
             }
@@ -269,7 +273,7 @@ namespace CIBERVET.Controllers
         }
 
         [HttpPost]
-        public ActionResult EditarMascota(Mascota mas)
+        public ActionResult EditarMascota(Mascota mas, HttpPostedFileBase foto3)
         {
             if (!ModelState.IsValid)
             {
@@ -278,6 +282,13 @@ namespace CIBERVET.Controllers
                 ViewBag.sexo = new SelectList(mas.sexo);
 
                 return View(mas);
+            }
+
+            if (foto3 != null)
+            {
+                mas.foto = foto3.FileName;
+                foto3.SaveAs(Path.Combine(Server.MapPath("~/images/FotosMascotas/"),
+                             Path.GetFileName(foto3.FileName)));
             }
 
             db.sp_EditarMascota(mas.idmascota, mas.nombre, mas.idespecie, mas.sexo, mas.idraza, mas.foto);
