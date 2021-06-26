@@ -127,11 +127,12 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
-    <Compile Include="Controllers\AdministradorController.cs" />
     <Compile Include="Controllers\ClienteController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\GenericController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PagPrinController.cs" />
+    <Compile Include="Controllers\VeterinariaController.cs" />
+    <Compile Include="Filters\AutorizarUsuario.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -217,6 +218,12 @@
     <Compile Include="Models\tb_estado.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\tb_modulo.cs">
+      <DependentUpon>CIBERVETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tb_operacion.cs">
+      <DependentUpon>CIBERVETModel.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\tb_pedidoCabe.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
@@ -229,10 +236,16 @@
     <Compile Include="Models\tb_proveedor.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="Models\tb_reservarservicio.cs">
+    <Compile Include="Models\tb_rol.cs">
+      <DependentUpon>CIBERVETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tb_rol_operacion.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\tb_servicio.cs">
+      <DependentUpon>CIBERVETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\tb_usuario.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\TIPOUSUARIO.cs">
@@ -703,6 +716,11 @@
     <Content Include="Scripts\ckeditor\package.json" />
     <Content Include="Scripts\ckeditor\LICENSE.md" />
     <Content Include="Scripts\ckeditor\CHANGES.md" />
+    <Content Include="fonts\FontAwesome.otf" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
     <EntityDeploy Include="Models\CIBERVETModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>CIBERVETModel.Designer.cs</LastGenOutput>
@@ -710,11 +728,6 @@
     <Content Include="Models\CIBERVETModel.edmx.diagram">
       <DependentUpon>CIBERVETModel.edmx</DependentUpon>
     </Content>
-    <Content Include="fonts\FontAwesome.otf" />
-    <Content Include="fonts\fontawesome-webfont.woff2" />
-    <Content Include="fonts\fontawesome-webfont.woff" />
-    <Content Include="fonts\fontawesome-webfont.ttf" />
-    <Content Include="fonts\fontawesome-webfont.eot" />
     <None Include="Scripts\jquery-3.6.0.intellisense.js" />
     <Content Include="Scripts\jquery-3.6.0.js" />
     <Content Include="Scripts\jquery-3.6.0.min.js" />
@@ -838,27 +851,12 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
     <Content Include="vendor\bootstrap\css\bootstrap-grid.css.map" />
     <Content Include="vendor\bootstrap\css\bootstrap-grid.min.css.map" />
     <Content Include="vendor\bootstrap\css\bootstrap-reboot.css.map" />
     <Content Include="vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
     <Content Include="vendor\bootstrap\css\bootstrap.css.map" />
     <Content Include="vendor\bootstrap\css\bootstrap.min.css.map" />
-    <Content Include="Views\Administrador\ModificarProducto.cshtml" />
-    <Content Include="Views\Administrador\DetalleServicio.cshtml" />
-    <Content Include="Views\Administrador\DetalleProducto.cshtml" />
-    <Content Include="Views\Administrador\EliminarProducto.cshtml" />
-    <Content Include="Views\Administrador\EliminarServicio.cshtml" />
-    <Content Include="Views\Administrador\HomeAdministrador.cshtml" />
-    <Content Include="Views\Administrador\ListadoServicios.cshtml" />
-    <Content Include="Views\Administrador\ListadoProductos.cshtml" />
-    <Content Include="Views\Administrador\RegistrarProducto.cshtml" />
-    <Content Include="Views\Administrador\RegistrarServicio.cshtml" />
-    <Content Include="Views\Administrador\LoginAdmin.cshtml" />
-    <Content Include="Views\Administrador\ModificarServicio.cshtml" />
     <Content Include="Views\Cliente\ContactanosCliente.cshtml" />
     <Content Include="Views\Cliente\HomeCliente.cshtml" />
     <Content Include="Views\Cliente\Login2.cshtml" />
@@ -871,7 +869,7 @@
     <Content Include="Views\Layout\_Layout.cshtml" />
     <Content Include="Views\Cliente\RegistrarMascota.cshtml" />
     <Content Include="Views\Cliente\PerfilClient.cshtml" />
-    <Content Include="Views\Layout\_Layout_Session_Admin.cshtml" />
+    <Content Include="Views\Layout\_Layout_Session_Veterinaria.cshtml" />
     <Content Include="Views\Cliente\ListadoMascotas.cshtml" />
     <Content Include="Views\Cliente\EditarPerfil.cshtml" />
     <Content Include="Scripts\umd\popper.min.js.map" />
@@ -890,16 +888,28 @@
     <Content Include="Views\Cliente\AllPedidos.cshtml" />
     <Content Include="Views\Cliente\PagarCarrito.cshtml" />
     <Content Include="Views\Cliente\TrackingCliente.cshtml" />
-    <Content Include="Views\Administrador\ListadoPedidosAdmin.cshtml" />
-    <Content Include="Views\Administrador\ModificarEstadoPedido.cshtml" />
     <Content Include="Views\Cliente\VerServiciosDetallado.cshtml" />
     <Content Include="Views\Cliente\ServicioCliente.cshtml" />
+    <Content Include="Views\Error\UnauthorizedOperation.cshtml" />
+    <Content Include="Views\Veterinaria\DetalleProducto.cshtml" />
+    <Content Include="Views\Veterinaria\DetalleServicio.cshtml" />
+    <Content Include="Views\Veterinaria\EliminarProducto.cshtml" />
+    <Content Include="Views\Veterinaria\EliminarServicio.cshtml" />
+    <Content Include="Views\Veterinaria\HomeVeterinaria.cshtml" />
+    <Content Include="Views\Veterinaria\LoginVeterinaria.cshtml" />
+    <Content Include="Views\Veterinaria\MantenimientoProductos.cshtml" />
+    <Content Include="Views\Veterinaria\MantenimientoServicios.cshtml" />
+    <Content Include="Views\Veterinaria\ModificarEstadoPedido.cshtml" />
+    <Content Include="Views\Veterinaria\ModificarProducto.cshtml" />
+    <Content Include="Views\Veterinaria\ModificarServicio.cshtml" />
+    <Content Include="Views\Veterinaria\RegistrarProducto.cshtml" />
+    <Content Include="Views\Veterinaria\RegistrarServicio.cshtml" />
+    <Content Include="Views\Veterinaria\TrackingPersonalVentas.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="fonts\NewFolder1\" />
-    <Folder Include="FotosMascota\" />
-    <Folder Include="FotosProductos\" />
+    <Folder Include="images\FotosProductos\" />
     <Folder Include="Views\Generic\" />
   </ItemGroup>
   <ItemGroup>

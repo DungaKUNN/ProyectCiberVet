@@ -77,6 +77,7 @@
     <NavigationProperty Name="Administrador" Relationship="Self.fk_admindis" FromRole="tb_distrito" ToRole="Administrador" />
     <NavigationProperty Name="tb_proveedor" Relationship="Self.fk_provedis" FromRole="tb_distrito" ToRole="tb_proveedor" />
     <NavigationProperty Name="usuario" Relationship="Self.fk_usudis" FromRole="tb_distrito" ToRole="usuario" />
+    <NavigationProperty Name="tb_usuario" Relationship="Self.fk_usudis2" FromRole="tb_distrito" ToRole="tb_usuario" />
   </EntityType>
   <EntityType Name="tb_estado">
     <Key>
@@ -85,6 +86,24 @@
     <Property Name="id_estado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="descripcion_estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
     <NavigationProperty Name="tb_pedidoCabe" Relationship="Self.fk_pedest" FromRole="tb_estado" ToRole="tb_pedidoCabe" />
+  </EntityType>
+  <EntityType Name="tb_modulo">
+    <Key>
+      <PropertyRef Name="id_modulo" />
+    </Key>
+    <Property Name="id_modulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre_modulo" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tb_operacion" Relationship="Self.fk_operamodu" FromRole="tb_modulo" ToRole="tb_operacion" />
+  </EntityType>
+  <EntityType Name="tb_operacion">
+    <Key>
+      <PropertyRef Name="id_operacion" />
+    </Key>
+    <Property Name="id_operacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre_operacion" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <Property Name="id_modulo" Type="Int32" />
+    <NavigationProperty Name="tb_modulo" Relationship="Self.fk_operamodu" FromRole="tb_operacion" ToRole="tb_modulo" />
+    <NavigationProperty Name="tb_rol_operacion" Relationship="Self.fk_rolOpe_opera" FromRole="tb_operacion" ToRole="tb_rol_operacion" />
   </EntityType>
   <EntityType Name="tb_pedidoCabe">
     <Key>
@@ -147,6 +166,25 @@
     <NavigationProperty Name="tb_distrito" Relationship="Self.fk_provedis" FromRole="tb_proveedor" ToRole="tb_distrito" />
     <NavigationProperty Name="tb_producto" Relationship="Self.fk_prodprove" FromRole="tb_proveedor" ToRole="tb_producto" />
   </EntityType>
+  <EntityType Name="tb_rol">
+    <Key>
+      <PropertyRef Name="id_rol" />
+    </Key>
+    <Property Name="id_rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="nombre_rol" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tb_rol_operacion" Relationship="Self.fk_rolOpe_rol" FromRole="tb_rol" ToRole="tb_rol_operacion" />
+    <NavigationProperty Name="tb_usuario" Relationship="Self.fk_usurol" FromRole="tb_rol" ToRole="tb_usuario" />
+  </EntityType>
+  <EntityType Name="tb_rol_operacion">
+    <Key>
+      <PropertyRef Name="id_rol_operacion" />
+    </Key>
+    <Property Name="id_rol_operacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="id_rol" Type="Int32" />
+    <Property Name="id_operacion" Type="Int32" />
+    <NavigationProperty Name="tb_operacion" Relationship="Self.fk_rolOpe_opera" FromRole="tb_rol_operacion" ToRole="tb_operacion" />
+    <NavigationProperty Name="tb_rol" Relationship="Self.fk_rolOpe_rol" FromRole="tb_rol_operacion" ToRole="tb_rol" />
+  </EntityType>
   <EntityType Name="tb_servicio">
     <Key>
       <PropertyRef Name="id_servicio" />
@@ -157,6 +195,23 @@
     <Property Name="descripcion_servicio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="horario_servicio" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
     <Property Name="fecha_servicio" Type="DateTime" Nullable="false" Precision="0" />
+  </EntityType>
+  <EntityType Name="tb_usuario">
+    <Key>
+      <PropertyRef Name="id_usuario" />
+    </Key>
+    <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="dni_usuario" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="nombre_usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="apellido_usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="direccion_usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+    <Property Name="celular_usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+    <Property Name="email_usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="password_usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="id_dis" Type="Int32" />
+    <Property Name="id_rol" Type="Int32" />
+    <NavigationProperty Name="tb_distrito" Relationship="Self.fk_usudis2" FromRole="tb_usuario" ToRole="tb_distrito" />
+    <NavigationProperty Name="tb_rol" Relationship="Self.fk_usurol" FromRole="tb_usuario" ToRole="tb_rol" />
   </EntityType>
   <EntityType Name="TIPOUSUARIO">
     <Key>
@@ -307,6 +362,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_usudis2">
+    <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_distrito">
+        <PropertyRef Name="id_dis" />
+      </Principal>
+      <Dependent Role="tb_usuario">
+        <PropertyRef Name="id_dis" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_pedest">
     <End Role="tb_estado" Type="Self.tb_estado" Multiplicity="0..1" />
     <End Role="tb_pedidoCabe" Type="Self.tb_pedidoCabe" Multiplicity="*" />
@@ -316,6 +383,30 @@
       </Principal>
       <Dependent Role="tb_pedidoCabe">
         <PropertyRef Name="id_estado" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_operamodu">
+    <End Role="tb_modulo" Type="Self.tb_modulo" Multiplicity="0..1" />
+    <End Role="tb_operacion" Type="Self.tb_operacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_modulo">
+        <PropertyRef Name="id_modulo" />
+      </Principal>
+      <Dependent Role="tb_operacion">
+        <PropertyRef Name="id_modulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_rolOpe_opera">
+    <End Role="tb_operacion" Type="Self.tb_operacion" Multiplicity="0..1" />
+    <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_operacion">
+        <PropertyRef Name="id_operacion" />
+      </Principal>
+      <Dependent Role="tb_rol_operacion">
+        <PropertyRef Name="id_operacion" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -367,6 +458,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_rolOpe_rol">
+    <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="0..1" />
+    <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_rol">
+        <PropertyRef Name="id_rol" />
+      </Principal>
+      <Dependent Role="tb_rol_operacion">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_usurol">
+    <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="0..1" />
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_rol">
+        <PropertyRef Name="id_rol" />
+      </Principal>
+      <Dependent Role="tb_usuario">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_usutipo">
     <End Role="TIPOUSUARIO" Type="Self.TIPOUSUARIO" Multiplicity="0..1" />
     <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
@@ -388,11 +503,16 @@
     <EntitySet Name="tb_categoria" EntityType="Self.tb_categoria" />
     <EntitySet Name="tb_distrito" EntityType="Self.tb_distrito" />
     <EntitySet Name="tb_estado" EntityType="Self.tb_estado" />
+    <EntitySet Name="tb_modulo" EntityType="Self.tb_modulo" />
+    <EntitySet Name="tb_operacion" EntityType="Self.tb_operacion" />
     <EntitySet Name="tb_pedidoCabe" EntityType="Self.tb_pedidoCabe" />
     <EntitySet Name="tb_pedidoDeta" EntityType="Self.tb_pedidoDeta" />
     <EntitySet Name="tb_producto" EntityType="Self.tb_producto" />
     <EntitySet Name="tb_proveedor" EntityType="Self.tb_proveedor" />
+    <EntitySet Name="tb_rol" EntityType="Self.tb_rol" />
+    <EntitySet Name="tb_rol_operacion" EntityType="Self.tb_rol_operacion" />
     <EntitySet Name="tb_servicio" EntityType="Self.tb_servicio" />
+    <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" />
     <EntitySet Name="TIPOUSUARIO" EntityType="Self.TIPOUSUARIO" />
     <EntitySet Name="usuario" EntityType="Self.usuario" />
     <AssociationSet Name="fk_admindis" Association="Self.fk_admindis">
@@ -435,9 +555,21 @@
       <End Role="tb_distrito" EntitySet="tb_distrito" />
       <End Role="usuario" EntitySet="usuario" />
     </AssociationSet>
+    <AssociationSet Name="fk_usudis2" Association="Self.fk_usudis2">
+      <End Role="tb_distrito" EntitySet="tb_distrito" />
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+    </AssociationSet>
     <AssociationSet Name="fk_pedest" Association="Self.fk_pedest">
       <End Role="tb_estado" EntitySet="tb_estado" />
       <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
+    </AssociationSet>
+    <AssociationSet Name="fk_operamodu" Association="Self.fk_operamodu">
+      <End Role="tb_modulo" EntitySet="tb_modulo" />
+      <End Role="tb_operacion" EntitySet="tb_operacion" />
+    </AssociationSet>
+    <AssociationSet Name="fk_rolOpe_opera" Association="Self.fk_rolOpe_opera">
+      <End Role="tb_operacion" EntitySet="tb_operacion" />
+      <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
     </AssociationSet>
     <AssociationSet Name="fk_detacabe" Association="Self.fk_detacabe">
       <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
@@ -454,6 +586,14 @@
     <AssociationSet Name="fk_prodprove" Association="Self.fk_prodprove">
       <End Role="tb_proveedor" EntitySet="tb_proveedor" />
       <End Role="tb_producto" EntitySet="tb_producto" />
+    </AssociationSet>
+    <AssociationSet Name="fk_rolOpe_rol" Association="Self.fk_rolOpe_rol">
+      <End Role="tb_rol" EntitySet="tb_rol" />
+      <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
+    </AssociationSet>
+    <AssociationSet Name="fk_usurol" Association="Self.fk_usurol">
+      <End Role="tb_rol" EntitySet="tb_rol" />
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
     </AssociationSet>
     <AssociationSet Name="fk_usutipo" Association="Self.fk_usutipo">
       <End Role="TIPOUSUARIO" EntitySet="TIPOUSUARIO" />
@@ -481,6 +621,14 @@
       <Parameter Name="horario" Mode="In" Type="String" />
       <Parameter Name="fecha" Mode="In" Type="DateTime" />
     </FunctionImport>
+    <FunctionImport Name="sp_boletaPedido" ReturnType="Collection(BD_CIBERVETModel.sp_boletaPedido_Result)">
+      <Parameter Name="idUsu" Mode="In" Type="Int32" />
+      <Parameter Name="idPed" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_EditarEstadoPedido">
+      <Parameter Name="idPedCabe" Mode="In" Type="Int32" />
+      <Parameter Name="idEstado" Mode="In" Type="Int32" />
+    </FunctionImport>
     <FunctionImport Name="sp_EditarUsuario">
       <Parameter Name="idusu" Mode="In" Type="Int32" />
       <Parameter Name="dniusu" Mode="In" Type="String" />
@@ -492,6 +640,9 @@
       <Parameter Name="corusu" Mode="In" Type="String" />
       <Parameter Name="dirusu" Mode="In" Type="String" />
       <Parameter Name="iddis" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_FiltroPedidoPorApellido" ReturnType="Collection(BD_CIBERVETModel.sp_FiltroPedidoPorApellido_Result)">
+      <Parameter Name="apeUsu" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_Insertar_Mascotas">
       <Parameter Name="nombre" Mode="In" Type="String" />
@@ -524,18 +675,32 @@
     <FunctionImport Name="sp_Listado_Mascotas" ReturnType="Collection(BD_CIBERVETModel.sp_Listado_Mascotas_Result)">
       <Parameter Name="idusuario" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_ListarCategorias" ReturnType="Collection(BD_CIBERVETModel.sp_ListarCategorias_Result)" />
-    <FunctionImport Name="sp_ListarProductos" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProductos_Result)" />
-    <FunctionImport Name="sp_ListarProveedores" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProveedores_Result)" />
-    <FunctionImport Name="sp_ListarServicios" ReturnType="Collection(BD_CIBERVETModel.sp_ListarServicios_Result)" />
-    <FunctionImport Name="sp_reporteVenta" ReturnType="Collection(BD_CIBERVETModel.sp_reporteVenta_Result)">
+    <FunctionImport Name="sp_listaPedidos" ReturnType="Collection(BD_CIBERVETModel.sp_listaPedidos_Result)">
       <Parameter Name="idUsu" Mode="In" Type="Int32" />
     </FunctionImport>
-    <FunctionImport Name="sp_reporteVentaPorPedido" ReturnType="Collection(BD_CIBERVETModel.sp_reporteVentaPorPedido_Result)">
+    <FunctionImport Name="sp_listaPedidosDetallado" ReturnType="Collection(BD_CIBERVETModel.sp_listaPedidosDetallado_Result)">
       <Parameter Name="idUsu" Mode="In" Type="Int32" />
       <Parameter Name="idPed" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="sp_ListarCategorias" ReturnType="Collection(BD_CIBERVETModel.sp_ListarCategorias_Result)" />
+    <FunctionImport Name="sp_ListarEstados" ReturnType="Collection(BD_CIBERVETModel.sp_ListarEstados_Result)" />
+    <FunctionImport Name="sp_ListarProductos" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProductos_Result)" />
+    <FunctionImport Name="sp_ListarProveedores" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProveedores_Result)" />
+    <FunctionImport Name="sp_ListarServicios" ReturnType="Collection(BD_CIBERVETModel.sp_ListarServicios_Result)" />
   </EntityContainer>
+  <ComplexType Name="sp_boletaPedido_Result">
+    <Property Type="String" Name="descripcionSimple_prod" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="precio_prod" Nullable="false" Precision="10" Scale="2" />
+    <Property Type="Int32" Name="cantidad_pedido" Nullable="false" />
+    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
+    <Property Type="Decimal" Name="total_pedido" Nullable="false" Precision="18" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="sp_FiltroPedidoPorApellido_Result">
+    <Property Type="Int32" Name="id_pedido" Nullable="false" />
+    <Property Type="String" Name="Column1" Nullable="false" MaxLength="92" />
+    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
+    <Property Type="String" Name="descripcion_estado" Nullable="false" MaxLength="50" />
+  </ComplexType>
   <ComplexType Name="sp_Listado_Mascotas_Result">
     <Property Type="Int32" Name="Codigo_de_Mascota" Nullable="false" />
     <Property Type="String" Name="Nombre" Nullable="false" MaxLength="45" />
@@ -544,9 +709,29 @@
     <Property Type="String" Name="Raza" Nullable="false" MaxLength="100" />
     <Property Type="String" Name="Foto" Nullable="false" MaxLength="100" />
   </ComplexType>
+  <ComplexType Name="sp_listaPedidos_Result">
+    <Property Type="Int32" Name="id_pedido" Nullable="false" />
+    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
+    <Property Type="String" Name="descripcion_estado" Nullable="false" MaxLength="50" />
+    <Property Type="Decimal" Name="total_pedido" Nullable="false" Precision="18" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="sp_listaPedidosDetallado_Result">
+    <Property Type="Int32" Name="id_pedido" Nullable="false" />
+    <Property Type="String" Name="Column1" Nullable="false" MaxLength="92" />
+    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
+    <Property Type="String" Name="descripcion_estado" Nullable="false" MaxLength="50" />
+    <Property Type="String" Name="descripcionSimple_prod" Nullable="false" MaxLength="100" />
+    <Property Type="Decimal" Name="precioPorUnidad" Nullable="false" Precision="18" Scale="0" />
+    <Property Type="Int32" Name="cantidad_pedido" Nullable="false" />
+    <Property Type="Decimal" Name="total_pedido" Nullable="false" Precision="18" Scale="0" />
+  </ComplexType>
   <ComplexType Name="sp_ListarCategorias_Result">
     <Property Type="Int32" Name="id_cate" Nullable="false" />
     <Property Type="String" Name="descripcion_cate" Nullable="false" MaxLength="80" />
+  </ComplexType>
+  <ComplexType Name="sp_ListarEstados_Result">
+    <Property Type="Int32" Name="id_estado" Nullable="false" />
+    <Property Type="String" Name="descripcion_estado" Nullable="false" MaxLength="50" />
   </ComplexType>
   <ComplexType Name="sp_ListarProductos_Result">
     <Property Type="Int32" Name="id_prod" Nullable="false" />
@@ -573,19 +758,5 @@
     <Property Type="String" Name="descripcion_servicio" Nullable="false" MaxLength="Max" />
     <Property Type="String" Name="horario_servicio" Nullable="false" MaxLength="40" />
     <Property Type="DateTime" Name="fecha_servicio" Nullable="false" />
-  </ComplexType>
-  <ComplexType Name="sp_reporteVenta_Result">
-    <Property Type="String" Name="descripcionSimple_prod" Nullable="false" MaxLength="100" />
-    <Property Type="Decimal" Name="precio_prod" Nullable="false" Precision="10" Scale="2" />
-    <Property Type="Int32" Name="cantidad_pedido" Nullable="false" />
-    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
-    <Property Type="Decimal" Name="total_pedido" Nullable="false" Precision="18" Scale="0" />
-  </ComplexType>
-  <ComplexType Name="sp_reporteVentaPorPedido_Result">
-    <Property Type="String" Name="descripcionSimple_prod" Nullable="false" MaxLength="100" />
-    <Property Type="Decimal" Name="precio_prod" Nullable="false" Precision="10" Scale="2" />
-    <Property Type="Int32" Name="cantidad_pedido" Nullable="false" />
-    <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
-    <Property Type="Decimal" Name="total_pedido" Nullable="false" Precision="18" Scale="0" />
   </ComplexType>
 </Schema>

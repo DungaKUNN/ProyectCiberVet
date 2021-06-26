@@ -12,12 +12,13 @@ namespace CIBERVET.Models
     using System;
     using System.Collections.Generic;
     
-    public partial class tb_reservarservicio
+    public partial class tb_rol_operacion
     {
-        public int id_reservarservicio { get; set; }
-        public string descripcionreserva { get; set; }
-        public Nullable<int> idservicio { get; set; }
+        public int id_rol_operacion { get; set; }
+        public Nullable<int> id_rol { get; set; }
+        public Nullable<int> id_operacion { get; set; }
     
-        public virtual tb_servicio tb_servicio { get; set; }
+        public virtual tb_operacion tb_operacion { get; set; }
+        public virtual tb_rol tb_rol { get; set; }
     }
 }

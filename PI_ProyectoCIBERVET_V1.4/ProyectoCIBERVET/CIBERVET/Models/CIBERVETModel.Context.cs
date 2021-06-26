@@ -35,14 +35,18 @@ namespace CIBERVET.Models
         public virtual DbSet<tb_categoria> tb_categoria { get; set; }
         public virtual DbSet<tb_distrito> tb_distrito { get; set; }
         public virtual DbSet<tb_estado> tb_estado { get; set; }
+        public virtual DbSet<tb_modulo> tb_modulo { get; set; }
+        public virtual DbSet<tb_operacion> tb_operacion { get; set; }
         public virtual DbSet<tb_pedidoCabe> tb_pedidoCabe { get; set; }
         public virtual DbSet<tb_pedidoDeta> tb_pedidoDeta { get; set; }
         public virtual DbSet<tb_producto> tb_producto { get; set; }
         public virtual DbSet<tb_proveedor> tb_proveedor { get; set; }
+        public virtual DbSet<tb_rol> tb_rol { get; set; }
+        public virtual DbSet<tb_rol_operacion> tb_rol_operacion { get; set; }
         public virtual DbSet<tb_servicio> tb_servicio { get; set; }
+        public virtual DbSet<tb_usuario> tb_usuario { get; set; }
         public virtual DbSet<TIPOUSUARIO> TIPOUSUARIO { get; set; }
         public virtual DbSet<usuario> usuario { get; set; }
-        public virtual DbSet<tb_reservarservicio> tb_reservarservicio { get; set; }
     
         public virtual int sp_ActualizarProducto(Nullable<int> id, string desSimple, Nullable<decimal> pre, Nullable<int> stk, string serie, string marca, Nullable<int> idCat, Nullable<int> idProve, string desHTML, string foto1, string foto2, string foto3)
         {

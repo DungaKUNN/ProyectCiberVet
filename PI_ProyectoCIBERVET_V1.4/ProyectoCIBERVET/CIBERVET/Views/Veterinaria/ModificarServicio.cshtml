@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "ModificarServicio";
-    Layout = "~/Views/Layout/_Layout_Session_Admin.cshtml";
+    Layout = "~/Views/Layout/_Layout_Session_Veterinaria.cshtml";
 }
 
 <h2>Modificar Servicio</h2>
@@ -36,6 +36,14 @@
         <div class="form-group">
             @Html.LabelFor(model => model.descripcion, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
+                @* En Hosting
+                    @Html.TextAreaFor(model => model.descripcion, new { htmlAttributes = new { @class = "form-control" } })
+                *@
+
+                @* En local
+                    @Html.TextAreaFor(model => model.descripcion, new { @class = "ckeditor" })
+                *@
+
                 @Html.TextAreaFor(model => model.descripcion, new { @class = "ckeditor" })
                 @Html.ValidationMessageFor(model => model.descripcion, "", new { @class = "text-danger" })
             </div>
@@ -66,7 +74,7 @@
 }
 
 <div>
-    @Html.ActionLink("Regresar a la Lista", "ListadoServicios")
+    @Html.ActionLink("Regresar a la Lista", "MantenimientoServicios")
 </div>
 <script>
     CKEDITOR.replace('ckeditor');

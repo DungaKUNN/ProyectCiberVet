@@ -71,6 +71,21 @@
     <Property Name="id_estado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="descripcion_estado" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <EntityType Name="tb_modulo">
+    <Key>
+      <PropertyRef Name="id_modulo" />
+    </Key>
+    <Property Name="id_modulo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_modulo" Type="varchar" MaxLength="80" />
+  </EntityType>
+  <EntityType Name="tb_operacion">
+    <Key>
+      <PropertyRef Name="id_operacion" />
+    </Key>
+    <Property Name="id_operacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_operacion" Type="varchar" MaxLength="80" />
+    <Property Name="id_modulo" Type="int" />
+  </EntityType>
   <EntityType Name="tb_pedidoCabe">
     <Key>
       <PropertyRef Name="id_pedido" />
@@ -121,6 +136,21 @@
     <Property Name="email_prove" Type="varchar" MaxLength="40" />
     <Property Name="id_dis" Type="int" />
   </EntityType>
+  <EntityType Name="tb_rol">
+    <Key>
+      <PropertyRef Name="id_rol" />
+    </Key>
+    <Property Name="id_rol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="nombre_rol" Type="varchar" MaxLength="80" />
+  </EntityType>
+  <EntityType Name="tb_rol_operacion">
+    <Key>
+      <PropertyRef Name="id_rol_operacion" />
+    </Key>
+    <Property Name="id_rol_operacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="id_rol" Type="int" />
+    <Property Name="id_operacion" Type="int" />
+  </EntityType>
   <EntityType Name="tb_servicio">
     <Key>
       <PropertyRef Name="id_servicio" />
@@ -131,6 +161,21 @@
     <Property Name="descripcion_servicio" Type="text" Nullable="false" />
     <Property Name="horario_servicio" Type="varchar" MaxLength="40" Nullable="false" />
     <Property Name="fecha_servicio" Type="date" Nullable="false" />
+  </EntityType>
+  <EntityType Name="tb_usuario">
+    <Key>
+      <PropertyRef Name="id_usuario" />
+    </Key>
+    <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="dni_usuario" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="nombre_usuario" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="apellido_usuario" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="direccion_usuario" Type="varchar" MaxLength="100" />
+    <Property Name="celular_usuario" Type="varchar" MaxLength="20" />
+    <Property Name="email_usuario" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="password_usuario" Type="varchar" MaxLength="100" Nullable="false" />
+    <Property Name="id_dis" Type="int" />
+    <Property Name="id_rol" Type="int" />
   </EntityType>
   <EntityType Name="TIPOUSUARIO">
     <Key>
@@ -239,6 +284,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_operamodu">
+    <End Role="tb_modulo" Type="Self.tb_modulo" Multiplicity="0..1" />
+    <End Role="tb_operacion" Type="Self.tb_operacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_modulo">
+        <PropertyRef Name="id_modulo" />
+      </Principal>
+      <Dependent Role="tb_operacion">
+        <PropertyRef Name="id_modulo" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_pedest">
     <End Role="tb_estado" Type="Self.tb_estado" Multiplicity="0..1" />
     <End Role="tb_pedidoCabe" Type="Self.tb_pedidoCabe" Multiplicity="*" />
@@ -323,6 +380,30 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="fk_rolOpe_opera">
+    <End Role="tb_operacion" Type="Self.tb_operacion" Multiplicity="0..1" />
+    <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_operacion">
+        <PropertyRef Name="id_operacion" />
+      </Principal>
+      <Dependent Role="tb_rol_operacion">
+        <PropertyRef Name="id_operacion" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_rolOpe_rol">
+    <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="0..1" />
+    <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_rol">
+        <PropertyRef Name="id_rol" />
+      </Principal>
+      <Dependent Role="tb_rol_operacion">
+        <PropertyRef Name="id_rol" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="fk_usudis">
     <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
     <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
@@ -332,6 +413,30 @@
       </Principal>
       <Dependent Role="usuario">
         <PropertyRef Name="IdDistritos" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_usudis2">
+    <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_distrito">
+        <PropertyRef Name="id_dis" />
+      </Principal>
+      <Dependent Role="tb_usuario">
+        <PropertyRef Name="id_dis" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="fk_usurol">
+    <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="0..1" />
+    <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_rol">
+        <PropertyRef Name="id_rol" />
+      </Principal>
+      <Dependent Role="tb_usuario">
+        <PropertyRef Name="id_rol" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -369,6 +474,14 @@
     <Parameter Name="horario" Type="varchar" Mode="In" />
     <Parameter Name="fecha" Type="date" Mode="In" />
   </Function>
+  <Function Name="sp_boletaPedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idUsu" Type="int" Mode="In" />
+    <Parameter Name="idPed" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_EditarEstadoPedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idPedCabe" Type="int" Mode="In" />
+    <Parameter Name="idEstado" Type="int" Mode="In" />
+  </Function>
   <Function Name="sp_EditarUsuario" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idusu" Type="int" Mode="In" />
     <Parameter Name="dniusu" Type="varchar" Mode="In" />
@@ -380,6 +493,9 @@
     <Parameter Name="corusu" Type="varchar" Mode="In" />
     <Parameter Name="dirusu" Type="varchar" Mode="In" />
     <Parameter Name="iddis" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_FiltroPedidoPorApellido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="apeUsu" Type="varchar" Mode="In" />
   </Function>
   <Function Name="sp_Insertar_Mascotas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="nombre" Type="varchar" Mode="In" />
@@ -412,17 +528,18 @@
   <Function Name="sp_Listado_Mascotas" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idusuario" Type="int" Mode="In" />
   </Function>
-  <Function Name="sp_ListarCategorias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-  <Function Name="sp_ListarProductos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-  <Function Name="sp_ListarProveedores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-  <Function Name="sp_ListarServicios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
-  <Function Name="sp_reporteVenta" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+  <Function Name="sp_listaPedidos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idUsu" Type="int" Mode="In" />
   </Function>
-  <Function Name="sp_reporteVentaPorPedido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+  <Function Name="sp_listaPedidosDetallado" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="idUsu" Type="int" Mode="In" />
     <Parameter Name="idPed" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_ListarCategorias" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_ListarEstados" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_ListarProductos" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_ListarProveedores" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+  <Function Name="sp_ListarServicios" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
   <EntityContainer Name="BD_CIBERVETModelStoreContainer">
     <EntitySet Name="Administrador" EntityType="Self.Administrador" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="Carrito" EntityType="Self.Carrito" Schema="dbo" store:Type="Tables" />
@@ -432,11 +549,16 @@
     <EntitySet Name="tb_categoria" EntityType="Self.tb_categoria" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_distrito" EntityType="Self.tb_distrito" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_estado" EntityType="Self.tb_estado" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_modulo" EntityType="Self.tb_modulo" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_operacion" EntityType="Self.tb_operacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_pedidoCabe" EntityType="Self.tb_pedidoCabe" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_pedidoDeta" EntityType="Self.tb_pedidoDeta" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_producto" EntityType="Self.tb_producto" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_proveedor" EntityType="Self.tb_proveedor" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_rol" EntityType="Self.tb_rol" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_rol_operacion" EntityType="Self.tb_rol_operacion" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_servicio" EntityType="Self.tb_servicio" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="TIPOUSUARIO" EntityType="Self.TIPOUSUARIO" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
     <AssociationSet Name="fk_admindis" Association="Self.fk_admindis">
@@ -467,6 +589,10 @@
       <End Role="usuario" EntitySet="usuario" />
       <End Role="MASCOTA" EntitySet="MASCOTA" />
     </AssociationSet>
+    <AssociationSet Name="fk_operamodu" Association="Self.fk_operamodu">
+      <End Role="tb_modulo" EntitySet="tb_modulo" />
+      <End Role="tb_operacion" EntitySet="tb_operacion" />
+    </AssociationSet>
     <AssociationSet Name="fk_pedest" Association="Self.fk_pedest">
       <End Role="tb_estado" EntitySet="tb_estado" />
       <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
@@ -495,9 +621,25 @@
       <End Role="especie_mascota" EntitySet="especie_mascota" />
       <End Role="raza_mascota" EntitySet="raza_mascota" />
     </AssociationSet>
+    <AssociationSet Name="fk_rolOpe_opera" Association="Self.fk_rolOpe_opera">
+      <End Role="tb_operacion" EntitySet="tb_operacion" />
+      <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
+    </AssociationSet>
+    <AssociationSet Name="fk_rolOpe_rol" Association="Self.fk_rolOpe_rol">
+      <End Role="tb_rol" EntitySet="tb_rol" />
+      <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
+    </AssociationSet>
     <AssociationSet Name="fk_usudis" Association="Self.fk_usudis">
       <End Role="tb_distrito" EntitySet="tb_distrito" />
       <End Role="usuario" EntitySet="usuario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_usudis2" Association="Self.fk_usudis2">
+      <End Role="tb_distrito" EntitySet="tb_distrito" />
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
+    </AssociationSet>
+    <AssociationSet Name="fk_usurol" Association="Self.fk_usurol">
+      <End Role="tb_rol" EntitySet="tb_rol" />
+      <End Role="tb_usuario" EntitySet="tb_usuario" />
     </AssociationSet>
     <AssociationSet Name="fk_usutipo" Association="Self.fk_usutipo">
       <End Role="TIPOUSUARIO" EntitySet="TIPOUSUARIO" />

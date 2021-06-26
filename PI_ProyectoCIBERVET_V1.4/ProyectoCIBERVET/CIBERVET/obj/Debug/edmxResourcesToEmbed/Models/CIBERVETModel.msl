@@ -80,6 +80,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tb_modulo">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_modulo">
+        <MappingFragment StoreEntitySet="tb_modulo">
+          <ScalarProperty Name="id_modulo" ColumnName="id_modulo" />
+          <ScalarProperty Name="nombre_modulo" ColumnName="nombre_modulo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_operacion">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_operacion">
+        <MappingFragment StoreEntitySet="tb_operacion">
+          <ScalarProperty Name="id_operacion" ColumnName="id_operacion" />
+          <ScalarProperty Name="nombre_operacion" ColumnName="nombre_operacion" />
+          <ScalarProperty Name="id_modulo" ColumnName="id_modulo" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tb_pedidoCabe">
       <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_pedidoCabe">
         <MappingFragment StoreEntitySet="tb_pedidoCabe">
@@ -133,6 +150,23 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tb_rol">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_rol">
+        <MappingFragment StoreEntitySet="tb_rol">
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="nombre_rol" ColumnName="nombre_rol" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_rol_operacion">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_rol_operacion">
+        <MappingFragment StoreEntitySet="tb_rol_operacion">
+          <ScalarProperty Name="id_rol_operacion" ColumnName="id_rol_operacion" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+          <ScalarProperty Name="id_operacion" ColumnName="id_operacion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <EntitySetMapping Name="tb_servicio">
       <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_servicio">
         <MappingFragment StoreEntitySet="tb_servicio">
@@ -142,6 +176,22 @@
           <ScalarProperty Name="descripcion_servicio" ColumnName="descripcion_servicio" />
           <ScalarProperty Name="horario_servicio" ColumnName="horario_servicio" />
           <ScalarProperty Name="fecha_servicio" ColumnName="fecha_servicio" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_usuario">
+      <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_usuario">
+        <MappingFragment StoreEntitySet="tb_usuario">
+          <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+          <ScalarProperty Name="dni_usuario" ColumnName="dni_usuario" />
+          <ScalarProperty Name="nombre_usuario" ColumnName="nombre_usuario" />
+          <ScalarProperty Name="apellido_usuario" ColumnName="apellido_usuario" />
+          <ScalarProperty Name="direccion_usuario" ColumnName="direccion_usuario" />
+          <ScalarProperty Name="celular_usuario" ColumnName="celular_usuario" />
+          <ScalarProperty Name="email_usuario" ColumnName="email_usuario" />
+          <ScalarProperty Name="password_usuario" ColumnName="password_usuario" />
+          <ScalarProperty Name="id_dis" ColumnName="id_dis" />
+          <ScalarProperty Name="id_rol" ColumnName="id_rol" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -172,7 +222,29 @@
     </EntitySetMapping>
     <FunctionImportMapping FunctionImportName="sp_ActualizarProducto" FunctionName="BD_CIBERVETModel.Store.sp_ActualizarProducto" />
     <FunctionImportMapping FunctionImportName="sp_ActualizarServicio" FunctionName="BD_CIBERVETModel.Store.sp_ActualizarServicio" />
+    <FunctionImportMapping FunctionImportName="sp_boletaPedido" FunctionName="BD_CIBERVETModel.Store.sp_boletaPedido">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_boletaPedido_Result">
+          <ScalarProperty Name="descripcionSimple_prod" ColumnName="descripcionSimple_prod" />
+          <ScalarProperty Name="precio_prod" ColumnName="precio_prod" />
+          <ScalarProperty Name="cantidad_pedido" ColumnName="cantidad_pedido" />
+          <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
+          <ScalarProperty Name="total_pedido" ColumnName="total_pedido" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_EditarEstadoPedido" FunctionName="BD_CIBERVETModel.Store.sp_EditarEstadoPedido" />
     <FunctionImportMapping FunctionImportName="sp_EditarUsuario" FunctionName="BD_CIBERVETModel.Store.sp_EditarUsuario" />
+    <FunctionImportMapping FunctionImportName="sp_FiltroPedidoPorApellido" FunctionName="BD_CIBERVETModel.Store.sp_FiltroPedidoPorApellido">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_FiltroPedidoPorApellido_Result">
+          <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
+          <ScalarProperty Name="Column1" ColumnName="Column1" />
+          <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
+          <ScalarProperty Name="descripcion_estado" ColumnName="descripcion_estado" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_Insertar_Mascotas" FunctionName="BD_CIBERVETModel.Store.sp_Insertar_Mascotas" />
     <FunctionImportMapping FunctionImportName="sp_InsertarProducto" FunctionName="BD_CIBERVETModel.Store.sp_InsertarProducto" />
     <FunctionImportMapping FunctionImportName="sp_InsertarServicio" FunctionName="BD_CIBERVETModel.Store.sp_InsertarServicio" />
@@ -188,11 +260,43 @@
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_listaPedidos" FunctionName="BD_CIBERVETModel.Store.sp_listaPedidos">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_listaPedidos_Result">
+          <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
+          <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
+          <ScalarProperty Name="descripcion_estado" ColumnName="descripcion_estado" />
+          <ScalarProperty Name="total_pedido" ColumnName="total_pedido" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_listaPedidosDetallado" FunctionName="BD_CIBERVETModel.Store.sp_listaPedidosDetallado">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_listaPedidosDetallado_Result">
+          <ScalarProperty Name="id_pedido" ColumnName="id_pedido" />
+          <ScalarProperty Name="Column1" ColumnName="Column1" />
+          <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
+          <ScalarProperty Name="descripcion_estado" ColumnName="descripcion_estado" />
+          <ScalarProperty Name="descripcionSimple_prod" ColumnName="descripcionSimple_prod" />
+          <ScalarProperty Name="precioPorUnidad" ColumnName="precioPorUnidad" />
+          <ScalarProperty Name="cantidad_pedido" ColumnName="cantidad_pedido" />
+          <ScalarProperty Name="total_pedido" ColumnName="total_pedido" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
     <FunctionImportMapping FunctionImportName="sp_ListarCategorias" FunctionName="BD_CIBERVETModel.Store.sp_ListarCategorias">
       <ResultMapping>
         <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_ListarCategorias_Result">
           <ScalarProperty Name="id_cate" ColumnName="id_cate" />
           <ScalarProperty Name="descripcion_cate" ColumnName="descripcion_cate" />
+        </ComplexTypeMapping>
+      </ResultMapping>
+    </FunctionImportMapping>
+    <FunctionImportMapping FunctionImportName="sp_ListarEstados" FunctionName="BD_CIBERVETModel.Store.sp_ListarEstados">
+      <ResultMapping>
+        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_ListarEstados_Result">
+          <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+          <ScalarProperty Name="descripcion_estado" ColumnName="descripcion_estado" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>
@@ -231,28 +335,6 @@
           <ScalarProperty Name="descripcion_servicio" ColumnName="descripcion_servicio" />
           <ScalarProperty Name="horario_servicio" ColumnName="horario_servicio" />
           <ScalarProperty Name="fecha_servicio" ColumnName="fecha_servicio" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_reporteVenta" FunctionName="BD_CIBERVETModel.Store.sp_reporteVenta">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_reporteVenta_Result">
-          <ScalarProperty Name="descripcionSimple_prod" ColumnName="descripcionSimple_prod" />
-          <ScalarProperty Name="precio_prod" ColumnName="precio_prod" />
-          <ScalarProperty Name="cantidad_pedido" ColumnName="cantidad_pedido" />
-          <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
-          <ScalarProperty Name="total_pedido" ColumnName="total_pedido" />
-        </ComplexTypeMapping>
-      </ResultMapping>
-    </FunctionImportMapping>
-    <FunctionImportMapping FunctionImportName="sp_reporteVentaPorPedido" FunctionName="BD_CIBERVETModel.Store.sp_reporteVentaPorPedido">
-      <ResultMapping>
-        <ComplexTypeMapping TypeName="BD_CIBERVETModel.sp_reporteVentaPorPedido_Result">
-          <ScalarProperty Name="descripcionSimple_prod" ColumnName="descripcionSimple_prod" />
-          <ScalarProperty Name="precio_prod" ColumnName="precio_prod" />
-          <ScalarProperty Name="cantidad_pedido" ColumnName="cantidad_pedido" />
-          <ScalarProperty Name="fecha_pedido" ColumnName="fecha_pedido" />
-          <ScalarProperty Name="total_pedido" ColumnName="total_pedido" />
         </ComplexTypeMapping>
       </ResultMapping>
     </FunctionImportMapping>

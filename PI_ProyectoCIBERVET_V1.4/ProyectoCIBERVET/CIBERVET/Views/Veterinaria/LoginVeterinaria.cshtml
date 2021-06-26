@@ -1,8 +1,7 @@
-﻿@model CIBERVET.Models.Administrador
-@{
+﻿@{
+    ViewBag.Title = "LoginVeterinaria";
     Layout = "";
 }
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -16,8 +15,7 @@
     <link rel="stylesheet" type="text/css" href="~/vendor/bootstrap/css/bootstrap.min.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
-    <!--======================================================================================
-        =========-->
+    <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
     <!--===============================================================================================-->
     <link rel="stylesheet" type="text/css" href="~/fonts/iconic/css/material-design-iconic-font.min.css">
@@ -37,53 +35,41 @@
     <!--===============================================================================================-->
 </head>
 <body>
-
     <div class="limiter">
         <div class="container-login100">
-            <div class="login100-more" style="background-image: url('../images/loginadmin.jpg');"></div>
+            <div class="login100-more" style="background-image: url('../images/menu1.jpg');"></div>
 
-            @using (Html.BeginForm("LoginAdmin", "Administrador", FormMethod.Post))
-            {
-                @Html.AntiForgeryToken()
-                @Html.ValidationSummary(true)
-
-                <div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
-                    <form class="login100-form validate-form">
+            <div class="wrap-login100 p-l-50 p-r-50 p-t-72 p-b-50">
+                <div class="row">
+                    <div class="danger">
+                        @ViewBag.Error
+                    </div>
+                    <form class="login100-form validate-form" action="@Url.Content("~/Veterinaria/LoginVeterinaria")" method="post">
                         <span class="login100-form-title p-b-59">
-                            Iniciar Sesión Administrador
+                            Login CiberVet
                         </span>
-
-                        <div class="wrap-input100 validate-input" data-validate="Se Requiere Ingresar Usuario">
+                        <div class="wrap-input100 validate-input">
                             <span class="label-input100">Usuario</span>
-                            @*<input class="input100" type="text" name="name" placeholder="Usuario...">*@
-                            @Html.EditorFor(model => model.emailAdm, new { htmlAttributes = new { @class = "input100", @type = "text", @name = "name", @placeholder = "Usuario..." } })
-                            <span class="focus-input100"></span>
+                            <input class="input100" type="email" name="usu" /><!--El name debe ser igual que la variable del Controller-->
                         </div>
-
-                        <div class="wrap-input100 validate-input" data-validate="Se Requiere Ingresar su Contraseña">
+                        <div class="wrap-input100 validate-input">
                             <span class="label-input100">Contraseña</span>
-                            @*<input class="input100" type="text" name="pass" placeholder="*************">*@
-                            @Html.EditorFor(model => model.pwdAdm, new { htmlAttributes = new { @class = "input100", @type = "password", @name = "pass", @placeholder = "*************" } })
-                            <span class="focus-input100"></span>
+                            <input class="input100" type="password" name="contra" />
                         </div>
-
-                        <div class="container-login100-form-btn">
-                            <div class="wrap-login100-form-btn">
-                                <div class="login100-form-bgbtn"></div>
-                                <button class="login100-form-btn">
-                                    Ingresar
-                                </button>
-                            </div>
-
-
-                            <a href="~/PagPrin/Home" class="dis-block txt3 hov1 p-r-30 p-t-10 p-b-10 p-l-30">
-                                Regresar a Home=>
-                                <i class="fa fa-long-arrow-right m-l-5"></i>
-                            </a>
+                        <div class="cart-and-bay-btn">
+                            <input class="btn btn-info" type="submit" value="Iniciar Sesión" />
                         </div>
+                        <a class="btn btn-info" href="~/PagPrin/RegistrarCliente" role="button">
+                            Regístrate
+                            <i class="fa fa-long-arrow-right m-l-5"></i>
+                        </a>
+                        <a class="btn btn-info" href="~/PagPrin/Home" role="button">
+                            Volver
+                            <i class="fa fa-long-arrow-right m-l-5"></i>
+                        </a>
                     </form>
                 </div>
-            }
+            </div>
         </div>
     </div>
 
@@ -103,8 +89,5 @@
     <script src="~/vendor/countdowntime/countdowntime.js"></script>
     <!--===============================================================================================-->
     <script src="~/jsi/main.js"></script>
-    @Scripts.Render("~/bundles/bootstrap")
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/bundles/ckeditor");
 </body>
 </html>

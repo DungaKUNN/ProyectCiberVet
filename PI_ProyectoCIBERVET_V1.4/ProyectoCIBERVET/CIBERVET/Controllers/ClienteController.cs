@@ -509,10 +509,10 @@ namespace CIBERVET.Controllers
             return View(s);
         }
 
-        public ActionResult ReservarServicio(int id)
+        /*public ActionResult ReservarServicio(int id)
         {
             var s = db.tb_reservarservicio.Find(id);
             return View(s);
-        }
+        }*/
     }
 }

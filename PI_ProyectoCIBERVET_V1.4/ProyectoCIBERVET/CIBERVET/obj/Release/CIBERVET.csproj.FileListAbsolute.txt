@@ -127,7 +127,6 @@ C:\Users\Yhal\Desktop\ProyectCiberVet\PI_ProyectoCIBERVET_V1.4\ProyectoCIBERVET\
 C:\Users\Yhal\Desktop\ProyectCiberVet\PI_ProyectoCIBERVET_V1.4\ProyectoCIBERVET\CIBERVET\bin\es\System.Web.WebPages.resources.dll
 C:\Users\Yhal\Desktop\ProyectCiberVet\PI_ProyectoCIBERVET_V1.4\ProyectoCIBERVET\CIBERVET\bin\es\System.Web.WebPages.Deployment.resources.dll
 C:\Users\Yhal\Desktop\ProyectCiberVet\PI_ProyectoCIBERVET_V1.4\ProyectoCIBERVET\CIBERVET\bin\es\System.Web.WebPages.Razor.resources.dll
-C:\Users\Yhal\Desktop\ProyectCiberVet\PI_ProyectoCIBERVET_V1.4\ProyectoCIBERVET\CIBERVET\obj\Release\CIBERVET.csprojAssemblyReference.cache
 C:\Users\Yhal\Desktop\ProyectCiberVet\PI_ProyectoCIBERVET_V1.4\ProyectoCIBERVET\CIBERVET\obj\Release\CIBERVET.csproj.CoreCompileInputs.cache
 C:\Users\Yhal\Desktop\ProyectCiberVet\PI_ProyectoCIBERVET_V1.4\ProyectoCIBERVET\CIBERVET\obj\Release\CIBERVET.csproj.CopyComplete
 C:\Users\Yhal\Desktop\ProyectCiberVet\PI_ProyectoCIBERVET_V1.4\ProyectoCIBERVET\CIBERVET\obj\Release\CIBERVET.dll

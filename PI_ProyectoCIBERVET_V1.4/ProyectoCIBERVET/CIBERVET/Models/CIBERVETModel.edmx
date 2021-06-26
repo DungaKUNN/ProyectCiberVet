@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="BD_CIBERVETModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="BD_CIBERVETModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Administrador">
           <Key>
             <PropertyRef Name="idAdm" />
@@ -76,6 +76,21 @@
           <Property Name="id_estado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="descripcion_estado" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
+        <EntityType Name="tb_modulo">
+          <Key>
+            <PropertyRef Name="id_modulo" />
+          </Key>
+          <Property Name="id_modulo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_modulo" Type="varchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="tb_operacion">
+          <Key>
+            <PropertyRef Name="id_operacion" />
+          </Key>
+          <Property Name="id_operacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_operacion" Type="varchar" MaxLength="80" />
+          <Property Name="id_modulo" Type="int" />
+        </EntityType>
         <EntityType Name="tb_pedidoCabe">
           <Key>
             <PropertyRef Name="id_pedido" />
@@ -126,13 +141,20 @@
           <Property Name="email_prove" Type="varchar" MaxLength="40" />
           <Property Name="id_dis" Type="int" />
         </EntityType>
-        <EntityType Name="tb_reservarservicio">
+        <EntityType Name="tb_rol">
           <Key>
-            <PropertyRef Name="id_reservarservicio" />
+            <PropertyRef Name="id_rol" />
           </Key>
-          <Property Name="id_reservarservicio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="descripcionreserva" Type="varchar" MaxLength="45" />
-          <Property Name="idservicio" Type="int" />
+          <Property Name="id_rol" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_rol" Type="varchar" MaxLength="80" />
+        </EntityType>
+        <EntityType Name="tb_rol_operacion">
+          <Key>
+            <PropertyRef Name="id_rol_operacion" />
+          </Key>
+          <Property Name="id_rol_operacion" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_rol" Type="int" />
+          <Property Name="id_operacion" Type="int" />
         </EntityType>
         <EntityType Name="tb_servicio">
           <Key>
@@ -144,6 +166,21 @@
           <Property Name="descripcion_servicio" Type="text" Nullable="false" />
           <Property Name="horario_servicio" Type="varchar" MaxLength="40" Nullable="false" />
           <Property Name="fecha_servicio" Type="date" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="dni_usuario" Type="varchar" MaxLength="10" Nullable="false" />
+          <Property Name="nombre_usuario" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="apellido_usuario" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="direccion_usuario" Type="varchar" MaxLength="100" />
+          <Property Name="celular_usuario" Type="varchar" MaxLength="20" />
+          <Property Name="email_usuario" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="password_usuario" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="id_dis" Type="int" />
+          <Property Name="id_rol" Type="int" />
         </EntityType>
         <EntityType Name="TIPOUSUARIO">
           <Key>
@@ -252,6 +289,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_operamodu">
+          <End Role="tb_modulo" Type="Self.tb_modulo" Multiplicity="0..1" />
+          <End Role="tb_operacion" Type="Self.tb_operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_modulo">
+              <PropertyRef Name="id_modulo" />
+            </Principal>
+            <Dependent Role="tb_operacion">
+              <PropertyRef Name="id_modulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_pedest">
           <End Role="tb_estado" Type="Self.tb_estado" Multiplicity="0..1" />
           <End Role="tb_pedidoCabe" Type="Self.tb_pedidoCabe" Multiplicity="*" />
@@ -336,15 +385,27 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="fk_reserv">
-          <End Role="tb_servicio" Type="Self.tb_servicio" Multiplicity="0..1" />
-          <End Role="tb_reservarservicio" Type="Self.tb_reservarservicio" Multiplicity="*" />
+        <Association Name="fk_rolOpe_opera">
+          <End Role="tb_operacion" Type="Self.tb_operacion" Multiplicity="0..1" />
+          <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="tb_servicio">
-              <PropertyRef Name="id_servicio" />
+            <Principal Role="tb_operacion">
+              <PropertyRef Name="id_operacion" />
             </Principal>
-            <Dependent Role="tb_reservarservicio">
-              <PropertyRef Name="idservicio" />
+            <Dependent Role="tb_rol_operacion">
+              <PropertyRef Name="id_operacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rolOpe_rol">
+          <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="0..1" />
+          <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="tb_rol_operacion">
+              <PropertyRef Name="id_rol" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -357,6 +418,30 @@
             </Principal>
             <Dependent Role="usuario">
               <PropertyRef Name="IdDistritos" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usudis2">
+          <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
+          <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_distrito">
+              <PropertyRef Name="id_dis" />
+            </Principal>
+            <Dependent Role="tb_usuario">
+              <PropertyRef Name="id_dis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usurol">
+          <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="0..1" />
+          <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="tb_usuario">
+              <PropertyRef Name="id_rol" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -469,12 +554,16 @@
           <EntitySet Name="tb_categoria" EntityType="Self.tb_categoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_distrito" EntityType="Self.tb_distrito" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_estado" EntityType="Self.tb_estado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_modulo" EntityType="Self.tb_modulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_operacion" EntityType="Self.tb_operacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_pedidoCabe" EntityType="Self.tb_pedidoCabe" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_pedidoDeta" EntityType="Self.tb_pedidoDeta" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_producto" EntityType="Self.tb_producto" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_proveedor" EntityType="Self.tb_proveedor" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="tb_reservarservicio" EntityType="Self.tb_reservarservicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_rol" EntityType="Self.tb_rol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_rol_operacion" EntityType="Self.tb_rol_operacion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_servicio" EntityType="Self.tb_servicio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TIPOUSUARIO" EntityType="Self.TIPOUSUARIO" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="fk_admindis" Association="Self.fk_admindis">
@@ -505,6 +594,10 @@
             <End Role="usuario" EntitySet="usuario" />
             <End Role="MASCOTA" EntitySet="MASCOTA" />
           </AssociationSet>
+          <AssociationSet Name="fk_operamodu" Association="Self.fk_operamodu">
+            <End Role="tb_modulo" EntitySet="tb_modulo" />
+            <End Role="tb_operacion" EntitySet="tb_operacion" />
+          </AssociationSet>
           <AssociationSet Name="fk_pedest" Association="Self.fk_pedest">
             <End Role="tb_estado" EntitySet="tb_estado" />
             <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
@@ -533,20 +626,33 @@
             <End Role="especie_mascota" EntitySet="especie_mascota" />
             <End Role="raza_mascota" EntitySet="raza_mascota" />
           </AssociationSet>
-          <AssociationSet Name="fk_reserv" Association="Self.fk_reserv">
-            <End Role="tb_servicio" EntitySet="tb_servicio" />
-            <End Role="tb_reservarservicio" EntitySet="tb_reservarservicio" />
+          <AssociationSet Name="fk_rolOpe_opera" Association="Self.fk_rolOpe_opera">
+            <End Role="tb_operacion" EntitySet="tb_operacion" />
+            <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rolOpe_rol" Association="Self.fk_rolOpe_rol">
+            <End Role="tb_rol" EntitySet="tb_rol" />
+            <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
           </AssociationSet>
           <AssociationSet Name="fk_usudis" Association="Self.fk_usudis">
             <End Role="tb_distrito" EntitySet="tb_distrito" />
             <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usudis2" Association="Self.fk_usudis2">
+            <End Role="tb_distrito" EntitySet="tb_distrito" />
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usurol" Association="Self.fk_usurol">
+            <End Role="tb_rol" EntitySet="tb_rol" />
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
           </AssociationSet>
           <AssociationSet Name="fk_usutipo" Association="Self.fk_usutipo">
             <End Role="TIPOUSUARIO" EntitySet="TIPOUSUARIO" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="BD_CIBERVETModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -627,6 +733,7 @@
           <NavigationProperty Name="Administrador" Relationship="Self.fk_admindis" FromRole="tb_distrito" ToRole="Administrador" />
           <NavigationProperty Name="tb_proveedor" Relationship="Self.fk_provedis" FromRole="tb_distrito" ToRole="tb_proveedor" />
           <NavigationProperty Name="usuario" Relationship="Self.fk_usudis" FromRole="tb_distrito" ToRole="usuario" />
+          <NavigationProperty Name="tb_usuario" Relationship="Self.fk_usudis2" FromRole="tb_distrito" ToRole="tb_usuario" />
         </EntityType>
         <EntityType Name="tb_estado">
           <Key>
@@ -635,6 +742,24 @@
           <Property Name="id_estado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="descripcion_estado" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="tb_pedidoCabe" Relationship="Self.fk_pedest" FromRole="tb_estado" ToRole="tb_pedidoCabe" />
+        </EntityType>
+        <EntityType Name="tb_modulo">
+          <Key>
+            <PropertyRef Name="id_modulo" />
+          </Key>
+          <Property Name="id_modulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_modulo" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_operacion" Relationship="Self.fk_operamodu" FromRole="tb_modulo" ToRole="tb_operacion" />
+        </EntityType>
+        <EntityType Name="tb_operacion">
+          <Key>
+            <PropertyRef Name="id_operacion" />
+          </Key>
+          <Property Name="id_operacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_operacion" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <Property Name="id_modulo" Type="Int32" />
+          <NavigationProperty Name="tb_modulo" Relationship="Self.fk_operamodu" FromRole="tb_operacion" ToRole="tb_modulo" />
+          <NavigationProperty Name="tb_rol_operacion" Relationship="Self.fk_rolOpe_opera" FromRole="tb_operacion" ToRole="tb_rol_operacion" />
         </EntityType>
         <EntityType Name="tb_pedidoCabe">
           <Key>
@@ -697,6 +822,25 @@
           <NavigationProperty Name="tb_distrito" Relationship="Self.fk_provedis" FromRole="tb_proveedor" ToRole="tb_distrito" />
           <NavigationProperty Name="tb_producto" Relationship="Self.fk_prodprove" FromRole="tb_proveedor" ToRole="tb_producto" />
         </EntityType>
+        <EntityType Name="tb_rol">
+          <Key>
+            <PropertyRef Name="id_rol" />
+          </Key>
+          <Property Name="id_rol" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_rol" Type="String" MaxLength="80" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_rol_operacion" Relationship="Self.fk_rolOpe_rol" FromRole="tb_rol" ToRole="tb_rol_operacion" />
+          <NavigationProperty Name="tb_usuario" Relationship="Self.fk_usurol" FromRole="tb_rol" ToRole="tb_usuario" />
+        </EntityType>
+        <EntityType Name="tb_rol_operacion">
+          <Key>
+            <PropertyRef Name="id_rol_operacion" />
+          </Key>
+          <Property Name="id_rol_operacion" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_rol" Type="Int32" />
+          <Property Name="id_operacion" Type="Int32" />
+          <NavigationProperty Name="tb_operacion" Relationship="Self.fk_rolOpe_opera" FromRole="tb_rol_operacion" ToRole="tb_operacion" />
+          <NavigationProperty Name="tb_rol" Relationship="Self.fk_rolOpe_rol" FromRole="tb_rol_operacion" ToRole="tb_rol" />
+        </EntityType>
         <EntityType Name="tb_servicio">
           <Key>
             <PropertyRef Name="id_servicio" />
@@ -707,7 +851,23 @@
           <Property Name="descripcion_servicio" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="horario_servicio" Type="String" MaxLength="40" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="fecha_servicio" Type="DateTime" Nullable="false" Precision="0" />
-          <NavigationProperty Name="tb_reservarservicio" Relationship="BD_CIBERVETModel.fk_reserv" FromRole="tb_servicio" ToRole="tb_reservarservicio" />
+        </EntityType>
+        <EntityType Name="tb_usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="dni_usuario" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="nombre_usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="apellido_usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="direccion_usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="celular_usuario" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="email_usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="password_usuario" Type="String" MaxLength="100" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="id_dis" Type="Int32" />
+          <Property Name="id_rol" Type="Int32" />
+          <NavigationProperty Name="tb_distrito" Relationship="Self.fk_usudis2" FromRole="tb_usuario" ToRole="tb_distrito" />
+          <NavigationProperty Name="tb_rol" Relationship="Self.fk_usurol" FromRole="tb_usuario" ToRole="tb_rol" />
         </EntityType>
         <EntityType Name="TIPOUSUARIO">
           <Key>
@@ -858,6 +1018,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_usudis2">
+          <End Role="tb_distrito" Type="Self.tb_distrito" Multiplicity="0..1" />
+          <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_distrito">
+              <PropertyRef Name="id_dis" />
+            </Principal>
+            <Dependent Role="tb_usuario">
+              <PropertyRef Name="id_dis" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_pedest">
           <End Role="tb_estado" Type="Self.tb_estado" Multiplicity="0..1" />
           <End Role="tb_pedidoCabe" Type="Self.tb_pedidoCabe" Multiplicity="*" />
@@ -867,6 +1039,30 @@
             </Principal>
             <Dependent Role="tb_pedidoCabe">
               <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_operamodu">
+          <End Role="tb_modulo" Type="Self.tb_modulo" Multiplicity="0..1" />
+          <End Role="tb_operacion" Type="Self.tb_operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_modulo">
+              <PropertyRef Name="id_modulo" />
+            </Principal>
+            <Dependent Role="tb_operacion">
+              <PropertyRef Name="id_modulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_rolOpe_opera">
+          <End Role="tb_operacion" Type="Self.tb_operacion" Multiplicity="0..1" />
+          <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_operacion">
+              <PropertyRef Name="id_operacion" />
+            </Principal>
+            <Dependent Role="tb_rol_operacion">
+              <PropertyRef Name="id_operacion" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -918,6 +1114,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="fk_rolOpe_rol">
+          <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="0..1" />
+          <End Role="tb_rol_operacion" Type="Self.tb_rol_operacion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="tb_rol_operacion">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_usurol">
+          <End Role="tb_rol" Type="Self.tb_rol" Multiplicity="0..1" />
+          <End Role="tb_usuario" Type="Self.tb_usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_rol">
+              <PropertyRef Name="id_rol" />
+            </Principal>
+            <Dependent Role="tb_usuario">
+              <PropertyRef Name="id_rol" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="fk_usutipo">
           <End Role="TIPOUSUARIO" Type="Self.TIPOUSUARIO" Multiplicity="0..1" />
           <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
@@ -939,11 +1159,16 @@
           <EntitySet Name="tb_categoria" EntityType="Self.tb_categoria" />
           <EntitySet Name="tb_distrito" EntityType="Self.tb_distrito" />
           <EntitySet Name="tb_estado" EntityType="Self.tb_estado" />
+          <EntitySet Name="tb_modulo" EntityType="Self.tb_modulo" />
+          <EntitySet Name="tb_operacion" EntityType="Self.tb_operacion" />
           <EntitySet Name="tb_pedidoCabe" EntityType="Self.tb_pedidoCabe" />
           <EntitySet Name="tb_pedidoDeta" EntityType="Self.tb_pedidoDeta" />
           <EntitySet Name="tb_producto" EntityType="Self.tb_producto" />
           <EntitySet Name="tb_proveedor" EntityType="Self.tb_proveedor" />
+          <EntitySet Name="tb_rol" EntityType="Self.tb_rol" />
+          <EntitySet Name="tb_rol_operacion" EntityType="Self.tb_rol_operacion" />
           <EntitySet Name="tb_servicio" EntityType="Self.tb_servicio" />
+          <EntitySet Name="tb_usuario" EntityType="Self.tb_usuario" />
           <EntitySet Name="TIPOUSUARIO" EntityType="Self.TIPOUSUARIO" />
           <EntitySet Name="usuario" EntityType="Self.usuario" />
           <AssociationSet Name="fk_admindis" Association="Self.fk_admindis">
@@ -986,9 +1211,21 @@
             <End Role="tb_distrito" EntitySet="tb_distrito" />
             <End Role="usuario" EntitySet="usuario" />
           </AssociationSet>
+          <AssociationSet Name="fk_usudis2" Association="Self.fk_usudis2">
+            <End Role="tb_distrito" EntitySet="tb_distrito" />
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
+          </AssociationSet>
           <AssociationSet Name="fk_pedest" Association="Self.fk_pedest">
             <End Role="tb_estado" EntitySet="tb_estado" />
             <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
+          </AssociationSet>
+          <AssociationSet Name="fk_operamodu" Association="Self.fk_operamodu">
+            <End Role="tb_modulo" EntitySet="tb_modulo" />
+            <End Role="tb_operacion" EntitySet="tb_operacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rolOpe_opera" Association="Self.fk_rolOpe_opera">
+            <End Role="tb_operacion" EntitySet="tb_operacion" />
+            <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
           </AssociationSet>
           <AssociationSet Name="fk_detacabe" Association="Self.fk_detacabe">
             <End Role="tb_pedidoCabe" EntitySet="tb_pedidoCabe" />
@@ -1005,6 +1242,14 @@
           <AssociationSet Name="fk_prodprove" Association="Self.fk_prodprove">
             <End Role="tb_proveedor" EntitySet="tb_proveedor" />
             <End Role="tb_producto" EntitySet="tb_producto" />
+          </AssociationSet>
+          <AssociationSet Name="fk_rolOpe_rol" Association="Self.fk_rolOpe_rol">
+            <End Role="tb_rol" EntitySet="tb_rol" />
+            <End Role="tb_rol_operacion" EntitySet="tb_rol_operacion" />
+          </AssociationSet>
+          <AssociationSet Name="fk_usurol" Association="Self.fk_usurol">
+            <End Role="tb_rol" EntitySet="tb_rol" />
+            <End Role="tb_usuario" EntitySet="tb_usuario" />
           </AssociationSet>
           <AssociationSet Name="fk_usutipo" Association="Self.fk_usutipo">
             <End Role="TIPOUSUARIO" EntitySet="TIPOUSUARIO" />
@@ -1053,7 +1298,7 @@
             <Parameter Name="iddis" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_FiltroPedidoPorApellido" ReturnType="Collection(BD_CIBERVETModel.sp_FiltroPedidoPorApellido_Result)">
-          <Parameter Name="apeUsu" Mode="In" Type="String" />
+            <Parameter Name="apeUsu" Mode="In" Type="String" />
           </FunctionImport>
           <FunctionImport Name="sp_Insertar_Mascotas">
             <Parameter Name="nombre" Mode="In" Type="String" />
@@ -1084,10 +1329,10 @@
             <Parameter Name="fecha" Mode="In" Type="DateTime" />
           </FunctionImport>
           <FunctionImport Name="sp_Listado_Mascotas" ReturnType="Collection(BD_CIBERVETModel.sp_Listado_Mascotas_Result)">
-          <Parameter Name="idusuario" Mode="In" Type="Int32" />
+            <Parameter Name="idusuario" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_listaPedidos" ReturnType="Collection(BD_CIBERVETModel.sp_listaPedidos_Result)">
-          <Parameter Name="idUsu" Mode="In" Type="Int32" />
+            <Parameter Name="idUsu" Mode="In" Type="Int32" />
           </FunctionImport>
           <FunctionImport Name="sp_listaPedidosDetallado" ReturnType="Collection(BD_CIBERVETModel.sp_listaPedidosDetallado_Result)">
             <Parameter Name="idUsu" Mode="In" Type="Int32" />
@@ -1098,11 +1343,6 @@
           <FunctionImport Name="sp_ListarProductos" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProductos_Result)" />
           <FunctionImport Name="sp_ListarProveedores" ReturnType="Collection(BD_CIBERVETModel.sp_ListarProveedores_Result)" />
           <FunctionImport Name="sp_ListarServicios" ReturnType="Collection(BD_CIBERVETModel.sp_ListarServicios_Result)" />
-          <EntitySet Name="tb_reservarservicio" EntityType="BD_CIBERVETModel.tb_reservarservicio" />
-          <AssociationSet Name="fk_reserv" Association="BD_CIBERVETModel.fk_reserv">
-            <End Role="tb_servicio" EntitySet="tb_servicio" />
-            <End Role="tb_reservarservicio" EntitySet="tb_reservarservicio" />
-          </AssociationSet>
         </EntityContainer>
         <ComplexType Name="sp_boletaPedido_Result">
           <Property Type="String" Name="descripcionSimple_prod" Nullable="false" MaxLength="100" />
@@ -1175,27 +1415,6 @@
           <Property Type="String" Name="horario_servicio" Nullable="false" MaxLength="40" />
           <Property Type="DateTime" Name="fecha_servicio" Nullable="false" />
         </ComplexType>
-        <EntityType Name="tb_reservarservicio">
-          <Key>
-            <PropertyRef Name="id_reservarservicio" />
-          </Key>
-          <Property Name="id_reservarservicio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="descripcionreserva" Type="String" MaxLength="45" FixedLength="false" Unicode="false" />
-          <Property Name="idservicio" Type="Int32" />
-          <NavigationProperty Name="tb_servicio" Relationship="BD_CIBERVETModel.fk_reserv" FromRole="tb_reservarservicio" ToRole="tb_servicio" />
-        </EntityType>
-        <Association Name="fk_reserv">
-          <End Type="BD_CIBERVETModel.tb_servicio" Role="tb_servicio" Multiplicity="0..1" />
-          <End Type="BD_CIBERVETModel.tb_reservarservicio" Role="tb_reservarservicio" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="tb_servicio">
-              <PropertyRef Name="id_servicio" />
-            </Principal>
-            <Dependent Role="tb_reservarservicio">
-              <PropertyRef Name="idservicio" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1281,6 +1500,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tb_modulo">
+            <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_modulo">
+              <MappingFragment StoreEntitySet="tb_modulo">
+                <ScalarProperty Name="id_modulo" ColumnName="id_modulo" />
+                <ScalarProperty Name="nombre_modulo" ColumnName="nombre_modulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_operacion">
+            <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_operacion">
+              <MappingFragment StoreEntitySet="tb_operacion">
+                <ScalarProperty Name="id_operacion" ColumnName="id_operacion" />
+                <ScalarProperty Name="nombre_operacion" ColumnName="nombre_operacion" />
+                <ScalarProperty Name="id_modulo" ColumnName="id_modulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tb_pedidoCabe">
             <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_pedidoCabe">
               <MappingFragment StoreEntitySet="tb_pedidoCabe">
@@ -1334,6 +1570,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="tb_rol">
+            <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_rol">
+              <MappingFragment StoreEntitySet="tb_rol">
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="nombre_rol" ColumnName="nombre_rol" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_rol_operacion">
+            <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_rol_operacion">
+              <MappingFragment StoreEntitySet="tb_rol_operacion">
+                <ScalarProperty Name="id_rol_operacion" ColumnName="id_rol_operacion" />
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
+                <ScalarProperty Name="id_operacion" ColumnName="id_operacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="tb_servicio">
             <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_servicio">
               <MappingFragment StoreEntitySet="tb_servicio">
@@ -1343,6 +1596,22 @@
                 <ScalarProperty Name="descripcion_servicio" ColumnName="descripcion_servicio" />
                 <ScalarProperty Name="horario_servicio" ColumnName="horario_servicio" />
                 <ScalarProperty Name="fecha_servicio" ColumnName="fecha_servicio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_usuario">
+            <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_usuario">
+              <MappingFragment StoreEntitySet="tb_usuario">
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="dni_usuario" ColumnName="dni_usuario" />
+                <ScalarProperty Name="nombre_usuario" ColumnName="nombre_usuario" />
+                <ScalarProperty Name="apellido_usuario" ColumnName="apellido_usuario" />
+                <ScalarProperty Name="direccion_usuario" ColumnName="direccion_usuario" />
+                <ScalarProperty Name="celular_usuario" ColumnName="celular_usuario" />
+                <ScalarProperty Name="email_usuario" ColumnName="email_usuario" />
+                <ScalarProperty Name="password_usuario" ColumnName="password_usuario" />
+                <ScalarProperty Name="id_dis" ColumnName="id_dis" />
+                <ScalarProperty Name="id_rol" ColumnName="id_rol" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1489,15 +1758,6 @@
               </ComplexTypeMapping>
             </ResultMapping>
           </FunctionImportMapping>
-          <EntitySetMapping Name="tb_reservarservicio">
-            <EntityTypeMapping TypeName="BD_CIBERVETModel.tb_reservarservicio">
-              <MappingFragment StoreEntitySet="tb_reservarservicio">
-                <ScalarProperty Name="idservicio" ColumnName="idservicio" />
-                <ScalarProperty Name="descripcionreserva" ColumnName="descripcionreserva" />
-                <ScalarProperty Name="id_reservarservicio" ColumnName="id_reservarservicio" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

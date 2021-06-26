@@ -8,14 +8,71 @@ using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using CIBERVET.Filters;
 
 namespace CIBERVET.Controllers
 {
-    public class AdministradorController : Controller
+    public class VeterinariaController : Controller
     {
         BD_CIBERVETEntities bd = new BD_CIBERVETEntities();
-
         SqlConnection cn = new SqlConnection(ConfigurationManager.ConnectionStrings["conexion"].ConnectionString);
+
+        public ActionResult LoginVeterinaria()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult LoginVeterinaria(string usu, string contra)
+        {
+            try
+            {
+                using (bd)
+                {
+                    var oUsuario = (from u in bd.tb_usuario
+                                    where u.email_usuario == usu.Trim() && u.password_usuario == contra.Trim()
+                                    select u).FirstOrDefault();
+                    if (oUsuario == null)
+                    {
+                        ViewBag.Error = "Usuario o contraseña incorrectos.";
+                        return View();
+                    }
+                    // Si el usuario existe
+                    Session["UsuarioVeterinaria"] = oUsuario;
+                    Session["UsuarioVeterinariaNombre"] = oUsuario.nombre_usuario.ToString();
+                    Session["UsuarioVeterinariaApellido"] = oUsuario.apellido_usuario.ToString();
+                }
+
+                return RedirectToAction("HomeVeterinaria", "Veterinaria");
+            }
+            catch (Exception ex)
+            {
+                ViewBag.Error = ex.Message;
+                return View();
+            }
+
+        }
+
+        public ActionResult CerrarSesionVeterinaria()
+        {
+            if (Session["UsuarioVeterinaria"] != null)
+            {
+                Session["UsuarioVeterinaria"] = null;
+            }
+            return RedirectToAction("Home", "PagPrin");/*POSIBLE CAMBIOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO*/
+        }
+
+        public ActionResult HomeVeterinaria()
+        {
+            if (Session["UsuarioVeterinaria"] != null)
+            {
+                return View();
+            }
+            else
+            {
+                return RedirectToAction("LoginVeterinaria", "Veterinaria");
+            }
+        }
 
         /*---------------------Mantenimiento Producto---------------------*/
         public List<CategoriaForCRUD> ListarCategorias()
@@ -130,8 +187,8 @@ namespace CIBERVET.Controllers
             return resultado;
         }
 
-        // GET: Producto
-        public ActionResult ListadoProductos()
+        [AutorizarUsuario(idOperacion: 1)]
+        public ActionResult MantenimientoProductos()
         {
             return View(ListarProductos());
         }
@@ -168,14 +225,14 @@ namespace CIBERVET.Controllers
             p.foto2 = archivo2.FileName;
             p.foto3 = archivo3.FileName;
             InsertarProducto(p);
-            archivo1.SaveAs(Path.Combine(Server.MapPath("~/images/"),
+            archivo1.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
                             Path.GetFileName(archivo1.FileName)));
-            archivo2.SaveAs(Path.Combine(Server.MapPath("~/images/"),
+            archivo2.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
                             Path.GetFileName(archivo2.FileName)));
-            archivo3.SaveAs(Path.Combine(Server.MapPath("~/images/"),
+            archivo3.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
                             Path.GetFileName(archivo3.FileName)));
 
-            return RedirectToAction("ListadoProductos");
+            return RedirectToAction("MantenimientoProductos");
         }
 
         public ActionResult ModificarProducto(int id)
@@ -240,25 +297,25 @@ namespace CIBERVET.Controllers
             if (file1 != null)
             {
                 p.foto1 = file1.FileName;
-                file1.SaveAs(Path.Combine(Server.MapPath("~/FotosProductos/"),
+                file1.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
                             Path.GetFileName(file1.FileName)));
             }
 
             if (file2 != null)
             {
                 p.foto2 = file2.FileName;
-                file2.SaveAs(Path.Combine(Server.MapPath("~/FotosProductos/"),
+                file2.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
                             Path.GetFileName(file2.FileName)));
             }
 
             if (file3 != null)
             {
                 p.foto3 = file3.FileName;
-                file3.SaveAs(Path.Combine(Server.MapPath("~/FotosProductos/"),
+                file3.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
                             Path.GetFileName(file3.FileName)));
             }
             ActualizarProducto(p);
-            return RedirectToAction("ListadoProductos");
+            return RedirectToAction("MantenimientoProductos");
         }
 
         public ActionResult DetalleProducto(int id)
@@ -287,7 +344,7 @@ namespace CIBERVET.Controllers
             }
             bd.tb_producto.Remove(producto);
             bd.SaveChanges();
-            return RedirectToAction("ListadoProductos");
+            return RedirectToAction("MantenimientoProductos");
         }
         /*----------------------------------------------------------------*/
 
@@ -347,7 +404,8 @@ namespace CIBERVET.Controllers
             return resultado;
         }
 
-        public ActionResult ListadoServicios()
+        [AutorizarUsuario(idOperacion: 2)]
+        public ActionResult MantenimientoServicios()
         {
             return View(ListarServicios());
         }
@@ -361,7 +419,7 @@ namespace CIBERVET.Controllers
         public ActionResult RegistrarServicio(ServicioForCRUD s)
         {
             InsertarServicio(s);
-            return RedirectToAction("ListadoServicios");
+            return RedirectToAction("MantenimientoServicios");
         }
 
         public ActionResult ModificarServicio(int id)
@@ -374,7 +432,7 @@ namespace CIBERVET.Controllers
         public ActionResult ModificarServicio(ServicioForCRUD s)
         {
             ActualizarServicio(s);
-            return RedirectToAction("ListadoServicios");
+            return RedirectToAction("MantenimientoServicios");
         }
 
         public ActionResult DetalleServicio(int id)
@@ -403,51 +461,11 @@ namespace CIBERVET.Controllers
             }
             bd.tb_servicio.Remove(servicio);
             bd.SaveChanges();
-            return RedirectToAction("ListadoServicios");
+            return RedirectToAction("MantenimientoServicios");
         }
         /*----------------------------------------------------------------*/
 
-        public ActionResult LoginAdmin()
-        {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult LoginAdmin(Administrador objUser)
-        {
-            if (ModelState.IsValid)
-            {
-                using (BD_CIBERVETEntities db = new BD_CIBERVETEntities())
-                {
-                    var obj = db.Administrador.Where(a => a.emailAdm.Equals(objUser.emailAdm) && a.pwdAdm.Equals(objUser.pwdAdm)).FirstOrDefault();
-                    if (obj != null)
-                    {
-                        Session["UserIDADMIN"] = obj.idAdm.ToString();
-                        Session["UserNamead"] = obj.nombreAdm.ToString();
-                        Session["UserLastNamead"] = obj.apellidoAdm.ToString();
-                        //return RedirectToAction("RegistrarTarjeta", "PagPrin");
-                        //return RedirectToAction("HomeAdministrador","Administrador");
-                        return RedirectToAction("HomeAdministrador", "Administrador");
-                    }
-                }
-            }
-            return View(objUser);
-        }
-
-        public ActionResult HomeAdministrador()
-        {
-            if (Session["UserIDADMIN"] != null)
-            {
-                return View();
-            }
-            else
-            {
-                return RedirectToAction("LoginAdmin", "Administrador");
-            }
-        }
-
-        //Metodos para cambiar el estadoPedido desde Administrador
+        /*------------------Metodos para cambiar el estadoPedido desde Administrador------------------*/
         public List<PedidoTracking> ListarPedidosPorApellido(string ape)
         {
             List<PedidoTracking> lista = new List<PedidoTracking>();
@@ -502,7 +520,8 @@ namespace CIBERVET.Controllers
             return resultado;
         }
 
-        public ActionResult ListadoPedidosAdmin(string apellido)
+        [AutorizarUsuario(idOperacion: 3)]
+        public ActionResult TrackingPersonalVentas(string apellido)
         {
             if (string.IsNullOrEmpty(apellido))
             {
@@ -527,7 +546,8 @@ namespace CIBERVET.Controllers
         public ActionResult ModificarEstadoPedido(PedidoTracking p)
         {
             ActualizarEstadoPedido(p);
-            return RedirectToAction("ListadoPedidosAdmin");
+            return RedirectToAction("TrackingPersonalVentas");
         }
+        /*--------------------------------------------------------------------------------------------*/
     }
 }

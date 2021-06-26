@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "DetalleServicio";
-    Layout = "~/Views/Layout/_Layout_Session_Admin.cshtml";
+    Layout = "~/Views/Layout/_Layout_Session_Veterinaria.cshtml";
 }
 
 <h2>Detalle Servicio</h2>
@@ -63,5 +63,5 @@
 </div>
 <p>
     @Html.ActionLink("Editar", "ModificarServicio", new { id = Model.idServicio }) |
-    @Html.ActionLink("Regresar a la Lista", "ListadoServicios")
+    @Html.ActionLink("Regresar a la Lista", "MantenimientoServicios")
 </p>

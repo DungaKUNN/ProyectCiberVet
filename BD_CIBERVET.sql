@@ -17,12 +17,31 @@ create table tb_distrito
 );
 go
 
-insert into tb_distrito values('Los Olivos')
-insert into tb_distrito values('Independencia')
+insert into tb_distrito values('Ancón')
+insert into tb_distrito values('Ate')
+insert into tb_distrito values('Barranco')
+insert into tb_distrito values('Breña')
+insert into tb_distrito values('Carabayllo')
+insert into tb_distrito values('Chaclacayo')
+insert into tb_distrito values('Chorrillos')
+insert into tb_distrito values('Cieneguilla')
 insert into tb_distrito values('Comas')
+insert into tb_distrito values('El Agustino')
+insert into tb_distrito values('Independencia')
+insert into tb_distrito values('Jesús María')
+insert into tb_distrito values('La Molina')
+insert into tb_distrito values('La Victoria')
+insert into tb_distrito values('Lince')
+insert into tb_distrito values('Los Olivos')
+insert into tb_distrito values('Lurin')
+insert into tb_distrito values('Magdalena del Mar')
+insert into tb_distrito values('Miraflores')
+insert into tb_distrito values('Pueblo Libre')
+insert into tb_distrito values('Pachacámac')
 insert into tb_distrito values('Puente Piedra')
 go
 
+/*Esta tabla posiblemente se elimina por el nuevo login*/
 create table Administrador
 (
  idAdm			int identity(1,1) primary key not null,
@@ -38,9 +57,10 @@ create table Administrador
 go
 
 insert into Administrador values('Jeanpier','Araujo',2,75234281,'Admin2021@hotmail.com','123')
-insert into Administrador values('Yhon','Alama',4,72643455,'yhon@gmail.com','1234')
+insert into Administrador values('Yhon','Alama',4,7849654,'yhon@gmail.com','1234')
 go
 
+/*Esta tabla posiblemente se elimina por el nuevo login*/
 create table TIPOUSUARIO
 (
  Id_TipoUsuario		int identity(1,1) primary key not null,
@@ -54,6 +74,7 @@ insert into TIPOUSUARIO values('Personal de Ventas')
 insert into TIPOUSUARIO values('Cliente')
 go
 
+/*Esta tabla posiblemente se elimina por el nuevo login*/
 create table usuario
 (
  idusuario			int identity(1,1) primary key not null,
@@ -76,6 +97,100 @@ go
 
 insert into usuario values('12345678','Mario','Bros','marbro','1234','123456789','marbro@hotmail.com','Calle setas 123',4,4)
 go
+
+/*-----------------------Tablas para nuevo login-----------------------*/
+create table tb_modulo
+(
+ id_modulo			int identity(1,1) primary key not null,
+ nombre_modulo		varchar(80)
+);
+go
+
+insert into tb_modulo values('Módulo de administración')
+insert into tb_modulo values('Módulo de registro de datos')
+insert into tb_modulo values('Módulo atención de pedidos')
+insert into tb_modulo values('Módulo de consultas')
+go
+
+create table tb_operacion
+(
+ id_operacion			int identity(1,1) primary key not null,
+ nombre_operacion		varchar(80),
+ id_modulo				int,
+ constraint fk_operamodu foreign key(id_modulo)
+ references tb_modulo(id_modulo)
+);
+go
+
+insert into tb_operacion values('Mantenimiento de productos',2)
+insert into tb_operacion values('Mantenimiento de servicios',2)
+insert into tb_operacion values('Tracking de pedido en personal de ventas',3)
+insert into tb_operacion values('Atención de consultas',4)
+insert into tb_operacion values('Registro de incidente al historial de la mascota',4)
+go
+
+create table tb_rol
+(
+ id_rol			int identity(1,1) primary key not null,
+ nombre_rol		varchar(80)
+);
+go
+
+insert into tb_rol values('Administrador')
+insert into tb_rol values('Personal de Ventas')
+insert into tb_rol values('Veterinario')
+insert into tb_rol values('Cliente')
+go
+
+create table tb_rol_operacion
+(
+ id_rol_operacion	int identity(1,1) primary key not null,
+ id_rol				int,
+ id_operacion		int,
+ constraint fk_rolOpe_rol foreign key(id_rol)
+ references tb_rol(id_rol),
+ constraint fk_rolOpe_opera foreign key(id_operacion)
+ references tb_operacion(id_operacion)
+);
+go
+
+insert into tb_rol_operacion values(1,1)
+insert into tb_rol_operacion values(1,2)
+insert into tb_rol_operacion values(1,3)
+insert into tb_rol_operacion values(1,4)
+insert into tb_rol_operacion values(1,5)
+insert into tb_rol_operacion values(2,1)
+insert into tb_rol_operacion values(2,2)
+insert into tb_rol_operacion values(2,3)
+insert into tb_rol_operacion values(3,4)
+insert into tb_rol_operacion values(3,5)
+go
+
+create table tb_usuario
+(
+ id_usuario				int identity(1,1) primary key not null,
+ dni_usuario			varchar(10) not null,
+ nombre_usuario			varchar(100) not null,
+ apellido_usuario		varchar(100) not null,
+ direccion_usuario		varchar(100),
+ celular_usuario		varchar(20),
+ email_usuario			varchar(100) not null,
+ password_usuario		varchar(100) not null,
+ id_dis					int,
+ id_rol					int,
+ constraint fk_usudis2 foreign key(id_dis)/*-----------------------------------CAMBIAR AQUI-----------------------------------*/
+ references tb_distrito(id_dis),
+ constraint fk_usurol foreign key(id_rol)
+ references tb_rol(id_rol)
+);
+go
+
+insert into tb_usuario values('78456349','Yhon','Alama','Mz. I lote 22 las calles limpias','978456315','yhon@gmail.com','a',22,1)
+insert into tb_usuario values('73456981','Maria','Paredes','Mz. K de la calle lejana','978462159','maria@gmail.com','a',11,2)
+insert into tb_usuario values('71593478','Ana','Pachas','Calle lentejas Nª 22','945671689','ana@gmail.com','a',12,3)
+go
+
+/*---------------------------------------------------------------------*/
 
 create table especie_mascota
 (
