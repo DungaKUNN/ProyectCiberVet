@@ -71,6 +71,12 @@
     <Property Name="id_estado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="descripcion_estado" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
+  <!--Errores durante la generación:
+advertencia 6013: La tabla o vista 'BD_CIBERVET.dbo.tb_incidenteMascota' no tiene definida una clave principal y no es posible inferir ninguna clave principal válida. Esta tabla o vista se ha excluido. Para usar la entidad, necesitará revisar el esquema, agregar las claves correctas y quitar sus comentarios.
+        <EntityType Name="tb_incidenteMascota">
+          <Property Name="idmascota" Type="int" />
+          <Property Name="descripcion_incidente" Type="text" />
+        </EntityType>-->
   <EntityType Name="tb_modulo">
     <Key>
       <PropertyRef Name="id_modulo" />
@@ -248,6 +254,9 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <!--Errores durante la generación:
+error 6004: Una relación hace referencia a la tabla 'BD_CIBERVET.dbo.tb_incidenteMascota', pero no se encuentra la tabla.
+        <Association Name="fk_incimasc" />-->
   <Association Name="fk_masespe">
     <End Role="especie_mascota" Type="Self.especie_mascota" Multiplicity="1" />
     <End Role="MASCOTA" Type="Self.MASCOTA" Multiplicity="*" />
@@ -502,6 +511,9 @@
     <Parameter Name="dirusu" Type="varchar" Mode="In" />
     <Parameter Name="iddis" Type="int" Mode="In" />
   </Function>
+  <Function Name="sp_FiltroMascotasPorApellidoCliente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="apeUsu" Type="varchar" Mode="In" />
+  </Function>
   <Function Name="sp_FiltroPedidoPorApellido" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="apeUsu" Type="varchar" Mode="In" />
   </Function>
@@ -512,6 +524,10 @@
     <Parameter Name="idraza" Type="int" Mode="In" />
     <Parameter Name="foto" Type="varchar" Mode="In" />
     <Parameter Name="idusuario" Type="int" Mode="In" />
+  </Function>
+  <Function Name="sp_InsertarIncidente" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+    <Parameter Name="idMas" Type="int" Mode="In" />
+    <Parameter Name="desInci" Type="text" Mode="In" />
   </Function>
   <Function Name="sp_InsertarProducto" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
     <Parameter Name="desSimple" Type="varchar" Mode="In" />

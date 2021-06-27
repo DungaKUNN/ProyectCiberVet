@@ -169,6 +169,7 @@
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\EstadoTracking.cs" />
+    <Compile Include="Models\IncidenteMascota.cs" />
     <Compile Include="Models\MASCOTA.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
@@ -181,6 +182,9 @@
     </Compile>
     <Compile Include="Models\ServicioForCRUD.cs" />
     <Compile Include="Models\sp_boletaPedido_Result.cs">
+      <DependentUpon>CIBERVETModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\sp_FiltroMascotasPorApellidoCliente_Result.cs">
       <DependentUpon>CIBERVETModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\sp_FiltroPedidoPorApellido_Result.cs">
@@ -346,6 +350,7 @@
     <Content Include="js\Login.js" />
     <Content Include="js\owl.carousel.min.js" />
     <Content Include="js\popper.min.js" />
+    <Content Include="js\sweetAlert.js" />
     <Content Include="Models\CIBERVETModel.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>CIBERVETModel.edmx</DependentUpon>
@@ -907,12 +912,11 @@
     <Content Include="Views\Veterinaria\RegistrarServicio.cshtml" />
     <Content Include="Views\Veterinaria\TrackingPersonalVentas.cshtml" />
     <Content Include="Views\Cliente\EditarMascota.cshtml" />
+    <Content Include="Views\Veterinaria\IncidenteMascota.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="fonts\NewFolder1\" />
-    <Folder Include="images\FotosMascotas\" />
-    <Folder Include="images\FotosProductos\" />
     <Folder Include="Views\Generic\" />
   </ItemGroup>
   <ItemGroup>

@@ -104,7 +104,7 @@
                 @if (!string.IsNullOrEmpty(Model.foto1))
                 {
                     @Html.HiddenFor(model => model.foto1)
-                    <img class="thumbnail" src="~/images/FotosProductos/@Model.foto1" />
+                    <img class="thumbnail" src="~/images/@Model.foto1" />
                 }
                 @Html.TextBox("file1", "", new { type = "file" })
                 @Html.ValidationMessageFor(model => model.foto1, "", new { @class = "text-danger" })
@@ -118,7 +118,7 @@
                 @if (!string.IsNullOrEmpty(Model.foto2))
                 {
                     @Html.HiddenFor(model => model.foto2)
-                    <img class="thumbnail" src="~/images/FotosProductos/@Model.foto2" />
+                    <img class="thumbnail" src="~/images/@Model.foto2" />
                 }
                 @Html.TextBox("file2", "", new { type = "file" })
                 @Html.ValidationMessageFor(model => model.foto2, "", new { @class = "text-danger" })
@@ -132,7 +132,7 @@
                 @if (!string.IsNullOrEmpty(Model.foto3))
                 {
                     @Html.HiddenFor(model => model.foto3)
-                    <img class="thumbnail" src="~/images/FotosProductos/@Model.foto3" />
+                    <img class="thumbnail" src="~/images/@Model.foto3" />
                 }
                 @Html.TextBox("file3", "", new { type = "file" })
                 @Html.ValidationMessageFor(model => model.foto3, "", new { @class = "text-danger" })

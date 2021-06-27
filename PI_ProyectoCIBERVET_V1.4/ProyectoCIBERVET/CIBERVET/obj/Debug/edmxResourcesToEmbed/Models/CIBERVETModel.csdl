@@ -649,6 +649,9 @@
       <Parameter Name="dirusu" Mode="In" Type="String" />
       <Parameter Name="iddis" Mode="In" Type="Int32" />
     </FunctionImport>
+    <FunctionImport Name="sp_FiltroMascotasPorApellidoCliente" ReturnType="Collection(BD_CIBERVETModel.sp_FiltroMascotasPorApellidoCliente_Result)">
+      <Parameter Name="apeUsu" Mode="In" Type="String" />
+    </FunctionImport>
     <FunctionImport Name="sp_FiltroPedidoPorApellido" ReturnType="Collection(BD_CIBERVETModel.sp_FiltroPedidoPorApellido_Result)">
       <Parameter Name="apeUsu" Mode="In" Type="String" />
     </FunctionImport>
@@ -659,6 +662,10 @@
       <Parameter Name="idraza" Mode="In" Type="Int32" />
       <Parameter Name="foto" Mode="In" Type="String" />
       <Parameter Name="idusuario" Mode="In" Type="Int32" />
+    </FunctionImport>
+    <FunctionImport Name="sp_InsertarIncidente">
+      <Parameter Name="idMas" Mode="In" Type="Int32" />
+      <Parameter Name="desInci" Mode="In" Type="String" />
     </FunctionImport>
     <FunctionImport Name="sp_InsertarProducto">
       <Parameter Name="desSimple" Mode="In" Type="String" />
@@ -702,6 +709,13 @@
     <Property Type="Int32" Name="cantidad_pedido" Nullable="false" />
     <Property Type="DateTime" Name="fecha_pedido" Nullable="false" Precision="23" />
     <Property Type="Decimal" Name="total_pedido" Nullable="false" Precision="18" Scale="0" />
+  </ComplexType>
+  <ComplexType Name="sp_FiltroMascotasPorApellidoCliente_Result">
+    <Property Type="String" Name="Column1" Nullable="false" MaxLength="92" />
+    <Property Type="String" Name="nombre" Nullable="false" MaxLength="45" />
+    <Property Type="String" Name="especie" Nullable="false" MaxLength="100" />
+    <Property Type="String" Name="sexo" Nullable="false" MaxLength="30" />
+    <Property Type="String" Name="raza" Nullable="false" MaxLength="100" />
   </ComplexType>
   <ComplexType Name="sp_FiltroPedidoPorApellido_Result">
     <Property Type="Int32" Name="id_pedido" Nullable="false" />

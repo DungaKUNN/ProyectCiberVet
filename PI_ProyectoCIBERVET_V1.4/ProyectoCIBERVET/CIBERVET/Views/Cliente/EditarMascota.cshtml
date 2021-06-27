@@ -73,7 +73,7 @@
                         @if (!string.IsNullOrEmpty(Model.foto))
                         {
                             @Html.HiddenFor(model => model.foto)
-                            <img class="thumbnail" src="~/images/FotosMascotas/@Model.foto" />
+                            <img class="thumbnail" src="~/images/@Model.foto" />
                         }
                         @Html.TextBox("foto3", "", new { type = "file" })
                         @Html.ValidationMessageFor(model => model.foto, "", new { @class = "text-danger" })

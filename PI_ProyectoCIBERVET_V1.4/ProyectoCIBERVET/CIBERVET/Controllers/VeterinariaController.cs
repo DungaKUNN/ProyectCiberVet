@@ -225,11 +225,11 @@ namespace CIBERVET.Controllers
             p.foto2 = archivo2.FileName;
             p.foto3 = archivo3.FileName;
             InsertarProducto(p);
-            archivo1.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
+            archivo1.SaveAs(Path.Combine(Server.MapPath("~/images/"),
                             Path.GetFileName(archivo1.FileName)));
-            archivo2.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
+            archivo2.SaveAs(Path.Combine(Server.MapPath("~/images/"),
                             Path.GetFileName(archivo2.FileName)));
-            archivo3.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
+            archivo3.SaveAs(Path.Combine(Server.MapPath("~/images/"),
                             Path.GetFileName(archivo3.FileName)));
 
             return RedirectToAction("MantenimientoProductos");
@@ -297,21 +297,21 @@ namespace CIBERVET.Controllers
             if (file1 != null)
             {
                 p.foto1 = file1.FileName;
-                file1.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
+                file1.SaveAs(Path.Combine(Server.MapPath("~/images/"),
                             Path.GetFileName(file1.FileName)));
             }
 
             if (file2 != null)
             {
                 p.foto2 = file2.FileName;
-                file2.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
+                file2.SaveAs(Path.Combine(Server.MapPath("~/images/"),
                             Path.GetFileName(file2.FileName)));
             }
 
             if (file3 != null)
             {
                 p.foto3 = file3.FileName;
-                file3.SaveAs(Path.Combine(Server.MapPath("~/images/FotosProductos/"),
+                file3.SaveAs(Path.Combine(Server.MapPath("~/images/"),
                             Path.GetFileName(file3.FileName)));
             }
             ActualizarProducto(p);
@@ -547,6 +547,45 @@ namespace CIBERVET.Controllers
         {
             ActualizarEstadoPedido(p);
             return RedirectToAction("TrackingPersonalVentas");
+        }
+        /*---------------------------------------------------------------------------------------------*/
+
+        /*------------------------------Metodos para Incidente de Mascota------------------------------*/
+        public List<IncidenteMascota> ListarMascotaPorApellidoCliente(string ape)
+        {
+            List<IncidenteMascota> lista = new List<IncidenteMascota>();
+            SqlCommand cmd = new SqlCommand("sp_FiltroMascotasPorApellidoCliente", cn);
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.AddWithValue("@apeUsu", ape);
+            cn.Open();
+            SqlDataReader dr = cmd.ExecuteReader();
+            while (dr.Read())
+            {
+                lista.Add(new IncidenteMascota()
+                {
+                    NomApeCliente = dr.GetString(0),
+                    nombreMascota = dr.GetString(1),
+                    especie = dr.GetString(2),
+                    sexo = dr.GetString(3),
+                    raza = dr.GetString(4)
+                });
+            }
+            dr.Close(); cn.Close();
+            return lista;
+        }
+
+        [AutorizarUsuario(idOperacion: 5)]
+        public ActionResult IncidenteMascota(string apellido)
+        {
+            if (string.IsNullOrEmpty(apellido))
+            {
+                apellido = string.Empty;
+            }
+
+            List<IncidenteMascota> lista = ListarMascotaPorApellidoCliente(apellido);
+            ViewBag.apellidos = apellido;
+
+            return View(lista);
         }
         /*--------------------------------------------------------------------------------------------*/
     }

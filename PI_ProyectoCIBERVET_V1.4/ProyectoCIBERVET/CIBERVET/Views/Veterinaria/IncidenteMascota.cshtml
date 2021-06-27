@@ -1,0 +1,60 @@
+﻿@model IEnumerable<CIBERVET.Models.IncidenteMascota>
+
+@{
+    ViewBag.Title = "IncidenteMascota";
+    Layout = "~/Views/Layout/_Layout_Session_Veterinaria.cshtml";
+}
+
+<h2>Listado de Mascotas por Apellidos de un Cliente</h2>
+
+@using (Html.BeginForm())
+{
+    <span>Ingrese el Apellido</span>
+    @Html.TextBox("apellido", (string)ViewBag.apellidos)
+    <button>Filtrar</button>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            Cliente
+        </th>
+        <th>
+            Mascota
+        </th>
+        <th>
+            Especie
+        </th>
+        <th>
+            Sexo
+        </th>
+        <th>
+            Raza
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomApeCliente)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.nombreMascota)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.especie)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sexo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.raza)
+            </td>
+            <td>
+                @Html.ActionLink("Registrar Incidente", "")
+            </td>
+        </tr>
+    }
+</table>

@@ -639,4 +639,20 @@ as
 	where id_pedido = @idPedCabe
  end
 go
-/*----------------------------------------------------------------------------*/
+/*----------------------------------------------------------------------------------*/
+
+/*---------------Procedimientos Almacenados para Incidente de Mascota---------------*/
+create procedure sp_FiltroMascotasPorApellidoCliente
+ @apeUsu varchar(45)
+as
+	begin
+		select CONCAT(u.nombre,', ',u.apellido),m.nombre,e.especie,m.sexo,
+			   r.raza
+		from MASCOTA m
+		inner join especie_mascota e on m.idespecie = e.idespecie
+		inner join raza_mascota r on m.idraza = r.idraza
+		inner join usuario u on m.idusuario = u.idusuario
+		where u.apellido like '%' + @apeUsu + '%'
+	end
+go
+/*----------------------------------------------------------------------------------*/

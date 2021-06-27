@@ -123,7 +123,7 @@ namespace CIBERVET.Controllers
 
                 InsertarMascota(m);
 
-                foto3.SaveAs(Path.Combine(Server.MapPath("~/images/FotosMascotas/"),
+                foto3.SaveAs(Path.Combine(Server.MapPath("~/images/"),
                              Path.GetFileName(foto3.FileName)));
 
                 var id = Session["UserID"];
@@ -287,7 +287,7 @@ namespace CIBERVET.Controllers
             if (foto3 != null)
             {
                 mas.foto = foto3.FileName;
-                foto3.SaveAs(Path.Combine(Server.MapPath("~/images/FotosMascotas/"),
+                foto3.SaveAs(Path.Combine(Server.MapPath("~/images/"),
                              Path.GetFileName(foto3.FileName)));
             }
 

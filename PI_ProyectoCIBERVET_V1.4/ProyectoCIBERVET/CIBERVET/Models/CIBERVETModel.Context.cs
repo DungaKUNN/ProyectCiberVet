@@ -230,6 +230,15 @@ namespace CIBERVET.Models
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_EditarUsuario", idusuParameter, dniusuParameter, nomusuParameter, apeusuParameter, logusuParameter, passusuParameter, celusuParameter, corusuParameter, dirusuParameter, iddisParameter);
         }
     
+        public virtual ObjectResult<sp_FiltroMascotasPorApellidoCliente_Result> sp_FiltroMascotasPorApellidoCliente(string apeUsu)
+        {
+            var apeUsuParameter = apeUsu != null ?
+                new ObjectParameter("apeUsu", apeUsu) :
+                new ObjectParameter("apeUsu", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<sp_FiltroMascotasPorApellidoCliente_Result>("sp_FiltroMascotasPorApellidoCliente", apeUsuParameter);
+        }
+    
         public virtual ObjectResult<sp_FiltroPedidoPorApellido_Result> sp_FiltroPedidoPorApellido(string apeUsu)
         {
             var apeUsuParameter = apeUsu != null ?
@@ -266,6 +275,19 @@ namespace CIBERVET.Models
                 new ObjectParameter("idusuario", typeof(int));
     
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_Insertar_Mascotas", nombreParameter, idespecieParameter, sexoParameter, idrazaParameter, fotoParameter, idusuarioParameter);
+        }
+    
+        public virtual int sp_InsertarIncidente(Nullable<int> idMas, string desInci)
+        {
+            var idMasParameter = idMas.HasValue ?
+                new ObjectParameter("idMas", idMas) :
+                new ObjectParameter("idMas", typeof(int));
+    
+            var desInciParameter = desInci != null ?
+                new ObjectParameter("desInci", desInci) :
+                new ObjectParameter("desInci", typeof(string));
+    
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction("sp_InsertarIncidente", idMasParameter, desInciParameter);
         }
     
         public virtual int sp_InsertarProducto(string desSimple, Nullable<decimal> pre, Nullable<int> stk, string serie, string marca, Nullable<int> idCat, Nullable<int> idProve, string desHTML, string foto1, string foto2, string foto3)
